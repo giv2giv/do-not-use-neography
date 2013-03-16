@@ -35,5 +35,6 @@ def import_charities_from_irs(irs_charities_url)
 	}
 end
 
+
 # call the import method with the download link
 import_charities_from_irs('http://apps.irs.gov/pub/epostcard/data-download-pub78.zip')
