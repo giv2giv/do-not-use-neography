@@ -1,0 +1,34 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    httparty (0.10.2)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
+    json (1.7.7)
+    multi_json (1.7.0)
+    multi_xml (0.5.3)
+    neography (1.0.8)
+      httparty (>= 0.8.1)
+      json (>= 1.6.0)
+      multi_json (>= 1.3.2)
+      os (>= 0.9.6)
+      rake (>= 0.8.7)
+      rubyzip (>= 0.9.7)
+    os (0.9.6)
+    rack (1.5.2)
+    rack-protection (1.5.0)
+      rack
+    rake (10.0.3)
+    rubyzip (0.9.9)
+    sinatra (1.4.1)
+      rack (~> 1.5, >= 1.5.2)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    tilt (1.3.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  neography
+  sinatra
