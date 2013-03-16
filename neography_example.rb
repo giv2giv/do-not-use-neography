@@ -182,7 +182,9 @@ def endowment_value(node)
         RETURN Total_In-Total_Out", {:node_id => node_id})["data"]
 end
 
-
+for node in @neo.list_nodes do
+  return node + "contributed" + transactions_in(node)
+end
 
 puts ""
 puts "In two months, Michael contributed #{transactions_in(michael)} into his own endowment"
