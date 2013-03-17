@@ -2,12 +2,10 @@ require 'rubygems'
 require 'neography' #neo4j access library - https://github.com/maxdemarzi/neography/
 require 'spreadsheet' # excel library - http://spreadsheet.ch
 require 'geokit'
-require 'awesome_print'
 
 include GeoKit::Geocoders
 
 load 'neo4j_config.rb'
-
 
 
 @neo = Neography::Rest.new
@@ -15,14 +13,14 @@ load 'neo4j_config.rb'
 #Open the excel file passed in from the commandline
 book = Spreadsheet.open ARGV[0]
 
-#Get the first worksheet
+# Data is in the first "sheet"
 worksheet = book.worksheet 0
 
 #counter
-ii=0
+@ii=0
 
 =begin
-Rows in the excel files:
+Key/Values in the excel files:
 [
     [ 0] "E. I. N.",
     [ 1] "Name",
@@ -60,21 +58,33 @@ Rows in the excel files:
 ]
 =end
 
-# cycle through every row
+# Iterate through the .xls rows
 worksheet.each do |row|
 
-  if row != nil #&& ii > 0 # skip because first row contains headers
+  if row != nil && @ii > 0 # skip row 0  - it contains headers
+
+	# Pull data from the row
   	ein = row[0].to_s()
   	name = row[1].to_s()
   	address = row[3].to_s()
   	city = row[4].to_s()
   	state = row[5].to_s()
   	zip = row[6].to_s()
-	geodata = MultiGeocoder.geocode(address + city + state + zip)
-	@neo.create_node('type' => 'charity', 'ein' => ein, 'name' => name, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'latitude' => geodata.lat, 'longitude' => geodata.lng)
-  	ii = ii+1
-	exit if ii > 5
-  end
 
+	# Use geodata to grab the latitude and longitude
+	geodata = MultiGeocoder.geocode(address + city + state + zip)
+
+	# Finally, create the neo4j node
+	@neo.create_node('type' => 'charity', 'name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'latitude' => geodata.lat, 'longitude' => geodata.lng)
+
+	# Count the charities
+  	@ii = @ii+1
+
+	# Debugging mode
+	exit if @ii > 5
+
+  end
 end
-puts "imported #{ii} charities."
+
+# This doesn't work. I still don't like Ruby.
+puts "Imported #{@ii} charities."
