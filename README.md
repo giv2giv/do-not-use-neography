@@ -18,9 +18,8 @@ Neo4j must be running locally on port 7474 for the API to work correctly.  You c
 
 Staring the api
 ---------------
-> bundle install
-> rackup
-visit <http://localhost:9292>
+*> bundle install
 
-
+*> rackup
+*visit <http://localhost:9292>
 
