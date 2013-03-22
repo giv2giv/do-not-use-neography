@@ -2,13 +2,58 @@ require 'rubygems'
 require 'neography' #neo4j access library - https://github.com/maxdemarzi/neography/
 require 'spreadsheet' # excel library - http://spreadsheet.ch
 require 'geokit'
+require 'open-uri'
+require 'net/http'
+require 'nokogiri'
 
 include GeoKit::Geocoders
 
 load 'neo4j_config.rb'
 
 
+#Grab a new neo4j rest handle
 @neo = Neography::Rest.new
+
+# Define directory into which to write excel files
+EXCEL_DIRECTORY = "charity_excel_files"
+
+
+# Hit the IRS site and grab list of regex matching files
+
+@urls = []
+
+#Nokogiri makes it easy, but probably a better way
+doc = Nokogiri::HTML(open('http://www.irs.gov/pub/irs-soi/'))
+
+# Grab all the links and store it in 
+doc.xpath('//a/@href').each do |links|
+	# parse out filenames matching eo_[^.]{2,4}.xls
+	if links.content =~ /eo_[^.]{2,4}.xls/
+		@urls << links.content
+	end
+end
+
+
+# Download each one, write file to EXCEL_DIRECTORY/{filename}
+
+@urls.each do |url|
+
+	begin
+		Net::HTTP.start("www.irs.gov") do |http|
+			resp = http.get("/pub/irs-soi/"+url)
+			open(EXCEL_DIRECTORY+'/'+File.basename(url), "wb") do |file|
+        			file.write(resp.body)
+				file.close
+    			end
+    		end
+	ensure
+	
+	end
+
+end
+
+
+exit # This is the end of the working code
 
 #Open the excel file passed in from the commandline
 book = Spreadsheet.open ARGV[0]
