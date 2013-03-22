@@ -20,6 +20,8 @@ GEM
       rack
     rake (10.0.3)
     rubyzip (0.9.9)
+    shotgun (0.9)
+      rack (>= 1.0)
     sinatra (1.4.1)
       rack (~> 1.5, >= 1.5.2)
       rack-protection (~> 1.4)
@@ -31,4 +33,5 @@ PLATFORMS
 
 DEPENDENCIES
   neography
+  shotgun
   sinatra

@@ -1,0 +1,7 @@
+hey
+    <form action="/putdat" method="post">  
+      <input type="text" name="message">  
+      <input type="submit">  
+    </form>  
+
+<button action="/">Go back home.</button>

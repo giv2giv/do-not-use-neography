@@ -1,0 +1,4 @@
+<!--- #this will display the contents of the form from "index.erb" because of the route in app.rb,  see comments there for more info -->
+<%="You said '#{params[:message]}'"%>
+
+<a href="/">Go back home.</a>
