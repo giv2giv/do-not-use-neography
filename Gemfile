@@ -8,7 +8,11 @@ gem "sinatra"
 gem "shotgun"
 
 # Required for charity import
-gem "spreadsheet" # excel library - http://spreadsheet.ch
-gem "geokit"
-gem "nokogiri"
-gem "oj"
+gem "spreadsheet" # excel library for reading IRS files - http://spreadsheet.ch
+gem "geokit" # geocoding library to get latitude and longitude from address
+gem "nokogiri" # easy HTML parser
+
+#Required for neography - see https://github.com/maxdemarzi/neography/wiki/Dependencies
+gem "os"
+gem "json"
+gem "httparty"
