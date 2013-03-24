@@ -6,3 +6,9 @@ source "https://rubygems.org"
 gem "neography"
 gem "sinatra"
 gem "shotgun"
+
+# Required for charity import
+gem "spreadsheet" # excel library - http://spreadsheet.ch
+gem "geokit"
+gem "nokogiri"
+gem "oj"
