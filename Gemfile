@@ -6,6 +6,7 @@ source "https://rubygems.org"
 gem "neography"
 gem "sinatra"
 gem "shotgun"
+gem "dwolla-ruby"
 
 # Required for charity import
 gem "spreadsheet" # excel library for reading IRS files - http://spreadsheet.ch
