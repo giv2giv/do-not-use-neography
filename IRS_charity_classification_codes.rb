@@ -397,7 +397,7 @@ National Taxonomy of Exempt Entities (NTEE) Code
 The National Taxonomy of Exempt Entities (NTEE) Code is a four digit code used to classify an exempt organization in terms of its primary exempt activity.  A table of the codes found in the first three-digits can be found described below. The first digit (Common Code) is a modifier used to describe activities in support of nonprofit organizations.  The fourth digit further defines the classification of the organization and is not defined here.   
 
 =end
-ntee_common_codes = Hash.new
+@ntee_common_codes = Hash.new
 
 {
 
@@ -430,7 +430,7 @@ ntee_common_codes = Hash.new
 "Z" => {1=>"Unknown"}
 }
 
-ntee_core_codes = Hash.new
+NTEE_CORE_CODES = Hash.new
 
 {
 
