@@ -139,10 +139,45 @@ Key/Values in the excel files:
 						# Finally, create the neo4j node
 						if @ii > 0
 
-							node = Neography::Node.create('type' => 'charity', 'name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee' => ntee, 'latitude' => geodata.lat, 'longitude' => geodata.lng)
-							node.add_to_index(CHARITY_INDEX, "name", name)
-							node.add_to_index(CHARITY_INDEX, "ein", ein)
-						end
+							existing_node = Neography::Node.find(CHARITY_INDEX, "ein", ein)
+
+							# If the charity node already exists
+							if existing_node.exist?
+								if !(
+									# Check if the existing node properties are the same as the IRS import
+									existing.node.name == name &&
+									existing.node.address == address &&
+									existing.node.city == city &&
+									existing.node.state == state &&
+									existing.node.zip == zip &&
+									existing.node.ntee == ntee &&
+									existing.node.latitude == latitude &&
+									existing.node.longitude == longitude 
+								)
+									existing_node.type='old_charity'
+
+                                                                	# Insert new node
+									node = Neography::Node.create('type' => 'charity', 'name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee' => ntee, 'latitude' => geodata.lat, 'longitude' => geodata.lng)
+
+									# Add to index for easy retrieval
+                                                                	node.add_to_index(CHARITY_INDEX, "name", name)
+                                                                	node.add_to_index(CHARITY_INDEX, "ein", ein)
+
+                                                                	# Create relationship of type 'old_charity' between new and old
+									node.outgoing(:old_charity) << existing_node
+								end
+							else # END   if existing_node.exist?
+
+								# If the charity node doesn't already exist then make a new node
+
+								node = Neography::Node.create('type' => 'charity', 'name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee' => ntee, 'latitude' => geodata.lat, 'longitude' => geodata.lng)
+
+								# Add to index for easy retrieval
+								node.add_to_index(CHARITY_INDEX, "name", name)
+								node.add_to_index(CHARITY_INDEX, "ein", ein)
+
+							end # END   else 
+						end # END  if @ii > 0 
 	
 						# Count the charities
   						@ii = @ii+1
