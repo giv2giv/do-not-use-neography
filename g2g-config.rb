@@ -1,16 +1,37 @@
-# these are the default values:
-Neography.configure do |config|
-  config.protocol       = "http://"
-  config.server         = "localhost"
-  config.port           = 7474
-  config.directory      = ""  # prefix this path with '/' 
-  config.cypher_path    = "/cypher"
-  config.gremlin_path   = "/ext/GremlinPlugin/graphdb/execute_script"
-  config.log_file       = "neography.log"
-  config.log_enabled    = false
-  config.max_threads    = 20
-  config.authentication = nil  # 'basic' or 'digest'
-  config.username       = nil
-  config.password       = nil
-  config.parser         = {:parser => MultiJsonParser}
-end
+
+=begin
+Core g2g settings
+=end
+
+# The name of the charity index
+CHARITY_INDEX="charity_index"
+# The name of the donor index
+DONOR_INDEX="donor_index"
+# The name of the package index
+PACKAGE_INDEX="package_index"
+=begin END core g2g settings
+=end
+
+
+=begin
+Charity import settings
+=end
+# Define directory into which to write excel files
+EXCEL_DIRECTORY = "charity_excel_files"
+=begin
+END charity import settings
+=end
+
+=begin
+Dwolla-specific settings
+=end
+# Dwolla processes all transactions $10 and under for free
+DWOLLA_FEE_THRESHOLD = 10.00
+
+# Dwolla transaction fee for transaction amounts at or above TRANSACT_FEE_THRESHOLD
+DWOLLA_TRANSACTION_FEE = 0.25
+
+=begin
+END Dwolla-specific settings
+=end
+

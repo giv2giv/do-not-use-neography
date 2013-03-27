@@ -1,9 +1,7 @@
 require 'rubygems'
 require 'neography' #neo4j access library - https://github.com/maxdemarzi/neography/
 
-# The example below may incur performance issues as described here: http://neo4j.rubyforge.org/guides/traverser.html
-
-load 'neo4j_config.rb'
+load 'g2g-config.rb'
 
 
 # Get a new handle to neo4j's RESTful API
