@@ -9,7 +9,7 @@ require 'awesome_print'
 
 include GeoKit::Geocoders
 
-load 'config/g2g-config.rb'
+load 'g2g-config.rb'
 load 'IRS_charity_classification_codes.rb'
 
 # these are the default values:
@@ -124,7 +124,8 @@ Key/Values in the excel files:
   						city = row[4].to_s().strip
   						state = row[5].to_s().strip
   						zip = row[6].to_s().strip
-						ntee = NTEE_CORE_CODES[row[30].to_s().strip]
+						ntee_core = NTEE_COMMON_CODES[row[30].to_s().strip[0]]
+						ntee_detail = NTEE_CORE_CODES[row[30].to_s().strip]
 
 						# Use geodata to grab the latitude and longitude
 
@@ -150,14 +151,16 @@ Key/Values in the excel files:
 									existing.node.city == city &&
 									existing.node.state == state &&
 									existing.node.zip == zip &&
-									existing.node.ntee == ntee &&
+									existing.node.ntee_core == ntee_core &&
+									existing.node.ntee_detail == ntee_detail &&
 									existing.node.latitude == latitude &&
 									existing.node.longitude == longitude 
 								)
+									# Change the existing node to be type old_charity
 									existing_node.type='old_charity'
 
                                                                 	# Insert new node
-									node = Neography::Node.create('type' => 'charity', 'name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee' => ntee, 'latitude' => geodata.lat, 'longitude' => geodata.lng)
+									node = Neography::Node.create('type' => 'charity', 'name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_core' => ntee_core, 'ntee_detail' => ntee_detail, 'latitude' => geodata.lat, 'longitude' => geodata.lng)
 
 									# Add to index for easy retrieval
                                                                 	node.add_to_index(CHARITY_INDEX, "name", name)
