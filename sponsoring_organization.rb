@@ -13,6 +13,6 @@ end
 # returns the neo4j node
 def fetch_sponsoring_organization_node()
 
-	return Neography::Node.find("sponsoring_orgniazation","name",SPONSORING_ORGANIZATION_NAME)
+	return Neography::Node.find("sponsoring_organization","name",SPONSORING_ORGANIZATION_NAME)
 
 end
