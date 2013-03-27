@@ -71,9 +71,9 @@ def record_overhead_fee (endowment, data)
 	# endowment, giv2giv are neo4j nodes
 	# data format: Hash["amount" => float, "date" => string, "transaction_id" => string]
 
-	# Fetch the node for the sponsoring organization
-	load 'sponsoring_organization.rb'
-	giv2giv = fetch_sponsoring_organization_node()
+	# Fetch the node for the sponsor organization
+	load 'sponsor_organization.rb'
+	giv2giv = fetch_sponsor_organization_node()
 
 	@neo.create_relationship("PAYS_OVERHEAD_FEE", endowment, giv2giv, data)
 
