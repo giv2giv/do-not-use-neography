@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'neography' #neo4j access library - https://github.com/maxdemarzi/neography/
 
-load 'g2g-config.rb'
+load 'config/g2g-config.rb'
 
 
 # Get a new handle to neo4j's RESTful API

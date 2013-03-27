@@ -1,4 +1,4 @@
-load 'g2g-config.rb'
+load 'config/g2g-config.rb'
 
 # Populate neo4j with the sponsoring organization name - should only be done once
 def sponsor_organization_initial_population()

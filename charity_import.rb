@@ -9,7 +9,7 @@ require 'awesome_print'
 
 include GeoKit::Geocoders
 
-load 'g2g-config.rb'
+load 'config/g2g-config.rb'
 load 'IRS_charity_classification_codes.rb'
 
 # these are the default values:
