@@ -1,10 +1,10 @@
 # app.rb
-require 'sinatra/base'
 require 'rubygems'
+# require 'sinatra/base'
+require 'sinatra'
 
 
-
-class App < Sinatra::Base
+# class App < Sinatra::Base
   set :static, true
   set :public_folder, File.dirname(__FILE__) + '/static'
 
@@ -20,5 +20,5 @@ class App < Sinatra::Base
     erb :putdat
   end
 
-end
+# end
 
