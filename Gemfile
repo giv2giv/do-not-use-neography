@@ -10,7 +10,6 @@ gem "dwolla-ruby"
 
 # Required for charity import
 gem "spreadsheet" # excel library for reading IRS files - http://spreadsheet.ch
-gem "geokit" # geocoding library to get latitude and longitude from address
 gem "nokogiri" # easy HTML parser
 
 #Required for neography - see https://github.com/maxdemarzi/neography/wiki/Dependencies
