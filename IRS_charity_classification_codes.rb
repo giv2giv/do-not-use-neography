@@ -3,62 +3,62 @@
 #Ruby thinks some leading zeros denote octal so turn the keys into strings
 
 # Subsection codes
-subsection_codes = Hash.new
-     subsection_codes[['01','1']]="Government Instrumentality"
-     subsection_codes[['02','1']]="Title‑Holding Corporation"
-     subsection_codes[['03','1']]="Charitable Organization"
-     subsection_codes[['03','2']]="Educational Organization"
-     subsection_codes[['03','3']]="Literary Organization"
-     subsection_codes[['03','4']]="Organization to Prevent Cruelty to Animals"
-     subsection_codes[['03','5']]="Organization to Prevent Cruelty to Children"
-     subsection_codes[['03','6']]="Organization for Public Safety Testing"
-     subsection_codes[['03','7']]="Religious Organization"
-     subsection_codes[['03','8']]="Scientific Organization"
-     subsection_codes[['04','1']]="Civic League"
-     subsection_codes[['04','2']]="Local Association of Employees"
-     subsection_codes[['04','3']]="Social Welfare Organization"
-     subsection_codes[['05','1']]="Agricultural Organization"
-     subsection_codes[['05','2']]="Horticultural Organization"
-     subsection_codes[['05','3']]="Labor Organization"
-     subsection_codes[['06','1']]="Board of Trade"
-     subsection_codes[['06','2']]="Business League"
-     subsection_codes[['06','3']]="Chamber of Commerce"
-     subsection_codes[['06','4']]="Real Estate Board"
-     subsection_codes[['07','1']]="Pleasure, Recreational, or Social Club"
-     subsection_codes[['08','1']]="Fraternal Beneficiary Society, Order or Association"
-     subsection_codes[['09','1']]="Voluntary Employees' Beneficiary Association (Non-Govt. Emps.)"
-     subsection_codes[['09','2']]="Voluntary Employees' Beneficiary Association (Govt. Emps.)"
-     subsection_codes[['10','1']]="Domestic Fraternal Societies and Associations"
-     subsection_codes[['11','1']]="Teachers Retirement Fund Assoc."
-     subsection_codes[['12','1']]="Benevolent Life Insurance Assoc."
-     subsection_codes[['12','2']]="Mutual Ditch or Irrigation Co."
-     subsection_codes[['12','3']]="Mutual Cooperative Telephone Co."
-     subsection_codes[['12','4']]="Organization Like Those on Three Preceding Lines"
-     subsection_codes[['13','1']]="Burial Association"
-     subsection_codes[['13','2']]="Cemetery Company"
-     subsection_codes[['14','1']]="Credit Union"
-     subsection_codes[['14','2']]="Other Mutual Corp. or Assoc."
-     subsection_codes[['15','1']]="Mutual Insurance Company or Assoc. Other Than Life or Marine"
-     subsection_codes[['16','1']]="Corp. Financing Crop Operations"
-     subsection_codes[['17','1']]="Supplemental Unemployment Compensation Trust or Plan"
-     subsection_codes[['18','1']]="Employee Funded Pension Trust (Created Before 6/25/59)"
-     subsection_codes[['19','1']]="Post or Organization of War Veterans"
-     subsection_codes[['20','1']]="Legal Service Organization"
-     subsection_codes[['21','1']]="Black Lung Trust"
-     subsection_codes[['22','1']]="Multiemployer Pension Plan"
-     subsection_codes[['23','1']]="Veterans Assoc. Formed Prior to 1880"
-     subsection_codes[['24','1']]="Trust Described in Sect. 4049 of ERISA"
-     subsection_codes[['25','1']]="Title Holding Co. for Pensions, etc."
-     subsection_codes[['26','1']]="State-Sponsored High Risk Health Insurance Organizations"
-     subsection_codes[['27','1']]="State-Sponsored Workers' Compensation Reinsurance"
-     subsection_codes[['29','1']]="ACA 1322 Qualified Nonprofit Health Insurance Issuers"
-     subsection_codes[['40','1']]="Apostolic and Religious Org. (501(d))"
-     subsection_codes[['50','1']]="Cooperative Hospital Service Organization (501(e))"
-     subsection_codes[['60','1']]="Cooperative Service Organization of Operating EducationalOrganization (501(f))"
-     subsection_codes[['70','1']]="Child Care Organization (501(k))"
-     subsection_codes[['71','1']]="Charitable Risk Pool"
-     subsection_codes[['81','1']]="Qualified State-Sponsored Tuition Program "
-     subsection_codes[['92','1']]="4947(a)(1) - Private Foundation (Form 990PF Filer)"
+SUBSECTION_CODES = Hash.new
+     SUBSECTION_CODES[['01','1']]="Government Instrumentality"
+     SUBSECTION_CODES[['02','1']]="Title‑Holding Corporation"
+     SUBSECTION_CODES[['03','1']]="Charitable Organization"
+     SUBSECTION_CODES[['03','2']]="Educational Organization"
+     SUBSECTION_CODES[['03','3']]="Literary Organization"
+     SUBSECTION_CODES[['03','4']]="Organization to Prevent Cruelty to Animals"
+     SUBSECTION_CODES[['03','5']]="Organization to Prevent Cruelty to Children"
+     SUBSECTION_CODES[['03','6']]="Organization for Public Safety Testing"
+     SUBSECTION_CODES[['03','7']]="Religious Organization"
+     SUBSECTION_CODES[['03','8']]="Scientific Organization"
+     SUBSECTION_CODES[['04','1']]="Civic League"
+     SUBSECTION_CODES[['04','2']]="Local Association of Employees"
+     SUBSECTION_CODES[['04','3']]="Social Welfare Organization"
+     SUBSECTION_CODES[['05','1']]="Agricultural Organization"
+     SUBSECTION_CODES[['05','2']]="Horticultural Organization"
+     SUBSECTION_CODES[['05','3']]="Labor Organization"
+     SUBSECTION_CODES[['06','1']]="Board of Trade"
+     SUBSECTION_CODES[['06','2']]="Business League"
+     SUBSECTION_CODES[['06','3']]="Chamber of Commerce"
+     SUBSECTION_CODES[['06','4']]="Real Estate Board"
+     SUBSECTION_CODES[['07','1']]="Pleasure, Recreational, or Social Club"
+     SUBSECTION_CODES[['08','1']]="Fraternal Beneficiary Society, Order or Association"
+     SUBSECTION_CODES[['09','1']]="Voluntary Employees' Beneficiary Association (Non-Govt. Emps.)"
+     SUBSECTION_CODES[['09','2']]="Voluntary Employees' Beneficiary Association (Govt. Emps.)"
+     SUBSECTION_CODES[['10','1']]="Domestic Fraternal Societies and Associations"
+     SUBSECTION_CODES[['11','1']]="Teachers Retirement Fund Assoc."
+     SUBSECTION_CODES[['12','1']]="Benevolent Life Insurance Assoc."
+     SUBSECTION_CODES[['12','2']]="Mutual Ditch or Irrigation Co."
+     SUBSECTION_CODES[['12','3']]="Mutual Cooperative Telephone Co."
+     SUBSECTION_CODES[['12','4']]="Organization Like Those on Three Preceding Lines"
+     SUBSECTION_CODES[['13','1']]="Burial Association"
+     SUBSECTION_CODES[['13','2']]="Cemetery Company"
+     SUBSECTION_CODES[['14','1']]="Credit Union"
+     SUBSECTION_CODES[['14','2']]="Other Mutual Corp. or Assoc."
+     SUBSECTION_CODES[['15','1']]="Mutual Insurance Company or Assoc. Other Than Life or Marine"
+     SUBSECTION_CODES[['16','1']]="Corp. Financing Crop Operations"
+     SUBSECTION_CODES[['17','1']]="Supplemental Unemployment Compensation Trust or Plan"
+     SUBSECTION_CODES[['18','1']]="Employee Funded Pension Trust (Created Before 6/25/59)"
+     SUBSECTION_CODES[['19','1']]="Post or Organization of War Veterans"
+     SUBSECTION_CODES[['20','1']]="Legal Service Organization"
+     SUBSECTION_CODES[['21','1']]="Black Lung Trust"
+     SUBSECTION_CODES[['22','1']]="Multiemployer Pension Plan"
+     SUBSECTION_CODES[['23','1']]="Veterans Assoc. Formed Prior to 1880"
+     SUBSECTION_CODES[['24','1']]="Trust Described in Sect. 4049 of ERISA"
+     SUBSECTION_CODES[['25','1']]="Title Holding Co. for Pensions, etc."
+     SUBSECTION_CODES[['26','1']]="State-Sponsored High Risk Health Insurance Organizations"
+     SUBSECTION_CODES[['27','1']]="State-Sponsored Workers' Compensation Reinsurance"
+     SUBSECTION_CODES[['29','1']]="ACA 1322 Qualified Nonprofit Health Insurance Issuers"
+     SUBSECTION_CODES[['40','1']]="Apostolic and Religious Org. (501(d))"
+     SUBSECTION_CODES[['50','1']]="Cooperative Hospital Service Organization (501(e))"
+     SUBSECTION_CODES[['60','1']]="Cooperative Service Organization of Operating EducationalOrganization (501(f))"
+     SUBSECTION_CODES[['70','1']]="Child Care Organization (501(k))"
+     SUBSECTION_CODES[['71','1']]="Charitable Risk Pool"
+     SUBSECTION_CODES[['81','1']]="Qualified State-Sponsored Tuition Program "
+     SUBSECTION_CODES[['92','1']]="4947(a)(1) - Private Foundation (Form 990PF Filer)"
 
 
 
@@ -70,7 +70,7 @@ An organization formerly listed up to three activity codes on application Forms 
 
 =end
 
-activity_codes = Hash.new
+ACTIVITY_CODES = Hash.new
 
 {
 
@@ -397,7 +397,7 @@ National Taxonomy of Exempt Entities (NTEE) Code
 The National Taxonomy of Exempt Entities (NTEE) Code is a four digit code used to classify an exempt organization in terms of its primary exempt activity.  A table of the codes found in the first three-digits can be found described below. The first digit (Common Code) is a modifier used to describe activities in support of nonprofit organizations.  The fourth digit further defines the classification of the organization and is not defined here.   
 
 =end
-@ntee_common_codes = Hash.new
+NTEE_COMMON_CODES = Hash.new
 
 {
 
