@@ -9,8 +9,8 @@ gem "shotgun"
 gem "dwolla-ruby"
 
 # Required for charity import
-gem "spreadsheet" # excel library for reading IRS files - http://spreadsheet.ch
-gem "nokogiri" # easy HTML parser
+gem "spreadsheet" # Excel library for reading IRS files - http://spreadsheet.ch
+gem "nokogiri" # Easy HTML parser
 
 #Required for neography - see https://github.com/maxdemarzi/neography/wiki/Dependencies
 gem "os"
