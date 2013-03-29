@@ -5,30 +5,11 @@ require 'geokit'
 require 'open-uri'
 require 'net/http'
 require 'nokogiri'
-require 'awesome_print'
 
-include GeoKit::Geocoders
+#include GeoKit::Geocoders
 
-load 'g2g-config.rb'
+load 'config/g2g-config.rb'
 load 'IRS_charity_classification_codes.rb'
-
-# these are the default values:
-Neography.configure do |config|
-  config.protocol       = "http://"
-  config.server         = "localhost"
-  config.port           = 7474
-  config.directory      = ""  # prefix this path with '/' 
-  config.cypher_path    = "/cypher"
-  config.gremlin_path   = "/ext/GremlinPlugin/graphdb/execute_script"
-  config.log_file       = "neography.log"
-  config.log_enabled    = false
-  config.max_threads    = 20
-  config.authentication = nil  # 'basic' or 'digest'
-  config.username       = nil
-  config.password       = nil
-  config.parser         = MultiJsonParser
-end
-
 
 # Make the directory to write the excel files if it doesn't exist
 Dir.mkdir(EXCEL_DIRECTORY) unless File.exists?(EXCEL_DIRECTORY)
@@ -124,26 +105,26 @@ Key/Values in the excel files:
   						city = row[4].to_s().strip
   						state = row[5].to_s().strip
   						zip = row[6].to_s().strip
-						ntee_core = NTEE_COMMON_CODES[row[30].to_s().strip[0]]
-						ntee_detail = NTEE_CORE_CODES[row[30].to_s().strip]
+						ntee_common = NTEE_COMMON_CODES[row[30].to_s().strip[0]]
+						ntee_core = NTEE_CORE_CODES[row[30].to_s().strip]
 
 						# Use geodata to grab the latitude and longitude
 
 						# geocode() below will begin to throw INFOs and ERRORs after reaching the geocoding service daily limit of API accesses. The default geocoding service is Google.
 
-						if address[0..5] == "PO BOX"
-							geodata = MultiGeocoder.geocode(city + ", " + state + " " + zip)
-						else
-							geodata = MultiGeocoder.geocode(address + " " + city + ", " + state + " " + zip)
-						end
+						#if address[0..5] == "PO BOX"
+							#geodata = MultiGeocoder.geocode(city + ", " + state + " " + zip)
+						#else
+							#geodata = MultiGeocoder.geocode(address + " " + city + ", " + state + " " + zip)
+						#end
 	
 						# Finally, create the neo4j node
 						if @ii > 0
 
-							existing_node = Neography::Node.find(CHARITY_INDEX, "ein", ein)
+							existing_node = Neography::Node.find(CHARITY_EIN_INDEX, "ein", ein)
 
 							# If the charity node already exists
-							if existing_node.exist?
+							unless existing_node==nil
 								if !(
 									# Check if the existing node properties are the same as the IRS import
 									existing.node.name == name &&
@@ -151,33 +132,40 @@ Key/Values in the excel files:
 									existing.node.city == city &&
 									existing.node.state == state &&
 									existing.node.zip == zip &&
+									existing.node.ntee_common == ntee_common &&
 									existing.node.ntee_core == ntee_core &&
-									existing.node.ntee_detail == ntee_detail &&
 									existing.node.latitude == latitude &&
 									existing.node.longitude == longitude 
 								)
-									# Change the existing node to be type old_charity
-									existing_node.type='old_charity'
 
                                                                 	# Insert new node
-									node = Neography::Node.create('type' => 'charity', 'name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_core' => ntee_core, 'ntee_detail' => ntee_detail, 'latitude' => geodata.lat, 'longitude' => geodata.lng)
+									node = Neography::Node.create('name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_common' => ntee_common, 'ntee_core' => ntee_core)
 
 									# Add to index for easy retrieval
-                                                                	node.add_to_index(CHARITY_INDEX, "name", name)
-                                                                	node.add_to_index(CHARITY_INDEX, "ein", ein)
+                                                                	node.add_to_index(CHARITY_NAME_INDEX, "name", name)
+                                                                	node.add_to_index(CHARITY_EIN_INDEX, "ein", ein)
+                                                                	node.add_to_index(TYPE_INDEX, "type", CHARITY_TYPE)
 
                                                                 	# Create relationship of type 'old_charity' between new and old
 									node.outgoing(:old_charity) << existing_node
+
+									# Remove the existing node from the type index to avoid duplicates
+									existing_node.remove_from_index(TYPE_INDEX, "type", CHARITY_TYPE)
+
+									# Add the existing node to the type index as an old charity
+                                                                	existing_node.add_to_index(TYPE_INDEX, "type", OLD_CHARITY_TYPE)
+
 								end
 							else # END   if existing_node.exist?
 
 								# If the charity node doesn't already exist then make a new node
 
-								node = Neography::Node.create('type' => 'charity', 'name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee' => ntee, 'latitude' => geodata.lat, 'longitude' => geodata.lng)
+								node = Neography::Node.create('name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_common' => ntee_common, 'ntee_core' => ntee_core)
 
 								# Add to index for easy retrieval
-								node.add_to_index(CHARITY_INDEX, "name", name)
-								node.add_to_index(CHARITY_INDEX, "ein", ein)
+								node.add_to_index(CHARITY_NAME_INDEX, "name", name)
+								node.add_to_index(CHARITY_EIN_INDEX, "ein", ein)
+                                                                node.add_to_index(TYPE_INDEX, "type", CHARITY_TYPE)
 
 							end # END   else 
 						end # END  if @ii > 0 

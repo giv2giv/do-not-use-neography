@@ -4,7 +4,7 @@ load 'config/g2g-config.rb'
 def sponsor_organization_initial_population()
 
         sponsoring_organization = Neography::Node.create("name"=>SPONSOR_ORGANIZATION_NAME)
-        sponsoring_organization.add_to_index(SPONSOR_INDEX,"name",SPONSOR_ORGANIZATION_NAME)
+        sponsoring_organization.add_to_index(TYPE_INDEX, "type", SPONSOR_ORGANIZATION_TYPE)
 
 end
 
