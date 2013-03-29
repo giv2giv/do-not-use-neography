@@ -3,7 +3,7 @@ require 'neography' #neo4j access library - https://github.com/maxdemarzi/neogra
 
 # The example below may incur performance issues as described here: http://neo4j.rubyforge.org/guides/traverser.html
 
-load 'neo4j_config.rb'
+load '../config/g2g-config.rb'
 
 @neo = Neography::Rest.new
 

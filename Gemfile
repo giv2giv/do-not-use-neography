@@ -5,14 +5,18 @@
 source "https://rubygems.org"
 gem "neography"
 gem "sinatra"
+gem "json"
 gem "shotgun"
 gem "dwolla-ruby"
 
 # Required for charity import
 gem "spreadsheet" # Excel library for reading IRS files - http://spreadsheet.ch
+gem "geokit"
 gem "nokogiri" # Easy HTML parser
 
-#Required for neography - see https://github.com/maxdemarzi/neography/wiki/Dependencies
+# Required for neography - see https://github.com/maxdemarzi/neography/wiki/Dependencies
 gem "os"
-gem "json"
 gem "httparty"
+
+# Developer tool
+gem "awesome_print"
