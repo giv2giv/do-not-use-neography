@@ -1,5 +1,4 @@
 require 'rake'
-require 'neography/tasks'
 
 namespace :server do
     
