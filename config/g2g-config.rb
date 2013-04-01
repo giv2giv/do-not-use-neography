@@ -24,11 +24,10 @@ OLD_CHARITY_TYPE = "old_charity"
 
 
 # The name of the charity index
-CHARITY_EIN_INDEX="charity_ein_index"
 CHARITY_NAME_INDEX="charity_name_index"
 
 # The name of the donor index
-DONOR_INDEX="donor_index"
+DONOR_EMAIL_INDEX="donor_email_index"
 
 # The name of the package index
 PACKAGE_INDEX="package_index"
