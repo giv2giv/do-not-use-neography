@@ -7,13 +7,15 @@ require 'neography'
 require 'awesome_print'
 
 load 'config/g2g-config.rb'
+load 'lib/crud.rb'
 
 
 # class App < Sinatra::Base
   set :static, true
   set :public_folder, File.dirname(__FILE__) + '/static'
 
-
+# Authentication 
+  use Rack::Session::Pool, :expire_after => 2592000
 
 # Pull all JSON into a scope variable
   before do
@@ -37,8 +39,8 @@ load 'config/g2g-config.rb'
   end
 
 
-  #post "/createdonor/" do
-  get "/createdonor/" do  #testing
+  post "/createdonor/" do
+  #get "/createdonor/" do  # Quicker to test using get
 
 	# Test data
 	@data ={
@@ -48,17 +50,16 @@ load 'config/g2g-config.rb'
 
 	@data = JSON.parse(@data)
 
-	# Create the donor node
-	donor_node = Neography::Node.create("name" => @data["name"], "email" => @data["email"])
+	# create_donor in lib/crud.rb
+	donor_node = create_donor (@data)
 
-	# Add this node to the donor email index so you can retrieve the donor using an email address
-	donor_node.add_to_index(DONOR_EMAIL_INDEX, "email", @data[:email])
-
-	# Return ephemeral id for look-up during development, name, email
+	# Return ephemeral id for look-up during development, name, email -- watch ID iterate
 	content_type :json
   	{ :id => donor_node.neo_id, :name => @data["name"], :email => @data["email"] }.to_json
 
   end
+
+
 
 
 
