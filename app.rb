@@ -26,6 +26,8 @@ load 'config/g2g-config.rb'
 
   end
 
+
+# Note, sinatra's routes must be in order. The framework goes down the list one by one to check routes. 
   get "/" do
     erb :home_index
   end
