@@ -43,11 +43,11 @@ ENDOWMENT_NAME_INDEX="endowment_name_index"
 INVESTMENT_NAME_INDEX="investment_name_index"
 
 
-ENDOWMENT_OWNER_REL = ":owns"  # The owner donor->package relationship
-ENDOWMENT_CONTRIBUTER_REL ":contributes"  # The contributing donor->package relationship
-ENDOWMENT_INVESTMENT_REL ":invests"  # The contributing donor->package relationship
-ENDOWMENT_SPONSOR_FEE_REL ":sponsor_fee"  # The contributing donor->package relationship
-ENDOWMENT_INVESTMENT_FEE_REL ":investment_fee"  # The contributing donor->package relationship
+ENDOWMENT_OWNER_REL=":owns"  # The owner donor->package relationship
+ENDOWMENT_CONTRIBUTER_REL =":contributes"  # The contributing donor->package relationship
+ENDOWMENT_INVESTMENT_REL =":invests"  # The contributing donor->package relationship
+ENDOWMENT_SPONSOR_FEE_REL =":sponsor_fee"  # The contributing donor->package relationship
+ENDOWMENT_INVESTMENT_FEE_REL =":investment_fee"  # The contributing donor->package relationship
 
 
 # The name of the sponsoring organization index
