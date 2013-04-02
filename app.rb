@@ -18,9 +18,9 @@ load 'lib/crud.rb'
   use Rack::Session::Pool, :expire_after => 2592000
 
 # Pull all JSON into a scope variable
-  before do
-	@data = JSON.parse(request.body.read) rescue {}
-  end
+  #before do
+	#@data = JSON.parse(request.body.read) rescue {}
+  #end
 
 
 
@@ -40,25 +40,23 @@ load 'lib/crud.rb'
 
 
   post "/createdonor/" do
-  #get "/createdonor/" do  # Quicker to test using get
 
-	# Test data
-	@data ={
-    		"name" => "Test",
-    		"email" => "president@whitehouse.gov"
-  	}.to_json
+	#send raw JSON to this endpoint, e.g. {"name":"Michael","email":"president.whitehouse.gov"}
 
-	@data = JSON.parse(@data)
+	# @data is json parsed request.body	
+	@data = JSON.parse(request.body.read)
 
-	# create_donor in lib/crud.rb
+	# create_donor resides in lib/crud.rb
 	donor_node = create_donor (@data)
 
-	# Return ephemeral id for look-up during development, name, email -- watch ID iterate
+	donor_node.happy = "fun" # This inserts a new property in the database node
+
+	# Return ephemeral id for look-up during development, also name, email -- watch ID iterate
 	content_type :json
-  	{ :id => donor_node.neo_id, :name => @data["name"], :email => @data["email"] }.to_json
+  	{ :id => donor_node.neo_id, :name => donor_node.name, :email => donor_node.email, :happy => donor_node.happy }.to_json
+  	#{ :name => "Michael", :email => "president.whitehouse.gov" }.to_json
 
   end
-
 
 
 
