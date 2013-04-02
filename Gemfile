@@ -9,6 +9,12 @@ gem "json"
 gem "shotgun"
 gem "dwolla-ruby"
 
+gem "omniauth"
+gem "omniauth-dwolla"
+gem "omniauth-facebook"
+gem "omniauth-openid"
+gem "omniauth-twitter"
+
 # Required for charity import
 gem "spreadsheet" # Excel library for reading IRS files - http://spreadsheet.ch
 gem "geokit"

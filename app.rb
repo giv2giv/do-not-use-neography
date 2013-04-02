@@ -4,6 +4,12 @@ require 'sinatra'
 require 'json'
 require 'neography'
 
+require 'omniauth'
+require 'omniauth-dwolla'
+require 'omniauth-facebook'
+require 'omniauth-openid'
+require 'omniauth-twitter'
+
 require 'awesome_print'
 
 load 'config/g2g-config.rb'
@@ -15,12 +21,14 @@ load 'lib/crud.rb'
   set :public_folder, File.dirname(__FILE__) + '/static'
 
 # Authentication 
-  use Rack::Session::Pool, :expire_after => 2592000
 
-# Pull all JSON into a scope variable
-  #before do
-	#@data = JSON.parse(request.body.read) rescue {}
-  #end
+  use Rack::Session::Cookie
+  use OmniAuth::Builder do
+	provider :dwolla, ENV['DWOLLA_KEY'], ENV['DWOLLA_SECRET'], :scope => 'accountinfofull|send|request'
+	provider :facebook, "APP_ID", "APP_SECRET"
+	provider :open_id, OpenID::Store::Filesystem.new('/tmp')
+	provider :twitter, 'consumerkey', 'consumersecret'
+  end
 
 
 
@@ -38,12 +46,15 @@ load 'lib/crud.rb'
 
   end
 
+  post '/auth/:name/callback' do
+	auth = request.env['omniauth.auth']
+	"Hello, #{auth['user_info']['name']}, you logged in via #{params['provider']}."
+	# do whatever you want with the information!
+  end
 
   post "/createdonor/" do
 
 	#send raw JSON to this endpoint, e.g. {"name":"Michael","email":"president.whitehouse.gov"}
-
-	# @data is json parsed request.body	
 	@data = JSON.parse(request.body.read)
 
 	# create_donor resides in lib/crud.rb
@@ -59,6 +70,24 @@ load 'lib/crud.rb'
   end
 
 
+  get '/auth/failure' do
+    erb "<h1>Authentication Failed:</h1><h3>message:<h3> <pre>#{params}</pre>"
+  end
+  
+  get '/auth/:provider/deauthorized' do
+    erb "#{params[:provider]} has deauthorized this app."
+  end
+  
+  get '/protected' do
+    throw(:halt, [401, "Not authorized\n"]) unless session[:authenticated]
+    erb "<pre>#{request.env['omniauth.auth'].to_json}</pre><hr>
+         <a href='/logout'>Logout</a>"
+  end
+  
+  get '/logout' do
+    session[:authenticated] = false
+    redirect '/'
+  end
 
 
 # Note, sinatra's routes must be in order. The framework goes down the list one by one to check routes. 
