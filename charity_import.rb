@@ -133,9 +133,9 @@ Key/Values in the excel files:
 									existing.node.state == state &&
 									existing.node.zip == zip &&
 									existing.node.ntee_common == ntee_common &&
-									existing.node.ntee_core == ntee_core &&
-									existing.node.latitude == latitude &&
-									existing.node.longitude == longitude 
+									existing.node.ntee_core == ntee_core 
+									#existing.node.latitude == latitude &&
+									#existing.node.longitude == longitude 
 								)
 
                                                                 	# Insert new node
@@ -156,7 +156,7 @@ Key/Values in the excel files:
                                                                 	existing_node.add_to_index(TYPE_INDEX, "type", OLD_CHARITY_TYPE)
 
 								end
-							else # END   if existing_node.exist?
+							else # END   if existing_node==nil
 
 								# If the charity node doesn't already exist then make a new node
 

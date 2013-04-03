@@ -8,6 +8,7 @@ gem "sinatra"
 gem "json"
 gem "shotgun"
 gem "dwolla-ruby"
+gem "bcrypt-ruby"
 
 # Required for charity import
 gem "spreadsheet" # Excel library for reading IRS files - http://spreadsheet.ch
