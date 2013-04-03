@@ -4,14 +4,17 @@
 # Good docs here:  http://blog.engineyard.com/2009/using-the-rubygems-bundler-for-your-app
 source "https://rubygems.org"
 
-gem "neography"    # Neo4J library.
+# The basics ...
 gem "sinatra"      # bare bones web framework
+gem "shotgun"      # automatic reloading version of the rackup - makes sinatra play nice.
+gem "rake"         # Rake is MAKE for ruby, and is useful for managing our library of scripts.
+gem "test-unit"    # Unit test our libraries.
 gem "json"         # For managing json
-gem "shotgun"      # automatic reloading version of the rackup - start up with this.
+
+# The specifics ...
+gem "neography"    # Neo4J library.
 gem "dwolla-ruby"  # Dwolla handles financial transactions.
 gem "bcrypt-ruby"  # encryption.  duh.
-gem "rake"         # Rake is MAKE for ruby, and is useful for managing our library of scripts.
-
 
 # Required for charity import
 gem "spreadsheet" # Excel library for reading IRS files - http://spreadsheet.ch
