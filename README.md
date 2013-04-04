@@ -21,7 +21,7 @@ Starting the api
 ---------------
 > bundle install
 
-> rackup
+> shotgun
 
-visit <http://localhost:9292>
+visit <http://localhost:9393>
 

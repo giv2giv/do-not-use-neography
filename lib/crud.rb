@@ -5,7 +5,8 @@ def create_donor(data)
 	# Create the node
         donor_node = Neography::Node.create(
 		"name" => data["name"],
-		"email" => data["email"]
+		"email" => data["email"],
+		"password" => data["password"]
 	)
 
         # Add this node to the donor email index for easy retrieval using email
