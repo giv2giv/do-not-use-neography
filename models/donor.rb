@@ -9,20 +9,20 @@ class Donor
 
 		# Create the node
 		donor_node = Neography::Node.create(
-			"email", email
-			"name", name
-			"address1", address1
-			"address2", address2
-			"city", city
-			"state", state
-			"country", country
-			"zip", zip
-			"node_id", node_id
-			"created_at", created_at
-			"zip", zip
-			"facebook_token", facebook_token
-			"dwolla_token", dwolla_token
-			"twitter_token", twitter_token
+			"email" => email,
+			"name" => name,
+			"address1" => address1,
+			"address2" => address2,
+			"city" => city,
+			"state" => state,
+			"country" => country,
+			"zip" => zip,
+			"node_id" => node_id,
+			"created_at" => created_at,
+			"zip" => zip,
+			"facebook_token" => facebook_token,
+			"dwolla_token" => dwolla_token,
+			"twitter_token" => twitter_token,
 			)
 
 
