@@ -76,11 +76,14 @@ load 'models/donor.rb'
   end
 
 	get "/donorsignup" do
-		erb :donorsignup
+
+#		erb :donorsignup
 	end
 
 
   post "/donorsignup" do
+# entering this curl command almost works right for sending json to this route .... curl -i --data "first_name=josh","city=poop","password=stuff","address1=Null","address2=Null","city=Null","state=Null","country=Null","zip=Null","node_id=Null","created_at=Null","facebook_token=Null","dwolla_token=Null","twitter_token=Null" http://localhost:9393/donorsignup
+
 
 	# Post JSON to this endpoint
 	# {"email":"president.whitehouse.gov","password":"somethingfunny"}
@@ -97,7 +100,7 @@ load 'models/donor.rb'
         # Return ephemeral id for look-up during development, also name, email -- watch ID iterate
 #        content_type :json
 #	{ :id => donor_node.neo_id, :email => donor_node.email, :password => donor_node.password }.to_json
-    @donor_node
+    puts @donor_node
   end
 
   post '/donorsignin' do

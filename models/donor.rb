@@ -15,7 +15,7 @@ class Donor
 			"state" => state,
 			"country" => country,
 			"zip" => zip,
-			"node_id" => node_id,
+			"node_id" => node_id, #need a way to auto-increment this --- actually it's already auto-incrementing them, really. it labels them "node XX" where XX is a number
 			"created_at" => created_at,
 			"facebook_token" => facebook_token,
 			"dwolla_token" => dwolla_token,
@@ -59,5 +59,7 @@ class Donor
 
 
 end #Donor class
+
+
 
 
