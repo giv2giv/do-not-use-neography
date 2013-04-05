@@ -121,7 +121,7 @@ Key/Values in the excel files:
 						# Finally, create the neo4j node
 						if @ii > 0
 
-							existing_node = Neography::Node.find(CHARITY_EIN_INDEX, "ein", ein)
+							existing_node = Neography::Node.find(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
 
 							# If the charity node already exists
 							unless existing_node==nil
@@ -142,8 +142,8 @@ Key/Values in the excel files:
 									node = Neography::Node.create('name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_common' => ntee_common, 'ntee_core' => ntee_core)
 
 									# Add to index for easy retrieval
-                                                                	node.add_to_index(CHARITY_NAME_INDEX, "name", name)
-                                                                	node.add_to_index(CHARITY_EIN_INDEX, "ein", ein)
+                                                                	node.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
+                                                                	node.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
                                                                 	node.add_to_index(TYPE_INDEX, "type", CHARITY_TYPE)
 
                                                                 	# Create relationship of type 'old_charity' between new and old
@@ -163,8 +163,8 @@ Key/Values in the excel files:
 								node = Neography::Node.create('name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_common' => ntee_common, 'ntee_core' => ntee_core)
 
 								# Add to index for easy retrieval
-								node.add_to_index(CHARITY_NAME_INDEX, "name", name)
-								node.add_to_index(CHARITY_EIN_INDEX, "ein", ein)
+								node.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
+								node.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
                                                                 node.add_to_index(TYPE_INDEX, "type", CHARITY_TYPE)
 
 							end # END   else 
