@@ -144,16 +144,16 @@ Key/Values in the excel files:
 									# Add to index for easy retrieval
                                                                 	node.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
                                                                 	node.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
-                                                                	node.add_to_index(TYPE_INDEX, "type", CHARITY_TYPE)
+                                                                	node.add_to_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
 
                                                                 	# Create relationship of type 'old_charity' between new and old
 									node.outgoing(:old_charity) << existing_node
 
 									# Remove the existing node from the type index to avoid duplicates
-									existing_node.remove_from_index(TYPE_INDEX, "type", CHARITY_TYPE)
+									existing_node.remove_from_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
 
 									# Add the existing node to the type index as an old charity
-                                                                	existing_node.add_to_index(TYPE_INDEX, "type", OLD_CHARITY_TYPE)
+                                                                	existing_node.add_to_index(TYPE_INDEX, TYPE_INDEX, OLD_CHARITY_TYPE)
 
 								end
 							else # END   if existing_node==nil
@@ -165,7 +165,7 @@ Key/Values in the excel files:
 								# Add to index for easy retrieval
 								node.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
 								node.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
-                                                                node.add_to_index(TYPE_INDEX, "type", CHARITY_TYPE)
+                                                                node.add_to_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
 
 							end # END   else 
 						end # END  if @ii > 0 
