@@ -9,7 +9,7 @@ require 'awesome_print'
 
 load 'config/g2g-config.rb'
 load 'lib/crud.rb'
-
+load 'models/donor.rb'
 
 # class App < Sinatra::Base
   set :static, true
@@ -23,27 +23,25 @@ load 'lib/crud.rb'
 # Run lynx localhost:9292/charities/611413914
 # 611413914 is an EIN of a charity. Charities are indexed by EIN as detailed below
   get "/charities/findein/:ein" do
+		# The giv2giv API speaks JSON and JSON only., e.g. {"name":"Michael","email":"president.whitehouse.gov","password":"somethingfunny"}
+		#@data = JSON.parse(request.body.read)
+		content_type :json
 
-	# The giv2giv API speaks JSON and JSON only., e.g. {"name":"Michael","email":"president.whitehouse.gov","password":"somethingfunny"}
-	#@data = JSON.parse(request.body.read)
+		# How do we provide this endpoint to logged in users only?
+		@email = session[:email]
 
-	content_type :json
+		@ein = params[:ein]
 
-	# How do we provide this endpoint to logged in users only?
-	@email = session[:email]
-
-        @ein = params[:ein]
-
-	# Look up the node by ein
-        charity_node = Neography::Node.find(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, @ein)
+		# look up the node by ein
+		charity_node = Neography::Node.find(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, @ein)
 
 
-	# if not found
-	if charity_node.nil?
+		# if not found
+		if charity_node.nil?
         	{ :error => "No match for #{@ein}" }.to_json
 
-	# if a bunch of nodes are found neography returns an array
-	elsif charity_node.kind_of?(Array)
+		# if a bunch of nodes are found neography returns an array
+		elsif charity_node.kind_of?(Array)
 
 		response = Array.new 
 		charity_node.each do |charity|
@@ -51,9 +49,9 @@ load 'lib/crud.rb'
 		end
 		response.to_json
 
-	else # if one node is found
-		{ :neo_id =>charity_node.neo_id, :ein => charity_node.ein, :name => charity_node.name }.to_json
-	end
+		else # if one node is found
+			{ :neo_id =>charity_node.neo_id, :ein => charity_node.ein, :name => charity_node.name }.to_json
+		end
 
   end
 
@@ -77,23 +75,31 @@ load 'lib/crud.rb'
     erb :putdat
   end
 
+	get "/donorsignup" do
+		erb :donorsignup
+	end
+
+
   post "/donorsignup" do
 
 	# Post JSON to this endpoint
 	# {"email":"president.whitehouse.gov","password":"somethingfunny"}
+		name=params[:first_name]
+		city=params[:city]
+		password = BCrypt::Password.create(params[:password])
 
-        # Use bcrypt to store PW hashes
-        @data["password"] = BCrypt::Password.create(@data["password"])
+		# Use bcrypt to store PW hashes
 
-        # create_donor resides in lib/crud.rb
-        donor_node = create_donor (@data)
+		new_user=Donor.new(name, city, password,"Null","Null","Null","Null","Null","Null","Null","Null","Null","Null","Null" )
+		# create_donor resides in lib/crud.rb
+		#donor_node = create_donor (@data)
 
-        session[:email] = donor_node.email
+		#session[:email] = donor_node.email
 
         # Return ephemeral id for look-up during development, also name, email -- watch ID iterate
-        content_type :json
-	{ :id => donor_node.neo_id, :email => donor_node.email, :password => donor_node.password }.to_json
-
+#        content_type :json
+#	{ :id => donor_node.neo_id, :email => donor_node.email, :password => donor_node.password }.to_json
+    @donor_node
   end
 
   post '/donorsignin' do
