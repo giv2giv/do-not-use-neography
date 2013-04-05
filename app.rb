@@ -41,7 +41,7 @@ load 'lib/crud.rb'
   end
 
   get "/index" do
-    "This is your index page. You need logic here"
+    erb :index
   end
 
   post '/putdat' do  
