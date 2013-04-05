@@ -5,7 +5,7 @@ class Donor
 
 
 
-	def initialize( name, address1, address2, city, state, country, zip, email )
+	def initialize( name, address1, address2, city, state, country, zip, email, created_at, facebook_token, dwolla_token, twitter_token )
 
 		# Create the node
 		donor_node = Neography::Node.create(
@@ -17,7 +17,14 @@ class Donor
 			"state"  => data["state"]
 			"country"  => data["country"]
 			"zip"  => data["zip"]
+			"node_id"  => data["node_id"]
+			"created_at"  => data["created_at"]
+			"zip"  => data["zip"]
+			"facebook_token"  => data["facebook_token"]
+			"dwolla_token"  => data["dwolla_token"]
+			"twitter_token"  => data["twitter_token"]
 			)
+
 
 		# Add this node to the donor email index for easy retrieval using email
 		donor_node.add_to_index(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, data["email"])
@@ -35,21 +42,7 @@ class Donor
 
 #property :something Serial    # An auto-increment integer key
 
-property :node_id,  Integer
-property :created_at, DateTime  # A DateTime, for any date you might like.
 
-property :email,       Text      # A text block, for longer string data.
-property :name,      String    # A varchar type string, for short strings
-
-property :address, Text
-property :city, Text
-property :state,   String
-property :zip1,  Integer
-property :zip2,  Integer
-
-property :facebook_token, Text, :default=>Null
-property :dwolla_token, Text, :default=>Null
-property :twitter_token, Text, :default=>Null
 
 
 	def load ( email )
