@@ -1,7 +1,35 @@
-=begin
+
 # Not working
 
 class Donor
+
+
+
+	def initialize( name, address1, address2, city, state, country, zip, email )
+
+		# Create the node
+		donor_node = Neography::Node.create(
+			"email" => data["email"]
+			"name"  => data["name"]
+			"address1"  => data["address1"]
+			"address2"  => data["address2"]
+			"city"  => data["city"]
+			"state"  => data["state"]
+			"country"  => data["country"]
+			"zip"  => data["zip"]
+			)
+
+		# Add this node to the donor email index for easy retrieval using email
+		donor_node.add_to_index(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, data["email"])
+		donor_node.add_to_index(TYPE_INDEX, TYPE_INDEX, data["email"])
+
+		return donor_node
+	end
+	
+	# Add this node to the donor email index for easy retrieval using email
+	donor_node.add_to_index(DONOR_EMAIL_INDEX, "email", data["email"])
+
+
 #may not need following line if we dont use datamapper, which makes a certain amount of sense
 #include DataMapper::Resource 
 
@@ -54,5 +82,4 @@ end
 
 end
 
-=end
 
