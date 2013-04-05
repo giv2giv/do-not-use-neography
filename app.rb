@@ -67,7 +67,7 @@ load 'lib/crud.rb'
 
   end
 
-  post '/signin' do
+  post '/donorsignin' do
 	email = params[:email]
 	password = params[:password]
 
@@ -75,11 +75,11 @@ load 'lib/crud.rb'
 
 	unless donor.password == BCrypt::Password.new(params[:password])
 		session[:email] = params[:email]
-		redirect "/donor"
+		redirect "/donorportal"
 
 	end
 
-	redirect "/loginfailed"
+	redirect "/donorloginfailed"
   end
 
 # end
