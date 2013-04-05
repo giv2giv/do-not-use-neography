@@ -9,20 +9,20 @@ class Donor
 
 		# Create the node
 		donor_node = Neography::Node.create(
-			"email" => data["email"]
-			"name"  => data["name"]
-			"address1"  => data["address1"]
-			"address2"  => data["address2"]
-			"city"  => data["city"]
-			"state"  => data["state"]
-			"country"  => data["country"]
-			"zip"  => data["zip"]
-			"node_id"  => data["node_id"]
-			"created_at"  => data["created_at"]
-			"zip"  => data["zip"]
-			"facebook_token"  => data["facebook_token"]
-			"dwolla_token"  => data["dwolla_token"]
-			"twitter_token"  => data["twitter_token"]
+			"email" => email
+			"name"  => name
+			"address1"  => address1
+			"address2"  => address2
+			"city"  => city
+			"state"  => state
+			"country"  => country
+			"zip"  => zip
+			"node_id"  => node_id
+			"created_at"  => created_at
+			"zip"  => zip
+			"facebook_token"  => facebook_token
+			"dwolla_token"  => dwolla_token
+			"twitter_token"  => twitter_token
 			)
 
 
@@ -33,18 +33,6 @@ class Donor
 		return donor_node
 	end
 	
-	# Add this node to the donor email index for easy retrieval using email
-	donor_node.add_to_index(DONOR_EMAIL_INDEX, "email", data["email"])
-
-
-#may not need following line if we dont use datamapper, which makes a certain amount of sense
-#include DataMapper::Resource 
-
-#property :something Serial    # An auto-increment integer key
-
-
-
-
 	def load ( email )
 
 		self.donor_node = Neography::Node.find(DONOR_INDEX, "email", data["email"])
