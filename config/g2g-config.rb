@@ -12,6 +12,8 @@ SPONSOR_ORGANIZATION_NAME = "giv2giv"
 # The name of the index allowing for lookups of all nodes of type donor, charity, etc
 TYPE_INDEX="type_index"
 
+# The name of the development index, throw every node in here
+FULL_INDEX = "full_index"
 
 # The types of each node - indexed to look up all nodes of a single type
 
