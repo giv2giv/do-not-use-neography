@@ -11,10 +11,12 @@ gem "rake"         # Rake is MAKE for ruby, and is useful for managing our libra
 gem "test-unit"    # Unit test our libraries.
 gem "json"         # For managing json
 
+
 # The specifics ...
 gem "neography"    # Neo4J library.
 gem "dwolla-ruby"  # Dwolla handles financial transactions.
 gem "bcrypt-ruby"  # encryption.  duh.
+gem "sinatra-authentication" #authentication
 
 # Required for charity import
 gem "spreadsheet" # Excel library for reading IRS files - http://spreadsheet.ch

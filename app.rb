@@ -4,6 +4,17 @@ require 'sinatra'
 require 'json'
 require 'neography'
 require 'bcrypt'
+require "dm-core"
+#for using auto_migrate!
+require "dm-migrations"
+require "digest/sha1"
+require 'rack-flash'
+require "sinatra-authentication"
+
+use Rack::Session::Cookie, :secret => 'No idea what im doing. this is supposedly for authentication secret key stuff. dunno if it works!'
+#if you want flash messages
+use Rack::Flash
+
 
 require 'awesome_print'
 
