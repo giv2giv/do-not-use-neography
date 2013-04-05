@@ -10,5 +10,8 @@ class HomepageTest < Test::Unit::TestCase
     assert true
   end
 
+  def test_pain_and_hate
+    assert false
+  end
 
 end
