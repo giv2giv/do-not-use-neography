@@ -4,17 +4,6 @@ require 'sinatra'
 require 'json'
 require 'neography'
 require 'bcrypt'
-require "dm-core"
-#for using auto_migrate!
-require "dm-migrations"
-require "digest/sha1"
-require 'rack-flash'
-require "sinatra-authentication"
-
-use Rack::Session::Cookie, :secret => 'No idea what im doing. this is supposedly for authentication secret key stuff. dunno if it works!'
-#if you want flash messages
-use Rack::Flash
-
 
 require 'awesome_print'
 
@@ -28,24 +17,8 @@ load 'lib/crud.rb'
   set :public_folder, File.dirname(__FILE__) + '/static'
 
 
-  post "/createdonor/" do
-
-	#send raw JSON to this endpoint, e.g. {"name":"Michael","email":"president.whitehouse.gov","password":"somethingfunny"}
-	@data = JSON.parse(request.body.read)
-
-	# Use bcrypt 
-	@data["password"] = BCrypt::Password.create(@data["password"])
-
-	# create_donor resides in lib/crud.rb
-	donor_node = create_donor (@data)
-
-	session[:email] = donor_node.email
-
-	# Return ephemeral id for look-up during development, also name, email -- watch ID iterate
-	content_type :json
-  	{ :id => donor_node.neo_id, :name => donor_node.name, :email => donor_node.email, :password => donor_node.password }.to_json
-
-  end
+# The giv2giv API speaks JSON and JSON only., e.g. {"name":"Michael","email":"president.whitehouse.gov","password":"somethingfunny"}
+@data = JSON.parse(request.body.read)
 
 # Example getting charity by EIN 'rackup' go to lynx localhost:9292/charities/611413914
 # Run  sudo service neo4j-service start && rackup &
@@ -62,7 +35,6 @@ load 'lib/crud.rb'
 
   end
 
-
 # Note, sinatra's routes must be in order. The framework goes down the list one by one to check routes. 
   get "/" do
     erb :home_index
@@ -76,16 +48,38 @@ load 'lib/crud.rb'
     erb :putdat
   end
 
-  post '/signup' do
-	user = User.create(params[:user])
-	user.password_salt = BCrypt::Engine.generate_salt
-	user.password_hash = BCrypt::Engine.hash_secret(params[:user][:password], user.password_salt)
-	if user.save
-		session[:user] = user.token
-		redirect "/" 
-	else
-		redirect "/signup?email=#{params[:user][:email]}"
+  post "/donorsignup/" do
+
+	# Post JSON to this endpoint
+	# {"email":"president.whitehouse.gov","password":"somethingfunny"}
+
+        # Use bcrypt to store PW hashes
+        @data["password"] = BCrypt::Password.create(@data["password"])
+
+        # create_donor resides in lib/crud.rb
+        donor_node = create_donor (@data)
+
+        session[:email] = donor_node.email
+
+        # Return ephemeral id for look-up during development, also name, email -- watch ID iterate
+        content_type :json
+        { :id => donor_node.neo_id, :email => donor_node.email, :password => donor_node.password }.to_json
+
   end
+
+  post '/signin' do
+	email = params[:email]
+	password = params[:password]
+
+	donor = Neography::Node.find(DONOR_EMAIL_INDEX, "email", email)
+
+	unless donor.password == BCrypt::Password.new(params[:password])
+		session[:email] = params[:email]
+		redirect "/donor"
+
+	end
+
+	redirect "/loginfailed"
   end
 
 # end
