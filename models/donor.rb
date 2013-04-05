@@ -2,7 +2,7 @@
 # Not working
 
 class Donor
-	def initialize( name, password, email, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
+	def initialize( name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
 
 		# Create the node
 		@donor_node = Neography::Node.create(

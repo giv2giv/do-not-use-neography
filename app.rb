@@ -87,9 +87,7 @@ load 'models/donor.rb'
 		name=params[:first_name]
 		city=params[:city]
 		password = BCrypt::Password.create(params[:password])
-
 		# Use bcrypt to store PW hashes
-
 		new_user=Donor.new(name, city, password,"Null","Null","Null","Null","Null","Null","Null","Null","Null","Null","Null" )
 		# create_donor resides in lib/crud.rb
 		#donor_node = create_donor (@data)
