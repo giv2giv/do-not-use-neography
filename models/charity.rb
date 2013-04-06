@@ -1,10 +1,13 @@
+#This is broken - errors with:  models/charity.rb:9:in `initialize': undefined method `create' for nil:NilClass (NoMethodError)
 class Charity
 
-	@node = Neography::Node
+	@neo4j = Neography::Node
 
-	def initialize ( ein, name, address, city, state, zip, ntee_core_code, ntee_common_code )
+	@node = nil
 
-		@node.create(
+	def initialize ( ein, name, address, city, state, zip, ntee_common_code, ntee_core_code )
+
+		self.node = @neo4j.create(
 			"ein" => ein,
 			"name" => name,
 			"address" => address,
@@ -15,14 +18,17 @@ class Charity
 			"ntee_core_code" => ntee_core_code
 		)
 
+		self.node.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
+ 		self.node.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
+ 		self.node.add_to_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
 
-	end
+	end # initialize
 
 	def find ( key )
 
-		@node.find(GIV2GIV_INDEX, GIV2GIV_INDEX, key)
+		self.node = @neo4j.find(GIV2GIV_INDEX, GIV2GIV_INDEX, key)
 
-	end
+	end # find
 
 end
 
