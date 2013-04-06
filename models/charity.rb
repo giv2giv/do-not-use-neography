@@ -1,4 +1,5 @@
 #This is broken - errors with:  models/charity.rb:9:in `initialize': undefined method `create' for nil:NilClass (NoMethodError)
+#Should be fixed. the proper way to call it is with .new
 class Charity
 
 	@neo4j = Neography::Node
@@ -7,7 +8,7 @@ class Charity
 
 	def initialize ( ein, name, address, city, state, zip, ntee_common_code, ntee_core_code )
 
-		self.node = @neo4j.create(
+		self.node = @neo4j.new(
 			"ein" => ein,
 			"name" => name,
 			"address" => address,
