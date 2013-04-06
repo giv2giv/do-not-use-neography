@@ -10,6 +10,7 @@ require 'nokogiri'
 
 load 'config/g2g-config.rb'
 load 'IRS_charity_classification_codes.rb'
+load 'models/charity.rb'
 
 # Make the directory to write the excel files if it doesn't exist
 Dir.mkdir(EXCEL_DIRECTORY) unless File.exists?(EXCEL_DIRECTORY)
@@ -139,12 +140,13 @@ Key/Values in the excel files:
 								)
 
                                                                 	# Insert new node
-									node = Neography::Node.create('name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_common' => ntee_common, 'ntee_core' => ntee_core)
+									#node = Neography::Node.create('name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_common' => ntee_common, 'ntee_core' => ntee_core)
+									node = Charity.new(name, ein, address, city, state, zip, ntee_common, ntee_core)
 
 									# Add to index for easy retrieval
-                                                                	node.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
-                                                                	node.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
-                                                                	node.add_to_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
+                                                                	#node.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
+                                                                	#node.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
+                                                                	#node.add_to_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
 
                                                                 	# Create relationship of type 'old_charity' between new and old
 									node.outgoing(:old_charity) << existing_node
@@ -159,13 +161,14 @@ Key/Values in the excel files:
 							else # END   if existing_node==nil
 
 								# If the charity node doesn't already exist then make a new node
+									node = Charity.new(name, ein, address, city, state, zip, ntee_common, ntee_core)
 
-								node = Neography::Node.create('name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_common' => ntee_common, 'ntee_core' => ntee_core)
+								#node = Neography::Node.create('name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_common' => ntee_common, 'ntee_core' => ntee_core)
 
 								# Add to index for easy retrieval
-								node.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
-								node.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
-                                                                node.add_to_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
+								#node.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
+								#node.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
+                                                                #node.add_to_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
 
 							end # END   else 
 						end # END  if @ii > 0 
