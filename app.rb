@@ -83,7 +83,7 @@ load 'models/donor.rb'
 
   post "/donorsignup" do
 # entering this curl command almost works right for sending json to this route .... curl -i --data "first_name=josh","city=poop","password=stuff","address1=Null","address2=Null","city=Null","state=Null","country=Null","zip=Null","node_id=Null","created_at=Null","facebook_token=Null","dwolla_token=Null","twitter_token=Null" http://localhost:9393/donorsignup
-
+	content_type :json
 
 	# Post JSON to this endpoint
 	# {"email":"president.whitehouse.gov","password":"somethingfunny"}

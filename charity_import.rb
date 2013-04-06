@@ -34,24 +34,23 @@ end
 # Download each one, write file to EXCEL_DIRECTORY/{filename}
 
 @urls.each do |url|
-
+puts url
 	begin
 		Net::HTTP.start("www.irs.gov") do |http|
 			resp = http.get("/pub/irs-soi/"+url)
 
 			# Create the data store directory if it doesn't exist
-
 			open(EXCEL_DIRECTORY+'/'+File.basename(url), "wb") do |file|
 
 				# Write out the downloaded Excel file
-        			file.write(resp.body)
+   			file.write(resp.body)
 				file.close
 			
 				# Open the file we just wrote with the spreadsheet gem functionality	
 				book = Spreadsheet.open (EXCEL_DIRECTORY+'/'+File.basename(url))
 
 				# Data is in the first "sheet"
-				worksheet = book.worksheet 0
+					worksheet = book.worksheet 0
 
 				#counter
 				@ii=0
@@ -101,11 +100,13 @@ Key/Values in the excel files:
 
 						# Pull data from the row
   						ein = row[0].to_s().strip
+#							puts ein --- i used this as debugger code -- josh
   						name = row[1].to_s().strip
   						address = row[3].to_s().strip
   						city = row[4].to_s().strip
   						state = row[5].to_s().strip
   						zip = row[6].to_s().strip
+#							puts zip --- i used this as debugger code -- josh
 						ntee_common = NTEE_COMMON_CODES[row[30].to_s().strip[0]]
 						ntee_core = NTEE_CORE_CODES[row[30].to_s().strip]
 
@@ -120,10 +121,11 @@ Key/Values in the excel files:
 						#end
 	
 						# Finally, create the neo4j node
+#						puts "Anything!" --- i used this as debugger code -- josh
 						if @ii > 0
-
+							puts ein
 							existing_node = Neography::Node.find(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
-
+							puts existing_node
 							# If the charity node already exists
 							unless existing_node==nil
 								if !(
