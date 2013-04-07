@@ -87,12 +87,15 @@ load 'models/donor.rb'
 		#curl --data '{"first_name":"Data","city":"Data","password":"Data","address1":"Data",
 		#"address2":"Data","city":"Data","state":"Data","country":"Data","zip":"Data","node_id":"Data",
 		#"created_at":"Data","facebook_token":"Data","dwolla_token":"Data","twitter_token":"Data"}' http://localhost:9393/donorsignupD
+	# Post JSON to this endpoint
+	# {"email":"president.whitehouse.gov","password":"somethingfunny"}
 
+
+###### Need checks to see if person exists (probably a find by email will work) ######
 		content_type :json
 		data=JSON.parse(request.body.read)
 
-	# Post JSON to this endpoint
-	# {"email":"president.whitehouse.gov","password":"somethingfunny"}
+
 		name=data["first_name"]
 		city=data["city"]
 		email=data["email"]

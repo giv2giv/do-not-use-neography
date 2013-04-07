@@ -30,7 +30,7 @@ class Donor
 		return @donor_node
 	end
 	
-	def load ( email )
+	def find ( email )
 
 		self.donor_node = Neography::Node.find(DONOR_INDEX, "email", email)
 
