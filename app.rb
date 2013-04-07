@@ -83,22 +83,32 @@ load 'models/donor.rb'
 
 
   post "/donorsignup" do
-# can  almost use a curl command for sending json to this route 
-		content_type :json
-#		puts "params =="
-#		puts params
-		data=JSON.parse(request.body.read)
-		puts "data =="
-		puts data
+		# can  almost use a curl command for sending json to this route, using a command line command in this format below
+		#curl --data '{"first_name":"Data","city":"Data","password":"Data","address1":"Data",
+		#"address2":"Data","city":"Data","state":"Data","country":"Data","zip":"Data","node_id":"Data",
+		#"created_at":"Data","facebook_token":"Data","dwolla_token":"Data","twitter_token":"Data"}' http://localhost:9393/donorsignupD
 
+		content_type :json
+		data=JSON.parse(request.body.read)
 
 	# Post JSON to this endpoint
 	# {"email":"president.whitehouse.gov","password":"somethingfunny"}
 		name=data["first_name"]
 		city=data["city"]
-		password = BCrypt::Password.create(params["password"])
+		email=data["email"]
+		address1=data["address1"]
+		address2=data["address2"]
+		state=data["state"]
+		country=data["country"]
+		zip=data["zip"]
+		node_id=data["node_id"]
+		created_at=data["created_at"]
+		facebook_token=data["facebook_token"]
+		dwolla_token=data["dwolla_token"]
+		twitter_token=data["twitter_token"]
+		password = BCrypt::Password.create(data["password"])
 		# Use bcrypt to store PW hashes
-		new_user=Donor.new(name, city, password,"Null","Null","Null","Null","Null","Null","Null","Null",data['facebook_token'],"Null","Null" )
+		new_user=Donor.new(name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
 		# create_donor resides in lib/crud.rb
 		#donor_node = create_donor (@data)
 
