@@ -34,7 +34,7 @@ end
 # Download each one, write file to EXCEL_DIRECTORY/{filename}
 
 @urls.each do |url|
-puts url
+#puts url
 	begin
 		Net::HTTP.start("www.irs.gov") do |http|
 			resp = http.get("/pub/irs-soi/"+url)
@@ -123,9 +123,9 @@ Key/Values in the excel files:
 						# Finally, create the neo4j node
 #						puts "Anything!" --- i used this as debugger code -- josh
 						if @ii > 0
-							puts ein
+							#puts ein
 							existing_node = Neography::Node.find(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
-							puts existing_node
+							#puts existing_node
 							# If the charity node already exists
 							unless existing_node==nil
 								if !(
