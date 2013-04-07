@@ -5,6 +5,7 @@ require 'json'
 require 'neography'
 require 'bcrypt'
 
+
 require 'awesome_print'
 
 load 'config/g2g-config.rb'
@@ -82,16 +83,22 @@ load 'models/donor.rb'
 
 
   post "/donorsignup" do
-# entering this curl command almost works right for sending json to this route .... curl -i --data "first_name=josh","city=poop","password=stuff","address1=Null","address2=Null","city=Null","state=Null","country=Null","zip=Null","node_id=Null","created_at=Null","facebook_token=Null","dwolla_token=Null","twitter_token=Null" http://localhost:9393/donorsignup
-	content_type :json
+# can  almost use a curl command for sending json to this route 
+		content_type :json
+#		puts "params =="
+#		puts params
+		data=JSON.parse(request.body.read)
+		puts "data =="
+		puts data
+
 
 	# Post JSON to this endpoint
 	# {"email":"president.whitehouse.gov","password":"somethingfunny"}
-		name=params[:first_name]
-		city=params[:city]
-		password = BCrypt::Password.create(params[:password])
+		name=data["first_name"]
+		city=data["city"]
+		password = BCrypt::Password.create(params["password"])
 		# Use bcrypt to store PW hashes
-		new_user=Donor.new(name, city, password,"Null","Null","Null","Null","Null","Null","Null","Null","Null","Null","Null" )
+		new_user=Donor.new(name, city, password,"Null","Null","Null","Null","Null","Null","Null","Null",data['facebook_token'],"Null","Null" )
 		# create_donor resides in lib/crud.rb
 		#donor_node = create_donor (@data)
 
@@ -100,7 +107,6 @@ load 'models/donor.rb'
         # Return ephemeral id for look-up during development, also name, email -- watch ID iterate
 #        content_type :json
 #	{ :id => donor_node.neo_id, :email => donor_node.email, :password => donor_node.password }.to_json
-    puts @donor_node
   end
 
   post '/donorsignin' do
