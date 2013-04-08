@@ -129,41 +129,24 @@ Key/Values in the excel files:
 
 							charity.find_ein(ein)
 
-							#puts existing_node
-							# If the charity node already exists
-							unless charity.neo4j==nil
-								if !(
-									# Check if the existing node properties are the same as the IRS import
-									charity.neo4j.name == name &&
-									charity.neo4j.address == address &&
-									charity.neo4j.city == city &&
-									charity.neo4j.state == state &&
-									charity.neo4j.zip == zip &&
-									charity.neo4j.ntee_common == ntee_common &&
-									charity.neo4j.ntee_core == ntee_core 
-									#charity.neo4j.latitude == latitude &&
-									#charity.neo4j.longitude == longitude 
-								)
-
-									charity.create(name, ein, address, city, state, zip, ntee_common, ntee_core)
-
-
-                                                                	# Create relationship of type 'old_charity' between new and old
-									charity.neo4j.outgoing(:old_charity) << existing_node
-
-									# Remove the existing node from the type index to avoid duplicates
-									charity.neo4j.remove_from_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
-
-									# Add the existing node to the type index as an old charity
-                                                                	charity.neo4j.add_to_index(TYPE_INDEX, TYPE_INDEX, OLD_CHARITY_TYPE)
-
-								end
-							else # END   if existing_node==nil
-
-								# If the charity node doesn't already exist then make a new node
+							if charity.neo4j==nil
 								charity.create(name, ein, address, city, state, zip, ntee_common, ntee_core)
+							else
 
-							end # END   else 
+								# The charity node already exists
+								# Update the existing node properties with data from the IRS import
+								charity.neo4j.name = name
+								charity.neo4j.address = address 
+								charity.neo4j.city = city 
+								charity.neo4j.state = state 
+								charity.neo4j.zip = zip 
+								charity.neo4j.ntee_common = ntee_common 
+								charity.neo4j.ntee_core = ntee_core 
+								#charity.neo4j.latitude = latitude 
+								#charity.neo4j.longitude = longitude 
+
+							end # END   charity.neo4j==nil
+
 						end # END  if @ii > 0 
 	
 						# Count the charities
