@@ -2,6 +2,9 @@
 # Not working
 
 class Donor
+
+	@donor_nod=nil
+
 	def initialize( name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
 
 		# Create the node
@@ -32,7 +35,7 @@ class Donor
 	
 	def find ( email )
 
-		self.donor_node = Neography::Node.find(DONOR_INDEX, "email", email)
+		@donor_node = Neography::Node.find(DONOR_INDEX, "email", email)
 
 	end
 

@@ -92,8 +92,7 @@ load 'models/donor.rb'
 ###### Need checks to see if person exists (probably a find by email will work) ######
 		content_type :json
 		data=JSON.parse(request.body.read)
-
-
+		
 		name=data["first_name"]
 		city=data["city"]
 		email=data["email"]
@@ -109,8 +108,15 @@ load 'models/donor.rb'
 		twitter_token=data["twitter_token"]
 		password = BCrypt::Password.create(data["password"])
 		# Use bcrypt to store PW hashes
-		new_user=Donor.new(name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
-		return new_user
+
+		@donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, "email", email)
+		puts @donor_node
+
+		puts "HIIIII"
+#		new_user=Donor.new(name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
+
+
+
 
 		#session[:email] = donor_node.email
 
@@ -139,6 +145,12 @@ load 'models/donor.rb'
 	end
 
   end
+
+
+
+
+
+
 
 
 
