@@ -72,10 +72,6 @@ load 'models/donor.rb'
     erb :index
   end
 
-  post '/putdat' do  
-    erb :putdat
-  end
-
 	get "/donorsignup" do
 
 #		erb :donorsignup
@@ -83,10 +79,12 @@ load 'models/donor.rb'
 
 
   post "/donorsignup" do
-		# can  almost use a curl command for sending json to this route, using a command line command in this format below
+		# can use a curl command for sending json to this route, using a command line command in the format below
 		#curl --data '{"first_name":"Data","city":"Data","password":"Data","address1":"Data",
 		#"address2":"Data","city":"Data","state":"Data","country":"Data","zip":"Data","node_id":"Data",
 		#"created_at":"Data","facebook_token":"Data","dwolla_token":"Data","twitter_token":"Data"}' http://localhost:9393/donorsignupD
+	
+
 	# Post JSON to this endpoint
 	# {"email":"president.whitehouse.gov","password":"somethingfunny"}
 
@@ -112,8 +110,7 @@ load 'models/donor.rb'
 		password = BCrypt::Password.create(data["password"])
 		# Use bcrypt to store PW hashes
 		new_user=Donor.new(name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
-		# create_donor resides in lib/crud.rb
-		#donor_node = create_donor (@data)
+		return new_user
 
 		#session[:email] = donor_node.email
 
