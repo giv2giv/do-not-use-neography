@@ -1,7 +1,7 @@
 
 class Charity
 
-	@neo4j = nil  # instance variable for DB handle
+	attr_accessor :neo4j
 
 	def create ( ein, name, address, city, state, zip, ntee_common_code, ntee_core_code )
 
