@@ -32,9 +32,9 @@ class Donor
 		return @donor_node
 	end #initialize
 	
-	def find ( email )
+	def self.find ( email )
 
-		@donor_node = Neography::Node.find(DONOR_INDEX, DONOR_EMAIL_INDEX, email)
+		@donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 
 	end
 

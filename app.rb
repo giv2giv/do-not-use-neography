@@ -95,7 +95,7 @@ load 'models/donor.rb'
 		puts ""
 
 		# search to see if the email has been used for another account
-		@donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, data["email"])
+		@donor_node = Donor.find(data["email"])
 		
 		# if there was nothing found by the email check, proceed to create new donor. otherwise, display the results of the email search
 		if @donor_node == nil
