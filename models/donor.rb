@@ -1,4 +1,4 @@
-
+require 'bcrypt'
 # Not working
 
 class Donor
@@ -9,7 +9,7 @@ class Donor
 		# Create the node
 		@donor_node = Neography::Node.create(
 			"name" => name,
-			"password" => password,
+			"password" => BCrypt::Password.create(password),
 			"email" => email,
 			"address1" => address1,
 			"address2" => address2,
