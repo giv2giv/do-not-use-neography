@@ -95,17 +95,17 @@ load 'models/donor.rb'
 		puts ""
 
 		# search to see if the email has been used for another account
-		@donor_node = Donor.find(data["email"])
+		@donor = Donor.find(data["email"])
 		
 		# if there was nothing found by the email check, proceed to create new donor. otherwise, display the results of the email search
-		if @donor_node == nil
+		if @donor == nil
 			puts "Created user >>>> "
-			new_user=Donor.create(data["first_name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["node_id"], data["created_at"], data["facebook_token"], data["dwolla_token"], data["twitter_token"] )
-			return new_user
+			@donor=Donor.create(data["first_name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["node_id"], data["created_at"], data["facebook_token"], data["dwolla_token"], data["twitter_token"] )
+			return @donor
 		else
 			puts "USER EXISTS >>>> "
-			puts @donor_node
-			return @donor_node
+			puts @donor
+			return @donor
 		end
 
 

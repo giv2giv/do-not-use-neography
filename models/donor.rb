@@ -34,7 +34,7 @@ class Donor
 	
 	def self.find ( email )
 
-		@donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+		@donor = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 
 	end
 
