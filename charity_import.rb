@@ -124,53 +124,44 @@ Key/Values in the excel files:
 #						puts "Anything!" --- i used this as debugger code -- josh
 						if @ii > 0
 							#puts ein
-							existing_node = Neography::Node.find(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
+
+							charity = Charity.new()
+
+							charity.find_ein(ein)
+
 							#puts existing_node
 							# If the charity node already exists
-							unless existing_node==nil
+							unless charity.neo4j==nil
 								if !(
 									# Check if the existing node properties are the same as the IRS import
-									existing.node.name == name &&
-									existing.node.address == address &&
-									existing.node.city == city &&
-									existing.node.state == state &&
-									existing.node.zip == zip &&
-									existing.node.ntee_common == ntee_common &&
-									existing.node.ntee_core == ntee_core 
-									#existing.node.latitude == latitude &&
-									#existing.node.longitude == longitude 
+									charity.neo4j.name == name &&
+									charity.neo4j.address == address &&
+									charity.neo4j.city == city &&
+									charity.neo4j.state == state &&
+									charity.neo4j.zip == zip &&
+									charity.neo4j.ntee_common == ntee_common &&
+									charity.neo4j.ntee_core == ntee_core 
+									#charity.neo4j.latitude == latitude &&
+									#charity.neo4j.longitude == longitude 
 								)
 
-                                                                	# Insert new node
-									#node = Neography::Node.create('name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_common' => ntee_common, 'ntee_core' => ntee_core)
-									node = Charity.new(name, ein, address, city, state, zip, ntee_common, ntee_core)
+									charity.create(name, ein, address, city, state, zip, ntee_common, ntee_core)
 
-									# Add to index for easy retrieval
-                                                                	#node.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
-                                                                	#node.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
-                                                                	#node.add_to_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
 
                                                                 	# Create relationship of type 'old_charity' between new and old
-									node.outgoing(:old_charity) << existing_node
+									charity.neo4j.outgoing(:old_charity) << existing_node
 
 									# Remove the existing node from the type index to avoid duplicates
-									existing_node.remove_from_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
+									charity.neo4j.remove_from_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
 
 									# Add the existing node to the type index as an old charity
-                                                                	existing_node.add_to_index(TYPE_INDEX, TYPE_INDEX, OLD_CHARITY_TYPE)
+                                                                	charity.neo4j.add_to_index(TYPE_INDEX, TYPE_INDEX, OLD_CHARITY_TYPE)
 
 								end
 							else # END   if existing_node==nil
 
 								# If the charity node doesn't already exist then make a new node
-									node = Charity.new(name, ein, address, city, state, zip, ntee_common, ntee_core)
-
-								#node = Neography::Node.create('name' => name, 'ein' => ein, 'address'=> address, 'city' => city, 'state' => state, 'zip' => zip, 'ntee_common' => ntee_common, 'ntee_core' => ntee_core)
-
-								# Add to index for easy retrieval
-								#node.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
-								#node.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
-                                                                #node.add_to_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
+								charity.create(name, ein, address, city, state, zip, ntee_common, ntee_core)
 
 							end # END   else 
 						end # END  if @ii > 0 
