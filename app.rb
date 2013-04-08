@@ -109,13 +109,16 @@ load 'models/donor.rb'
 		password = BCrypt::Password.create(data["password"])
 		# Use bcrypt to store PW hashes
 
+		# search to see if the email has been used for another account
 		@donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, "email", email)
-		puts @donor_node
-
-		puts "HIIIII"
-#		new_user=Donor.new(name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
-
-
+		
+		# if there was nothing found by the email check, proceed to create new donor. otherwise, display the results of the email search
+		if @donor_node == nil
+			new_user=Donor.new(name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
+		else
+			puts @donor_node
+			return @donor_node
+		end
 
 
 		#session[:email] = donor_node.email
