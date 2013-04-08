@@ -129,21 +129,20 @@ load 'models/donor.rb'
   end
 
   post '/donorsignin' do
+		content_type :json
+		data=JSON.parse(request.body.read)
+		email = data["email"]
+		password = data["password"]
 
-	email = params[:email]
-	password = params[:password]
+		donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, "email", email)
 
-	donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+		if donor_node.nil?
+			response = { :error => "Donor email not found" }.to_json
 
-	content_type :json
-
-	if donor_node.nil?
-        	response = { :error => "Donor email not found" }.to_json
-
-	elsif donor_node.password == BCrypt::Password.new(params[:password])
-		session[:email] = params[:email]
+		elsif donor_node.password == BCrypt::Password.new(data["password"])
+			session[:email] = data["email"]
         	response = { :neo_id =>donor_node.neo_id, :email => donor_node.email, :password => donor_node.password }.to_json
-	else
+		else
         	response = { :error => "Invalid password" }.to_json
 	end
 

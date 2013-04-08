@@ -3,7 +3,6 @@
 
 class Donor
 
-	@donor_nod=nil
 
 	def initialize( name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
 
