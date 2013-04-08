@@ -122,7 +122,7 @@ load 'models/donor.rb'
 		email = data["email"]
 		password = data["password"]
 
-		donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, "email", email)
+		donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 
 		if donor_node.nil?
 			response = { :error => "Donor email not found" }.to_json
@@ -136,8 +136,11 @@ load 'models/donor.rb'
 
   end
 
-
-
+	post '/delete_user' do
+		content_type :json
+		data = JSON.parse (request.body.read)
+		
+	end
 
 
 

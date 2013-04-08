@@ -38,6 +38,10 @@ class Donor
 
 	end
 
+	def self.delete( email )
+		Neography::Node.delete(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+	end
+
 	def add_funds(source)
 		#connect to source (dwolla) via token
 		#pull amount
