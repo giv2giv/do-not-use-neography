@@ -95,13 +95,15 @@ load 'models/donor.rb'
 		puts ""
 
 		# search to see if the email has been used for another account
-		@donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, "email", email)
+		@donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, data["email"])
 		
 		# if there was nothing found by the email check, proceed to create new donor. otherwise, display the results of the email search
 		if @donor_node == nil
-			new_user=Donor.new(data["first_name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["node_id"], data["created_at"], data["facebook_token"], data["dwolla_token"], data["twitter_token"] )
+			puts "Created user >>>> "
+			new_user=Donor.create(data["first_name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["node_id"], data["created_at"], data["facebook_token"], data["dwolla_token"], data["twitter_token"] )
 			return new_user
 		else
+			puts "USER EXISTS >>>> "
 			puts @donor_node
 			return @donor_node
 		end

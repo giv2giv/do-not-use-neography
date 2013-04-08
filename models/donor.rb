@@ -4,7 +4,7 @@ require 'bcrypt'
 class Donor
 
 
-	def initialize( name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
+	def self.create( name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
 
 		# Create the node
 		@donor_node = Neography::Node.create(
@@ -26,7 +26,7 @@ class Donor
 
 
 		# Add this node to the donor email index for easy retrieval using email
-		@donor_node.add_to_index(DONOR_EMAIL_INDEX, "email", email)
+		@donor_node.add_to_index(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 		@donor_node.add_to_index(TYPE_INDEX, TYPE_INDEX, email)
 
 		return @donor_node
@@ -34,7 +34,7 @@ class Donor
 	
 	def find ( email )
 
-		@donor_node = Neography::Node.find(DONOR_INDEX, "email", email)
+		@donor_node = Neography::Node.find(DONOR_INDEX, DONOR_EMAIL_INDEX, email)
 
 	end
 
