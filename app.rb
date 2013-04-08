@@ -92,29 +92,17 @@ load 'models/donor.rb'
 ###### Need checks to see if person exists (probably a find by email will work) ######
 		content_type :json
 		data=JSON.parse(request.body.read)
-		
-		name=data["first_name"]
-		city=data["city"]
-		email=data["email"]
-		address1=data["address1"]
-		address2=data["address2"]
-		state=data["state"]
-		country=data["country"]
-		zip=data["zip"]
-		node_id=data["node_id"]
-		created_at=data["created_at"]
-		facebook_token=data["facebook_token"]
-		dwolla_token=data["dwolla_token"]
-		twitter_token=data["twitter_token"]
-		password = BCrypt::Password.create(data["password"])
-		# Use bcrypt to store PW hashes
+		puts "parsing JSON data"
+		puts data
+		puts ""
 
 		# search to see if the email has been used for another account
 		@donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, "email", email)
 		
 		# if there was nothing found by the email check, proceed to create new donor. otherwise, display the results of the email search
 		if @donor_node == nil
-			new_user=Donor.new(name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
+			new_user=Donor.new(data["first_name"], data["email"], BCrypt::Password.create(data["password"]), data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["node_id"], data["created_at"], data["facebook_token"], data["dwolla_token"], data["twitter_token"] )
+			return new_user
 		else
 			puts @donor_node
 			return @donor_node
