@@ -27,11 +27,11 @@ class Donor
 
 
 		# Add this node to the donor email index for easy retrieval using email
-		@donor_node.add_to_index(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+		@donor_node.add_to_index(DONOR_EMAIL_INDEX, "email", email)
 		@donor_node.add_to_index(TYPE_INDEX, TYPE_INDEX, email)
 
 		return @donor_node
-	end
+	end #initialize
 	
 	def find ( email )
 
