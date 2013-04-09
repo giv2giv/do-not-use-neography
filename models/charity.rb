@@ -3,7 +3,7 @@ class Charity
 
 	attr_accessor :neo4j
 
-	def create ( ein, name, address, city, state, zip, ntee_common_code, ntee_core_code )
+	def create( ein, name, address, city, state, zip, ntee_common_code, ntee_core_code )
 
 		@neo4j = Neography::Node.create(
 			"ein" => ein,
@@ -22,10 +22,21 @@ class Charity
 
 	end # initialize
 
-	def find_ein ( ein )
+	def self.find_ein( ein )
 
 		@neo4j = Neography::Node.find(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
 
 	end # find
+
+	def self.find_name( name )
+
+		results = Neography::Rest.new.get_node_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, "name:#{name}*");
+		if results.nil?
+			{ :error => "No match for #{name}" }.to_json
+		else
+			results.map { |n| n["data"]["name"] }
+		end
+
+	end #  find_name
 
 end

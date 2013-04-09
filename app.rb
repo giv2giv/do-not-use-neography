@@ -31,36 +31,37 @@ use Rack::MethodOverride
 		# How do we provide this endpoint to logged in users only?
 		@email = session[:email]
 
-		@ein = params[:ein]
+		ein = params[:ein]
 
 		# look up the node by ein
-		charity_node = Neography::Node.find(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, @ein)
-
+		charity = Charity.find_ein(ein)
 
 		# if not found
-		if charity_node.nil?
-        	{ :error => "No match for #{@ein}" }.to_json
+		if charity.neo4j==nil
+        		{ :error => "No match for #{ein}" }.to_json
 
 		# if a bunch of nodes are found neography returns an array
-		elsif charity_node.kind_of?(Array)
+		elsif charity.neo4j.kind_of?(Array)
 
 		response = Array.new 
-		charity_node.each do |charity|
-			response <<  { :neo_id => charity.neo_id, :name => charity.name }
+		charity.neo4j.each do |charity_node|
+			response <<  { :neo_id => charity_node.neo_id, :name => charity_node.name }
 		end
 		response.to_json
 
 		else # if one node is found
-			{ :neo_id =>charity_node.neo_id, :ein => charity_node.ein, :name => charity_node.name }.to_json
+			{ :neo_id =>charity.neo4j.neo_id, :ein => charity.neo4j.ein, :name => charity.neo4j.name }.to_json
 		end
 
   end
 
 
   get "/charities/findname/:name" do
-	@name = params[:name]
-        node = Neography::Node.find(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, @ein)
-
+	load 'models/charity.rb'
+	name = params[:name]
+	content_type :json
+	# Not working with wildcards. Exact names match
+	Charity.find_name(name).to_json
   end
 
 # Note, sinatra's routes must be in order. The framework goes down the list one by one to check routes. 
