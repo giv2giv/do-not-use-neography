@@ -11,7 +11,7 @@ require 'awesome_print'
 load 'config/g2g-config.rb'
 load 'lib/crud.rb'
 load 'models/donor.rb'
-
+use Rack::MethodOverride
 # class App < Sinatra::Base
   set :static, true
   set :sessions, true
@@ -136,14 +136,15 @@ load 'models/donor.rb'
 
   end
 
-	post '/delete_user' do
-		content_type :json
-		incoming_data = JSON.parse (request.body.read)
+	delete '/donor/:email' do
+#		content_type :json
+#		incoming_data = JSON.parse (request.body.read)
 		#puts incoming_data
 		#@donor=Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, incoming_data["email"])
 		#puts @donor
 #		puts @donor.inspect
-		Donor.delete(incoming_data["email"])
+#		puts params[:email]
+		Donor.delete(params[:email])
 	end
 
 
