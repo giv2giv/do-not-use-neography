@@ -38,8 +38,15 @@ class Donor
 
 	end
 
-	def self.delete( email )
-		Neography::Node.delete(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+	def self.delete(donor)
+#		donor=Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+		puts "test"
+		puts donor
+#		puts self
+		puts "^^^^^^^  THIS SHOULD BE DELETED"
+		Neography::Node.remove_from_index(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, donor.email)
+		Neography::Node.delete_node!(donor)
+#		Neography::Node.delete(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 	end
 
 	def add_funds(source)

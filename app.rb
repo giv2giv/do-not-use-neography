@@ -138,8 +138,12 @@ load 'models/donor.rb'
 
 	post '/delete_user' do
 		content_type :json
-		data = JSON.parse (request.body.read)
-		
+		incoming_data = JSON.parse (request.body.read)
+		puts incoming_data
+		@donor=Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, incoming_data["email"])
+		puts @donor
+#		puts @donor.inspect
+		Donor.delete(@donor)
 	end
 
 
