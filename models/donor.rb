@@ -38,14 +38,14 @@ class Donor
 
 	end
 
-	def self.delete(donor)
-#		donor=Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
-		puts "test"
-		puts donor
-#		puts self
-		puts "^^^^^^^  THIS SHOULD BE DELETED"
-		Neography::Node.remove_from_index(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, donor.email)
-		Neography::Node.delete_node!(donor)
+	def self.delete(email)
+		donor=Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+		#puts "test"
+		#puts donor
+##		puts self
+		#puts "^^^^^^^  THIS SHOULD BE DELETED"
+		donor.remove_node_from_index() # not sure if this removes from all indices
+		donor.del
 #		Neography::Node.delete(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 	end
 

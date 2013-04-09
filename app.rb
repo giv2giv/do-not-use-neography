@@ -82,7 +82,7 @@ load 'models/donor.rb'
 		# can use a curl command for sending json to this route, using a command line command in the format below
 		#curl --data '{"first_name":"Data","city":"Data","password":"Data","address1":"Data",
 		#"address2":"Data","city":"Data","state":"Data","country":"Data","zip":"Data","node_id":"Data",
-		#"created_at":"Data","facebook_token":"Data","dwolla_token":"Data","twitter_token":"Data"}' http://localhost:9393/donorsignupD
+		#"created_at":"Data","facebook_token":"Data","dwolla_token":"Data","twitter_token":"Data"}' http://localhost:9393/donorsignup
 	
 
 	# Post JSON to this endpoint
@@ -139,11 +139,11 @@ load 'models/donor.rb'
 	post '/delete_user' do
 		content_type :json
 		incoming_data = JSON.parse (request.body.read)
-		puts incoming_data
-		@donor=Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, incoming_data["email"])
-		puts @donor
+		#puts incoming_data
+		#@donor=Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, incoming_data["email"])
+		#puts @donor
 #		puts @donor.inspect
-		Donor.delete(@donor)
+		Donor.delete(incoming_data["email"])
 	end
 
 
