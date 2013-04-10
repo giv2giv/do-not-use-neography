@@ -30,11 +30,14 @@ class Charity
 
 	def self.find_name( name )
 
-		results = Neography::Rest.new.get_node_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, "name:#{name}*");
+		neo = Neography::Rest.new
+
+		results = neo.execute_query("start n = node:#{CHARITY_NAME_INDEX}('name:#{name}*') return n")
+
 		if results.nil?
 			{ :error => "No match for #{name}" }.to_json
 		else
-			results.map { |n| n["data"]["name"] }
+			results.to_json
 		end
 
 	end #  find_name
