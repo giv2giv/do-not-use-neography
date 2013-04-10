@@ -143,12 +143,12 @@ use Rack::MethodOverride
 	end #delete
 
 	get '/donor/:email' do
-		#this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
+		#TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
 		yield
 	end #/donor/:email
 
 	get '/profile/:email' do
-#		This is should return all the data that is part of a user's profile.
+#		TODO This is should return all the data that is part of a user's profile.
 #		including, endowment packages, contact info, any other public info
 		yield
 	end #/profile/:email
