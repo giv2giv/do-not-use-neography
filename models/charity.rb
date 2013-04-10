@@ -22,13 +22,19 @@ class Charity
 
 	end # initialize
 
-	def self.find_ein( ein )
+	def self.findein( ein )
 
 		@neo4j = Neography::Node.find(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
 
+		if @neo4j==nil
+			{ :error => "No match for #{ein}" }.to_json
+		else
+			results.to_json
+		end
+
 	end # find
 
-	def self.find_name( name )
+	def self.findname( name )
 
 		neo = Neography::Rest.new
 

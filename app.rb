@@ -34,7 +34,7 @@ use Rack::MethodOverride
 		ein = params[:ein]
 
 		# look up the node by ein
-		charity = Charity.find_ein(ein)
+		charity = Charity.findein(ein)
 
 		# if not found
 		if charity.neo4j==nil
@@ -60,8 +60,7 @@ use Rack::MethodOverride
 	load 'models/charity.rb'
 	name = params[:name]
 	content_type :json
-	# Not working with wildcards. Exact names match
-	Charity.find_name(name).to_json
+	Charity.findname(name).to_json
   end
 
 # Note, sinatra's routes must be in order. The framework goes down the list one by one to check routes. 

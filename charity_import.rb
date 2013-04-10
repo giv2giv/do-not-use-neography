@@ -127,7 +127,7 @@ Key/Values in the excel files:
 
 							charity = Charity.new()
 
-							charity.find_ein(ein)
+							charity.findein(ein)
 
 							if charity.neo4j==nil
 								charity.create(name, ein, address, city, state, zip, ntee_common, ntee_core)
