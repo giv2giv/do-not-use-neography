@@ -133,20 +133,25 @@ use Rack::MethodOverride
         	response = { :neo_id =>donor_node.neo_id, :email => donor_node.email, :password => donor_node.password }.to_json
 		else
         	response = { :error => "Invalid password" }.to_json
-	end
+	end #if
 
-  end
+  end #donorsignin
 
 	delete '/donor/:email' do
-#		content_type :json
-#		incoming_data = JSON.parse (request.body.read)
-		#puts incoming_data
-		#@donor=Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, incoming_data["email"])
-		#puts @donor
-#		puts @donor.inspect
-#		puts params[:email]
+		##TODO: needs check to see if you really want to delete the donor. perhaps put that in a get request that then redirects here?
 		Donor.delete(params[:email])
-	end
+	end #delete
+
+	get '/donor/:email' do
+		#this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
+		yield
+	end #/donor/:email
+
+	get '/profile/:email' do
+#		This is should return all the data that is part of a user's profile.
+#		including, endowment packages, contact info, any other public info
+		yield
+	end #/profile/:email
 
 
 
