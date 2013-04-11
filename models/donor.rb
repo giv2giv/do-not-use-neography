@@ -82,7 +82,10 @@ class Donor
 		if method_sym.to_s =~ /^*=$/
 			new_property=method_sym.to_s
 			value=arguments.first
-			Neography::Node[:new_property] = value		#need to reference the object itself here, where 'self' is
+			
+			#@donor = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, "fun@happy.com")
+			@donor = Neography::Node.create("email"=> "fun@happy.com")
+			@donor.:new_property = value		#need to reference the object itself here, where 'self' is
 #			find($1.to_sym => arguments.first)
 		else
 			super
