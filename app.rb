@@ -153,12 +153,12 @@ use Rack::MethodOverride
 	end #/profile/:email
 
 
-	post '/:object/:property' do
+	post '/:node/:property/:value' do
 		content_type :json
 		data=JSON.parse(request.body.read)
-		@object=:object
-		property=:property
-		@object*=property
+		value=:property
+		@object=:node
+		@object.property=[value]
 
 	end # post
 
