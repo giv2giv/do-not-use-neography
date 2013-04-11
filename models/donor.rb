@@ -73,7 +73,7 @@ class Donor
 		# possibly filter by source (dwolla, paypal, etc)
 	end
 
-  
+  	# The following method doesn't work yet. But will be *awesome* when it does.
 	# Define on self, since it's  a class method
 	# This will allow us to create new node properties on the fly by calling object.newproperty=value,
 	# because there will be no method called 'newproperty', so it will hit this method, and assign the value to a node property
