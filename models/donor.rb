@@ -81,7 +81,8 @@ class Donor
 		# the first argument is a Symbol, so you need to_s it if you want to pattern match
 		if method_sym.to_s =~ /^*=$/
 			new_property=method_sym.to_s
-			Neography::Node.set_node_properties(self, {"#new_property" => &block})		#need to reference the object itself here, where 'self' is
+			value=arguments.first
+			Neography::Node[:new_property] = value		#need to reference the object itself here, where 'self' is
 #			find($1.to_sym => arguments.first)
 		else
 			super
