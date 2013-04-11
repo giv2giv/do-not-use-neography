@@ -47,6 +47,11 @@ class Donor
 #		Neography::Node.delete(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 	end
 
+	def self.add_new_attribute()
+		#TODO this should be a method that allows us to arbirtrarily add attributes on the nodes either to all instances or to an individual instance
+		yield
+	end
+
 	def add_funds(source)
 		#connect to source (dwolla) via token
 		#pull amount
@@ -67,6 +72,37 @@ class Donor
 		# return total donations between periods
 		# possibly filter by source (dwolla, paypal, etc)
 	end
+
+  
+	# Define on self, since it's  a class method
+	# This will allow us to create new node properties on the fly by calling object.newproperty=value,
+	# because there will be no method called 'newproperty', so it will hit this method, and assign the value to a node property
+	def self.method_missing(method_sym, *arguments, &block)
+		# the first argument is a Symbol, so you need to_s it if you want to pattern match
+		if method_sym.to_s =~ /^*=$/
+			new_property=method_sym.to_s
+			Neography::Node.set_node_properties(self, {"#new_property" => &block})		#need to reference the object itself here, where 'self' is
+#			find($1.to_sym => arguments.first)
+		else
+			super
+		end
+	end
+
+
+	# It's important to know Object defines respond_to to take two parameters: the method to check, and whether to include private methods
+	# http://www.ruby-doc.org/core/classes/Object.html#M000333
+	def self.respond_to?(method_sym, include_private = false)
+		if method_sym.to_s =~ /^find_by_(.*)$/
+			true
+		else
+			super
+		end
+	end
+
+
+
+
+
 
 
 end #Donor class

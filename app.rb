@@ -148,12 +148,19 @@ use Rack::MethodOverride
 
 	get '/profile/:email' do
 #		TODO This is should return all the data that is part of a user's profile.
-#		including, endowment packages, contact info, any other public info
+#		including: endowment packages, contact info, any other public info
 		yield
 	end #/profile/:email
 
 
+	post '/:object/:property' do
+		content_type :json
+		data=JSON.parse(request.body.read)
+		@object=:object
+		property=:property
+		@object*=property
 
+	end # post
 
 
 
