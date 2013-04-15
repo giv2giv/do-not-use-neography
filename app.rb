@@ -153,11 +153,14 @@ use Rack::MethodOverride
 	end #/profile/:email
 
 
-	post '/:node/:property/:value' do
+### The following route is nonfunctional -josh
+	post '/donor/addproperty' do
 		content_type :json
 		data=JSON.parse(request.body.read)
-		value=:property
-		@object=:node
+		@object=data[object]
+		for thing in hash:
+			property=thing
+			value=thing[0]
 		@object.property=[value]
 
 	end # post

@@ -47,7 +47,11 @@ class Donor
 #		Neography::Node.delete(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 	end
 
-	def add_attribute(self, attribute=>value)
+	def add_attribute( hash = {} )
+		object=self
+		attribute=hash[:attribute]
+		property=hash[:property]
+		
 		#TODO this should be a method that allows us to arbirtrarily add attributes on the nodes either to all instances or to an individual instance
 		yield
 	end
