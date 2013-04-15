@@ -153,17 +153,17 @@ use Rack::MethodOverride
 	end #/profile/:email
 
 
-### The following route is nonfunctional -josh
+### The following route is semi nonfunctional -josh
 	post '/donor/addproperty' do
 		content_type :json
 		data=JSON.parse(request.body.read)
-		@object=data[object]
-		for thing in hash:
-			property=thing
-			value=thing[0]
-		@object.property=[value]
+		@object=data["email"]
+		puts @object
+		data.each do |key, value|
+			@object.add_attribute(key, value)
+		end
 
-	end # post
+	end # post /donor/addproperty
 
 
 
