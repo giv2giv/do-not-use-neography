@@ -157,7 +157,7 @@ use Rack::MethodOverride
 	post '/donor/addproperty' do
 		content_type :json
 		data=JSON.parse(request.body.read)
-		@object=data["email"]
+		@object = Donor.find(data["email"])
 		puts @object
 		data.each do |key, value|
 			@object.add_attribute(key, value)
