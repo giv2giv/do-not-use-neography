@@ -153,7 +153,7 @@ use Rack::MethodOverride
 	end #/profile/:email
 
 
-### The following route is semi nonfunctional -josh
+### The following route is semi nonfunctional, mostly because the add_property method in Donor.rb isn't correct -josh
 	post '/donor/addproperty' do
 		content_type :json
 		data=JSON.parse(request.body.read)
