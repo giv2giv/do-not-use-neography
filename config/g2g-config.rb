@@ -9,6 +9,9 @@ Core g2g settings
 # The nonprofit running the fund
 SPONSOR_ORGANIZATION_NAME = "giv2giv"
 
+# The investment fund
+INVESTMENT_FUND_NAME = "giv2giv investment fund"
+
 # The name of the index allowing for lookups of all nodes of type donor, charity, etc
 TYPE_INDEX="type_index"
 
@@ -21,15 +24,12 @@ SPONSOR_ORGANIZATION_TYPE = "sponsor"
 DONOR_TYPE = "donor"
 ENDOWMENT_TYPE = "endowment"
 CHARITY_TYPE = "charity"
-INVESTMENT_TYPE = "investment"
+INVESTMENT_FUND_TYPE = "investment_fund"
 
 
 # Charity indices
 CHARITY_NAME_INDEX="charity_name_index"
 CHARITY_EIN_INDEX="charity_ein_index"
-
-# Duplicate nodes for when information from the IRS changes - Only keeping track to see how often this happens
-OLD_CHARITY_TYPE = "old_charity"
 
 
 # Donor indices
@@ -39,10 +39,6 @@ DONOR_TOKEN_INDEX="donor_token_index" # look up donors by auth token
 
 # Endowment indices
 ENDOWMENT_NAME_INDEX="endowment_name_index"
-
-
-# Investment fund indices
-INVESTMENT_NAME_INDEX="investment_name_index"
 
 
 ENDOWMENT_OWNER_REL=":owns"  # The owner donor->package relationship

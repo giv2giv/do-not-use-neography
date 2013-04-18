@@ -9,9 +9,12 @@ require 'bcrypt'
 require 'awesome_print'
 
 load 'config/g2g-config.rb'
-load 'lib/crud.rb'
 load 'models/donor.rb'
+load 'models/charity.rb'
+load 'models/endowment.rb'
+
 use Rack::MethodOverride
+
 # class App < Sinatra::Base
   set :static, true
   set :sessions, true
@@ -21,46 +24,21 @@ use Rack::MethodOverride
 
 # Example getting charity by EIN 'rackup' go to lynx localhost:9292/charities/611413914
 # Run  sudo service neo4j-service start && rackup &
-# Run lynx localhost:9292/charities/611413914
-# 611413914 is an EIN of a charity. Charities are indexed by EIN as detailed below
-  get "/charities/findein/:ein" do
-		# The giv2giv API speaks JSON and JSON only., e.g. {"name":"Michael","email":"president.whitehouse.gov","password":"somethingfunny"}
-		#@data = JSON.parse(request.body.read)
-		content_type :json
+# Run lynx localhost:4567/charities/611413914
+# 611413914 is an EIN of a charity. Charities are indexed by EIN - see config/g2g-config.rb for index constants
+  get "/charities/find_by_ein/:ein" do
+	ein = params[:ein]
 
-		# How do we provide this endpoint to logged in users only?
-		@email = session[:email]
-
-		ein = params[:ein]
-
-		# look up the node by ein
-		charity = Charity.findein(ein)
-
-		# if not found
-		if charity.neo4j==nil
-        		{ :error => "No match for #{ein}" }.to_json
-
-		# if a bunch of nodes are found neography returns an array
-		elsif charity.neo4j.kind_of?(Array)
-
-		response = Array.new 
-		charity.neo4j.each do |charity_node|
-			response <<  { :neo_id => charity_node.neo_id, :name => charity_node.name }
-		end
-		response.to_json
-
-		else # if one node is found
-			{ :neo_id =>charity.neo4j.neo_id, :ein => charity.neo4j.ein, :name => charity.neo4j.name }.to_json
-		end
-
+	# look up the node by ein
+	content_type :json
+	# how to pull just data from this?
+	Charity.find_by_ein(ein).to_json
   end
 
-
-  get "/charities/findname/:name" do
-	load 'models/charity.rb'
+  get "/charities/find_by_name/:name" do
 	name = params[:name]
 	content_type :json
-	Charity.findname(name).to_json
+	Charity.find_by_name(name).to_json
   end
 
 # Note, sinatra's routes must be in order. The framework goes down the list one by one to check routes. 

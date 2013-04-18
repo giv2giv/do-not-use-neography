@@ -37,13 +37,15 @@ end
 #puts url
 	begin
 		Net::HTTP.start("www.irs.gov") do |http|
-			resp = http.get("/pub/irs-soi/"+url)
 
-			# Create the data store directory if it doesn't exist
-			open(EXCEL_DIRECTORY+'/'+File.basename(url), "wb") do |file|
+			#unless File.exist?(EXCEL_DIRECTORY+'/'+File.basename(url))
+
+				resp = http.get("/pub/irs-soi/"+url)
+				# Create the data store directory if it doesn't exist
+				open(EXCEL_DIRECTORY+'/'+File.basename(url), "wb") do |file|
 
 				# Write out the downloaded Excel file
-   			file.write(resp.body)
+   				file.write(resp.body)
 				file.close
 			
 				# Open the file we just wrote with the spreadsheet gem functionality	
@@ -54,6 +56,7 @@ end
 
 				#counter
 				@ii=0
+			#end
 
 =begin
 Key/Values in the excel files:
@@ -125,25 +128,23 @@ Key/Values in the excel files:
 						if @ii > 0
 							#puts ein
 
-							charity = Charity.new()
+							charity = Charity.find_by_ein(ein)
 
-							charity.findein(ein)
-
-							if charity.neo4j==nil
-								charity.create(name, ein, address, city, state, zip, ntee_common, ntee_core)
+							if charity==nil
+								Charity.create(ein, name, address, city, state, zip, ntee_common, ntee_core)
 							else
 
 								# The charity node already exists
 								# Update the existing node properties with data from the IRS import
-								charity.neo4j.name = name
-								charity.neo4j.address = address 
-								charity.neo4j.city = city 
-								charity.neo4j.state = state 
-								charity.neo4j.zip = zip 
-								charity.neo4j.ntee_common = ntee_common 
-								charity.neo4j.ntee_core = ntee_core 
-								#charity.neo4j.latitude = latitude 
-								#charity.neo4j.longitude = longitude 
+								Charity.node.name = name
+								Charity.node.address = address 
+								Charity.node.city = city 
+								Charity.node.state = state 
+								Charity.node.zip = zip 
+								Charity.node.ntee_common = ntee_common 
+								Charity.node.ntee_core = ntee_core 
+								#charity.node.latitude = latitude 
+								#charity.node.longitude = longitude 
 
 							end # END   charity.neo4j==nil
 

@@ -9,6 +9,6 @@ end
 namespace :server do
     desc "start server"
     task :start do
-        system "shotgun"
+        system "shotgun -p9393"
     end
 end

@@ -46,7 +46,7 @@ def record_investment_fee(endowment, investment_fund, data)
 	# endowment, investment_fund are neo4j nodes
 	# data format: Hash["amount" => float, "date" => string]
 
-	@neo.create_relationship("PAYS_INVESTMENT_FEE", endowment, fund, data)
+	@neo.create_relationship("PAYS_INVESTMENT_FEE", endowment, investment_fund, data)
 
 end # END record_investment_fee(endowment, investment_fund, data)
 

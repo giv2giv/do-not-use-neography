@@ -1,11 +1,14 @@
 
 class Charity
 
-	attr_accessor :neo4j
+	attr_accessor :node
 
-	def create( ein, name, address, city, state, zip, ntee_common_code, ntee_core_code )
+	def self.create( ein=nil, name=nil, address=nil, city=nil, state=nil, zip=nil, ntee_common_code=nil, ntee_core_code=nil )
 
-		@neo4j = Neography::Node.create(
+		# Since we're adding to indexes we must use Phase 1
+		@neo4j = Neography::Rest.new
+
+		@node = @neo4j.create_node(
 			"ein" => ein,
 			"name" => name,
 			"address" => address,
@@ -16,35 +19,40 @@ class Charity
 			"ntee_core_code" => ntee_core_code
 		)
 
-		@neo4j.add_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
- 		@neo4j.add_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
- 		@neo4j.add_to_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE)
+		# Adding the node to an index via
+		@neo4j.add_node_to_index(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name, @node)
+ 		@neo4j.add_node_to_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein, @node)
+ 		@neo4j.add_node_to_index(TYPE_INDEX, TYPE_INDEX, CHARITY_TYPE, @node)
 
 	end # initialize
 
-	def self.findein( ein )
+	def self.find_by_ein( ein )
 
-		@neo4j = Neography::Node.find(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
+		@neo4j = Neography::Rest.new
 
-		if @neo4j==nil
-			{ :error => "No match for #{ein}" }.to_json
-		else
-			results.to_json
-		end
+		# Set the class variable to the found node(s) & return either the node or nil
+		@node = @neo4j.get_node_index(CHARITY_EIN_INDEX, CHARITY_EIN_INDEX, ein)
 
 	end # find
 
-	def self.findname( name )
+	def self.find_by_name( name )
 
-		neo = Neography::Rest.new
+		@neo4j = Neography::Rest.new
 
-		results = neo.execute_query("start n = node:#{CHARITY_NAME_INDEX}('name:#{name}*') return n")
+		# This is best done using a Cypher query, so it's a little different
 
-		if results.nil?
-			{ :error => "No match for #{name}" }.to_json
-		else
-			results.to_json
-		end
+		# this is now re-broken
+
+		cypher = "START me=node:#{CHARITY_NAME_INDEX}({query}) 
+            		me.name
+            		ORDER BY me.name
+            		LIMIT 15"
+  			query = "name:*#{name}*"
+  			@neo4j.execute_query(cypher, 
+                    		{:query => query })["data"].map{|x| 
+                           		{ label: x[1], 
+                             		value: x[0] }
+                         	}.to_json   
 
 	end #  find_name
 
