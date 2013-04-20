@@ -138,8 +138,10 @@ use Rack::MethodOverride
 		@object = Donor.find(data["email"])
 		puts @object
 		data.each do |key, value|
-			@object.add_attribute(key, value)
-		end
+			if key!="email"
+				@object.add_attribute(key, value)
+			end
+		end #do
 
 	end # post /donor/addproperty
 
