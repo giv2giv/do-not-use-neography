@@ -64,4 +64,12 @@ class Charity
 
 	end #  find_name
 
+	def self.delete( id)
+
+		@node = Neography::Node.find(ID_INDEX, ID_INDEX, id)
+		@node.remove_node_from_index()
+		@node.del
+
+	end
+
 end
