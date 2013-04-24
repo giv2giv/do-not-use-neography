@@ -7,9 +7,11 @@ Core g2g settings
 =end
 
 # The nonprofit running the fund
+SPONSOR_ORGANIZATION_TYPE = "sponsor"
 SPONSOR_ORGANIZATION_NAME = "giv2giv"
 
 # The investment fund
+INVESTMENT_FUND_TYPE = "investment_fund"
 INVESTMENT_FUND_NAME = "giv2giv investment fund"
 
 # The name of the index allowing for lookups of all nodes of type donor, charity, etc
@@ -18,26 +20,22 @@ TYPE_INDEX="type_index"
 # The name of the id index, throw every node in here with its ID
 ID_INDEX = "id_index"
 
-# The types of each node - indexed to look up all nodes of a single type
-
-SPONSOR_ORGANIZATION_TYPE = "sponsor"
-DONOR_TYPE = "donor"
-ENDOWMENT_TYPE = "endowment"
-CHARITY_TYPE = "charity"
-INVESTMENT_FUND_TYPE = "investment_fund"
 
 
 # Charity indices
+CHARITY_TYPE = "charity"
 CHARITY_NAME_INDEX="charity_name_index"
 CHARITY_EIN_INDEX="charity_ein_index"
 
 
 # Donor indices
+DONOR_TYPE = "donor"
 DONOR_EMAIL_INDEX="donor_email_index"
 DONOR_TOKEN_INDEX="donor_token_index" # look up donors by auth token
 
 
 # Endowment indices
+ENDOWMENT_TYPE = "endowment"
 ENDOWMENT_NAME_INDEX="endowment_name_index"
 
 
