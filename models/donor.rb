@@ -1,13 +1,18 @@
 require 'bcrypt'
 # Not working
 
+load 'lib/functions.rb'
+
 class Donor
+
+	attr_accessor :node
 
 
 	def self.create( name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
 
 		# Create the node
-		@donor_node = Neography::Node.create(
+		@node = Neography::Node.create(
+			"id" => generate_unique_id(),
 			"name" => name,
 			"password" => BCrypt::Password.create(password),
 			"email" => email,
@@ -26,17 +31,26 @@ class Donor
 
 
 		# Add this node to the donor email index for easy retrieval using email
-		@donor_node.add_to_index(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
-		@donor_node.add_to_index(TYPE_INDEX, TYPE_INDEX, email)
+		@node.add_to_index(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+		@node.add_to_index(TYPE_INDEX, TYPE_INDEX, DONOR_TYPE)
+		@node.add_to_index(ID_INDEX, ID_INDEX, @node.id)
 
-		return @donor_node
+		return @node
 	end #initialize
 	
-	def self.find ( email )
+	def self.find_by_email ( email )
 
-		@donor = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+		@node = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 
 	end
+
+	def self.find_by_id( id )
+
+                @node = Neography::Node.find(ID_INDEX, ID_INDEX, id)
+                rescue Neography::NeographyError => err # Don't throw the error
+
+        end # find
+
 
 	def self.delete(email)
 		donor=Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
