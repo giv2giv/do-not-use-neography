@@ -13,6 +13,7 @@ load 'models/donor.rb'
 load 'models/charity.rb'
 load 'models/endowment.rb'
 
+
 use Rack::MethodOverride
 
 # class App < Sinatra::Base
@@ -31,12 +32,21 @@ use Rack::MethodOverride
 
 	# look up the node by ein
 	content_type :json
-	# how to pull just data from this?
 	Charity.find_by_ein(ein).to_json
+  end
+
+  get "/charities/find_by_id/:ein" do
+        id = params[:ein]
+
+        # look up the node by id
+        content_type :json
+        Charity.find_by_id(id).to_json
   end
 
   get "/charities/find_by_name/:name" do
 	name = params[:name]
+
+	# look up the node by name
 	content_type :json
 	Charity.find_by_name(name).to_json
   end
@@ -54,7 +64,6 @@ use Rack::MethodOverride
 
 #		erb :donorsignup
 	end
-
 
   post "/donorsignup" do
 		# can use a curl command for sending json to this route, using a command line command in the format below
@@ -118,6 +127,19 @@ use Rack::MethodOverride
 		##TODO: needs check to see if you really want to delete the donor. perhaps put that in a get request that then redirects here?
 		Donor.delete(params[:email])
 	end #delete
+
+	get "/donor/find_by_id/:ein" do
+        	id = params[:ein]
+
+        	# look up the node by id
+        	content_type :json
+        	Donor.find_by_id(id).to_json
+  	end
+
+	get '/donor/:id' do
+                #TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
+                yield
+        end #/donor/:email
 
 	get '/donor/:email' do
 		#TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
