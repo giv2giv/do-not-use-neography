@@ -40,14 +40,12 @@ ENDOWMENT_NAME_INDEX="endowment_name_index"
 
 
 ENDOWMENT_OWNER_REL=":owns"  # The owner donor->package relationship
-ENDOWMENT_CONTRIBUTER_REL =":contributes"  # The contributing donor->package relationship
-ENDOWMENT_INVESTMENT_REL =":invests"  # The contributing donor->package relationship
+ENDOWMENT_DONOR_REL =":donates"  # The contributing donor->package relationship
+ENDOWMENT_INVESTMENT_REL =":invests"  # The relationship from endowment to investment fund
+ENDOWMENT_GRANTS_REL =":grants"  # The relationship from endowment to investment fund
 ENDOWMENT_SPONSOR_FEE_REL =":sponsor_fee"  # The contributing donor->package relationship
 ENDOWMENT_INVESTMENT_FEE_REL =":investment_fee"  # The contributing donor->package relationship
 
-
-# The name of the sponsoring organization index
-SPONSOR_INDEX="sponsor_index"
 
 
 
