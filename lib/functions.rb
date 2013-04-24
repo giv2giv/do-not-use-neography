@@ -6,4 +6,7 @@ def fetch_sponsor_organization_node()
 
 end
 
-
+def generate_unique_id()
+	require 'securerandom'
+	return SecureRandom.urlsafe_base64(16)
+end
