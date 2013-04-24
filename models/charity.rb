@@ -43,24 +43,26 @@ class Charity
 
         end # find
 
-	def self.find_by_name( name )
+	def self.find_by_name(name)
 
-		@neo4j = Neography::Rest.new
 
-		# This is best done using a Cypher query, so it's a little different
-
+		# This should *absolutely work* and doesn't
+		@node = Neography::Node.find(CHARITY_NAME_INDEX, CHARITY_NAME_INDEX, name)
 		# This doesn't work, but *should*
-		Neography::Rest.new.find_node_index(CHARITY_NAME_INDEX, "name:#{name}*").map { |n| n["data"]["name"] }.to_json
-		rescue Neography::NeographyError => err # Don't throw the error
+		#Neography::Rest.new.find_node_index(CHARITY_NAME_INDEX, "name:#{name}*").map { |n| n["data"]["name"] }.to_json
 
-
-  		#query = "name:#{name}*"
-		#cypher = "START n=node:#{CHARITY_NAME_INDEX}('#{query}*') return n.name LIMIT 15"
-  			#@neo4j.execute_query(cypher, 
-                    		#{:query => query })["data"].map{|x| 
+		# This also doesn't work, but *should*
+		#@neo4j = Neography::Rest.new
+		#cypher = "START n=node:#{CHARITY_NAME_INDEX}('name:#{name}*') return n.name LIMIT 15"
+  			#@neo4j.execute_query(cypher)["data"].map{|x| 
                            		#{ label: x[1], 
                              		#value: x[0] }
                          	#}.to_json 
+
+
+		# What used to work, and now doesn't. Unsure why.
+		# neo = Neography::Rest.new
+		# results = neo.execute_query("start n = node:#{CHARITY_NAME_INDEX}('name:#{name}*') return n LIMIT 5")
 
 	end #  find_name
 
