@@ -100,7 +100,7 @@ use Rack::MethodOverride
 		# if there was nothing found by the email check, proceed to create new donor. otherwise, display the results of the email search
 		if @donor == nil
 			puts "Created user >>>> "
-			@donor=Donor.create(data["first_name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["node_id"], data["created_at"], data["facebook_token"], data["dwolla_token"], data["twitter_token"] )
+			@donor=Donor.create(data["first_name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["created_at"], data["facebook_token"], data["dwolla_token"], data["twitter_token"] )
 			return @donor
 		else
 			puts "USER EXISTS >>>> "
@@ -133,26 +133,34 @@ use Rack::MethodOverride
         	response = { :neo_id =>donor_node.neo_id, :email => donor_node.email, :password => donor_node.password }.to_json
 		else
         	response = { :error => "Invalid password" }.to_json
-	end #if
+		end #if
 
   end #donorsignin
 
-	delete '/donor/:email' do
+	delete '/donor/delete/:email' do
 		##TODO: needs check to see if you really want to delete the donor. perhaps put that in a get request that then redirects here?
 		Donor.delete(params[:email])
 	end #delete
 
-	get "/donor/find_by_id/:ein" do
-        	id = params[:ein]
-
+	get "/donor/email/:email" do
+### AS THIS CURRENTLY STANDS IT WILL FIND AN OBJECT WITH THE VALID EMAIL AND RETURN IT'S NEO4J ID. WE SHOULD BE MOVING TOWARD THIS
+### TYPE OF ID'ing NODES, IE, WHERE WE RELY ON THE NODE ID INSTEAD OF ANY OTHER ID
+#        	id = params[:ein]
         	# look up the node by id
-        	content_type :json
-        	Donor.find_by_id(id).to_json
+#        	Donor.find_by_id(id).to_json
+			donor=Donor.find_by_email(params[:email])
+			puts "Found donor:"
+			puts "\tid: "+donor.neo_id.to_s
+			print "\temail: "+donor.email
   	end
 
+
 	get '/donor/:id' do
-                #TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
-                yield
+		node=Neography::Node.load(params[:id])
+		puts node.neo_id
+		puts node.name
+		puts node.email                #TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
+#                yield
         end #/donor/:email
 
 	get '/donor/:email' do
@@ -173,6 +181,7 @@ use Rack::MethodOverride
 		data=JSON.parse(request.body.read)
 		@object = Donor.find(data["email"])
 		puts @object
+		
 		data.each do |key, value|
 			if key!="email"
 				@object.add_attribute(key, value)

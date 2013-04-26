@@ -8,7 +8,7 @@ class Donor
 	attr_accessor :node
 
 
-	def self.create( name, email, password, address1, address2, city, state, country, zip, node_id, created_at, facebook_token, dwolla_token, twitter_token )
+	def self.create( name, email, password, address1, address2, city, state, country, zip, created_at, facebook_token, dwolla_token, twitter_token )
 
 		# Create the node
 		@node = Neography::Node.create(
@@ -22,7 +22,6 @@ class Donor
 			"state" => state,
 			"country" => country,
 			"zip" => zip,
-			"node_id" => node_id, #need a way to auto-increment this 
 			"created_at" => created_at,
 			"facebook_token" => facebook_token,
 			"dwolla_token" => dwolla_token,
@@ -61,12 +60,12 @@ class Donor
 #		Neography::Node.delete(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 	end
 
-	def add_attribute( hash = {} )
-		object=self
-		attribute=hash[:attribute]
-		property=hash[:property]
-		
+	def add_attribute( key, value )
 		#TODO this should be a method that allows us to arbirtrarily add attributes on the nodes either to all instances or to an individual instance
+		#find node to add attribute to
+		#add attribute
+
+		
 		yield
 	end
 
