@@ -133,16 +133,16 @@ use Rack::MethodOverride
         	response = { :neo_id =>donor_node.neo_id, :email => donor_node.email, :password => donor_node.password }.to_json
 		else
         	response = { :error => "Invalid password" }.to_json
-	end #if
+		end #if
 
   end #donorsignin
 
-	delete '/donor/:email' do
+	delete '/donor/delete/:email' do
 		##TODO: needs check to see if you really want to delete the donor. perhaps put that in a get request that then redirects here?
 		Donor.delete(params[:email])
 	end #delete
 
-	post "/donor/find_by_id" do
+	post "/donor/find_by_email" do
 ### AS THIS CURRENTLY STANDS IT WILL FIND AN OBJECT WITH THE VALID EMAIL AND RETURN IT'S NEO4J ID. WE SHOULD BE MOVING TOWARD THIS
 ### TYPE OF ID'ing NODES, IE, WHERE WE RELY ON THE NODE ID INSTEAD OF ANY OTHER ID
 #        	id = params[:ein]
@@ -157,9 +157,13 @@ use Rack::MethodOverride
 			print "\temail: "+donor.email
   	end
 
+
 	get '/donor/:id' do
-                #TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
-                yield
+		node=Neography::Node.load(params[:id])
+		puts node.neo_id
+		puts node.name
+		puts node.email                #TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
+#                yield
         end #/donor/:email
 
 	get '/donor/:email' do
