@@ -63,7 +63,8 @@ class Donor
 
 	def add_attribute( key, value )
 		#TODO this should be a method that allows us to arbirtrarily add attributes on the nodes either to all instances or to an individual instance
-		
+		#find node to add attribute to
+		#add attribute
 
 		
 		yield
