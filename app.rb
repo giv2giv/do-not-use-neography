@@ -100,7 +100,7 @@ use Rack::MethodOverride
 		# if there was nothing found by the email check, proceed to create new donor. otherwise, display the results of the email search
 		if @donor == nil
 			puts "Created user >>>> "
-			@donor=Donor.create(data["first_name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["node_id"], data["created_at"], data["facebook_token"], data["dwolla_token"], data["twitter_token"] )
+			@donor=Donor.create(data["first_name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["created_at"], data["facebook_token"], data["dwolla_token"], data["twitter_token"] )
 			return @donor
 		else
 			puts "USER EXISTS >>>> "
