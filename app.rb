@@ -151,8 +151,10 @@ use Rack::MethodOverride
         	# look up the node by id
 
 #        	Donor.find_by_id(id).to_json
-			donor=Donor.find_by_email(data["email"])
-			puts donor.neo_id
+			@donor=Donor.find_by_email(data["email"])
+			puts "Found donor:"
+			puts "\tid: "+@donor.neo_id.to_s
+			print "\temail: "+@donor.email
   	end
 
 	get '/donor/:id' do
