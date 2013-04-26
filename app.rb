@@ -142,16 +142,13 @@ use Rack::MethodOverride
 		Donor.delete(params[:email])
 	end #delete
 
-	post "/donor/find_by_email" do
+	get "/donor/email/:email" do
 ### AS THIS CURRENTLY STANDS IT WILL FIND AN OBJECT WITH THE VALID EMAIL AND RETURN IT'S NEO4J ID. WE SHOULD BE MOVING TOWARD THIS
 ### TYPE OF ID'ing NODES, IE, WHERE WE RELY ON THE NODE ID INSTEAD OF ANY OTHER ID
 #        	id = params[:ein]
-        	content_type :json
-			data=JSON.parse(request.body.read)
         	# look up the node by id
-
 #        	Donor.find_by_id(id).to_json
-			donor=Donor.find_by_email(data["email"])
+			donor=Donor.find_by_email(params[:email])
 			puts "Found donor:"
 			puts "\tid: "+donor.neo_id.to_s
 			print "\temail: "+donor.email
