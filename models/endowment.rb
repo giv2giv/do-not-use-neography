@@ -8,6 +8,7 @@ class Endowment
 #this is like the charity endowment of the StautnonLocalPackage, including charities:TiesForHomelessGuys
 #and SPCA...... also, need better name for this (givdowments? etc)
 
+	attr_accessor :node
 
 # This code does not work -MPB
 
@@ -63,9 +64,24 @@ class Endowment
         	charity_rel = @node.outgoing(ENDOWMENT_GRANTS_REL) << charity_node
 	
 	end
-	
-	
-	def self.add_donor( endowment_id )
+
+	def self.remove_charity( endowment_id, charity_id )
+
+        	@node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
+        	@charity_node = Neography::Node.find(ID_INDEX, ID_INDEX, charity_id)
+
+		@neo = Neography::Rest.new
+
+		# Find relatioships between the two nodes of constant type (from g2g-config.rb)
+		rels = @neo.get_node_relationships_to(@node, @charity_node, "in", ENDOWMENT_GRANTS_REL) 
+
+		# Should be only one - delete all
+		rels.each { |rel_id| @neo.delete_relationship(rel_id) }
+
+	end
+
+
+	def self.add_donor( endowment_id, donor_id )
 		#add the donor to the package
 	
 		# Look up the endowment by function argument
@@ -78,20 +94,24 @@ class Endowment
         	donor_rel = donor_node.outgoing(ENDOWMENT_DONOR_REL) << @node
 	
 	end
-	
+
+	def self.remove_donor( endowment_id, donor_id )
+
+		@node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
+                @donor_node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
+
+                @neo = Neography::Rest.new
+                
+                # Find relatioships between the two nodes of constant type (from g2g-config.rb)
+                rels = @neo.get_node_relationships_to(@node, @donor_node, "in", ENDOWMENT_DONOR_REL)
+
+                # Should be only one - delete all
+                rels.each { |rel_id| @neo.delete_relationship(rel_id) }
+
+	end
 =begin
-def remove_donor(donor)
-	#remove the donor
-end
 
 
-def remove_fund
-	#remove fund from endowment
-end
-
-
-def add_charity(charity)
-	#needs check for authorized user to change the endowment/endowment
 	#if authorized, change the endowment/endowment
 end
 
