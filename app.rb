@@ -8,7 +8,7 @@ require 'awesome_print'
 
 load 'config/g2g-config.rb'
 
-class MyApp < Sinatra::Application
+class App < Sinatra::Application
   enable :sessions
 
   configure :production do
