@@ -25,7 +25,13 @@ class App < Sinatra::Application
 #    puts node.email                #TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
     #                yield
 #  end #/donor/:email
-  
+  put '/donor/new' do
+	content_type :json
+	data=Json.parse(request.body.read)
+	@donor=Donor.create()
+
+  end
+
   get '/donor/:email' do
 	@donor=Donor.find_by_email(params[:email])
 	puts @donor
