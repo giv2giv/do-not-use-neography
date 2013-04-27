@@ -1,5 +1,5 @@
 # Begin endowments
-class MyApp < Sinatra::Application
+class App < Sinatra::Application
   # Create a new endowment
   post '/endowment/create' do
     content_type :json

@@ -1,4 +1,4 @@
-class MyApp < Sinatra::Application
+class App < Sinatra::Application
   post "/donorsignup" do
     # can use a curl command for sending json to this route, using a command line command in the format below
     # curl --data '{"first_name":"Data","city":"Data","password":"Data","address1":"Data",

@@ -1,4 +1,4 @@
-class MyApp < Sinatra::Application
+class App < Sinatra::Application
 
   delete '/donor/delete/:email' do
     ##TODO: needs check to see if you really want to delete the donor. perhaps put that in a get request that then redirects here?
