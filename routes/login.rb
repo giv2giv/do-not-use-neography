@@ -42,7 +42,7 @@ class MyApp < Sinatra::Application
     email = data["email"]
     password = data["password"]
     
-    donor_node = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+    donor_node = Donor.find_by_email(email)
     
     if donor_node.nil?
       response = { :error => "Donor email not found" }.to_json
@@ -50,7 +50,7 @@ class MyApp < Sinatra::Application
     elsif donor_node.password == BCrypt::Password.new(data["password"])
       session[:email] = data["email"]
       session[:id] = data["id"]
-      response = { :neo_id =>donor_node.neo_id, :email => donor_node.email, :password => donor_node.password }.to_json
+      response = { :id =>donor_node.id, :email => donor_node.email, :password => donor_node.password }.to_json
     else
       response = { :error => "Invalid password" }.to_json
     end #if

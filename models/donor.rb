@@ -39,7 +39,10 @@ class Donor
 	
 	def self.find_by_email ( email )
 
+		begin
 		@node = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+		rescue Neography::NeographyError => err # Don't throw the error
+		end
 
 	end
 
@@ -47,7 +50,7 @@ class Donor
 
 			begin
 	            @node = Neography::Node.find(ID_INDEX, ID_INDEX, id)
-            rescue Neography::NeographyError => err # Don't throw the error
+		rescue Neography::NeographyError => err # Don't throw the error
 				puts "Received error: #{err}"
 			end #begin
 
