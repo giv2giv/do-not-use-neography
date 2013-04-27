@@ -145,11 +145,11 @@ load 'models/endowment.rb'
 		
 	end
 
-	delete '/donor/delete/:email' do
+	delete '/donor/:email' do
 		Donor.delete(params[:email])
 	end #delete
 
-	get "/donor/email/:email" do
+	get "/donor/:email" do
 ### AS THIS CURRENTLY STANDS IT WILL FIND AN OBJECT WITH THE VALID EMAIL AND RETURN IT'S NEO4J ID. WE SHOULD BE MOVING TOWARD THIS
 ### TYPE OF ID'ing NODES, IE, WHERE WE RELY ON THE NODE ID INSTEAD OF ANY OTHER ID
 #        	id = params[:ein]
@@ -162,23 +162,13 @@ load 'models/endowment.rb'
   	end
 
 
-	get '/donor/:id' do
-		node=Neography::Node.load(params[:id])
-		puts node.neo_id
-		puts node.name
-		puts node.email                #TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
-#                yield
-        end #/donor/:email
 
-	get '/profile/:email' do
-#		TODO This is should return all the data that is part of a user's profile.
-#		including: endowment packages, contact info, any other public info
-		yield
-	end #/profile/:email
-
-
+	get '/donor/:email/property/:attribute' do
+		@object=Donor.find_by_email(params[:email])
+		puts @object.params[:attribute]
+	end
 ### The following route is semi nonfunctional, mostly because the add_property method in Donor.rb isn't correct -josh
-	post '/donor/addproperty' do
+	post '/donor/:email/property/:attribute' do
 		content_type :json
 		data=JSON.parse(request.body.read)
 		@object = Donor.find_by_email(data["email"])
@@ -188,10 +178,20 @@ load 'models/endowment.rb'
 			if key!="email"
 				@object[:key]= value.to_s ##proper syntax for adding property!! yay!!
 			end
+		@object
 		end #do
 
 	end # post /donor/addproperty
 
+	delete '/donor/:email/property/:attribute' do
+#		content_type :json
+#		data=JSON.parse(request.body.read)
+		puts params[:email]
+		@object = Donor.find_by_email(params[:email])
+		puts @object
+		@object[params[:attribute]]=nil
+
+	end #delete /donor/:email/property/:attribute
 
 
 # Begin endowments
