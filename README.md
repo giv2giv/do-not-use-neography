@@ -14,8 +14,16 @@ Neo4j must be running locally on port 7474 for the API to work correctly.  You c
 * Download the community edition of neo4j from http://www.neo4j.org/install
 * Untar the downloaded file.
 * Start up Neo4j
- 
+
 > ./bin/neo4j start
+
+Load the Charities
+------------------
+ruby ./charity_import.rb
+
+Buid the indexes
+-------------------
+ruby ./initial_seed.rb
 
 Starting the api
 ---------------
@@ -25,5 +33,7 @@ Starting the api
 
 visit <http://localhost:9393>
 
-bla
-bla
+
+Running the Tests
+=================
+
