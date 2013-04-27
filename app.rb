@@ -181,12 +181,12 @@ load 'models/endowment.rb'
 	post '/donor/addproperty' do
 		content_type :json
 		data=JSON.parse(request.body.read)
-		@object = Donor.find(data["email"])
+		@object = Donor.find_by_email(data["email"])
 		puts @object
 		
 		data.each do |key, value|
 			if key!="email"
-				@object.add_attribute(key, value)
+				@object[:key]= value.to_s ##proper syntax for adding property!! yay!!
 			end
 		end #do
 

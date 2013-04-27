@@ -66,6 +66,8 @@ class Donor
 		#TODO this should be a method that allows us to arbirtrarily add attributes on the nodes either to all instances or to an individual instance
 		#find node to add attribute to
 		#add attribute
+		self.
+
 
 		
 		yield
