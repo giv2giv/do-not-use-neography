@@ -1,4 +1,4 @@
-class MyApp < Sinatra::Application
+class App < Sinatra::Application
   # Run lynx localhost:4567/charities/611413914
   # 611413914 is an EIN of a charity. Charities are indexed by EIN - see config/g2g-config.rb for index constants
   get "/charities/find_by_ein/:ein" do
