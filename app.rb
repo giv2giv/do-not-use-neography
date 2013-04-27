@@ -19,7 +19,6 @@ class MyApp < Sinatra::Application
   configure :development do
     # ...
   end
-
 end
 
 require_relative 'models/init'
