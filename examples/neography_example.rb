@@ -1,19 +1,9 @@
 require 'rubygems'
 require 'neography' #neo4j access library - https://github.com/maxdemarzi/neography/
 
-# The example below may incur performance issues as described here: http://neo4j.rubyforge.org/guides/traverser.html
-
 load '../config/g2g-config.rb'
 
 @neo = Neography::Rest.new
-
-# Clear any previous data
-#@neo.execute_script("g.clear()")   
-
-#This if statement doesn't work therefore, when uncommented, the automatic index creation fires every time. An error is thrown on the second and subsequent script executions.
-#if @neo.execute_script("g.indices;").empty
-	#@neo.execute_script("g.createAutomaticIndex('vertices', Vertex.class, null);")
-#end
 
 # Create basic nodes
 
