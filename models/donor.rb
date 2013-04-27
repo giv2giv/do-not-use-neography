@@ -45,8 +45,11 @@ class Donor
 
 	def self.find_by_id( id )
 
-                @node = Neography::Node.find(ID_INDEX, ID_INDEX, id)
-                rescue Neography::NeographyError => err # Don't throw the error
+			begin
+	            @node = Neography::Node.find(ID_INDEX, ID_INDEX, id)
+            rescue Neography::NeographyError => err # Don't throw the error
+				puts "Received error: #{err}"
+			end #begin
 
         end # find
 
@@ -57,7 +60,6 @@ class Donor
 		puts donor
 		donor.remove_node_from_index() # not sure if this removes from all indices
 		donor.del
-#		Neography::Node.delete(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 	end
 
 	def add_attribute( key, value )

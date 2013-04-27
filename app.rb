@@ -14,8 +14,6 @@ load 'models/charity.rb'
 load 'models/endowment.rb'
 
 
-use Rack::MethodOverride
-
 # class App < Sinatra::Base
   set :static, true
   set :sessions, true
@@ -137,8 +135,17 @@ use Rack::MethodOverride
 
   end #donorsignin
 
+	delete '/donor/delete/:id' do
+		node=Neography::Node.load(params[:id])
+		puts "Deleting ...."
+		puts node
+		puts node.id
+		puts node.name
+		node.del
+		
+	end
+
 	delete '/donor/delete/:email' do
-		##TODO: needs check to see if you really want to delete the donor. perhaps put that in a get request that then redirects here?
 		Donor.delete(params[:email])
 	end #delete
 
@@ -162,11 +169,6 @@ use Rack::MethodOverride
 		puts node.email                #TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
 #                yield
         end #/donor/:email
-
-	get '/donor/:email' do
-		#TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
-		yield
-	end #/donor/:email
 
 	get '/profile/:email' do
 #		TODO This is should return all the data that is part of a user's profile.
