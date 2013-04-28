@@ -25,8 +25,7 @@ class App < Sinatra::Application
 
   
   put '/donor/:email' do
-	content_type :json
-	data=Json.parse(request.body.read)
+	##this will at some point be :id, i'm just using :email cuz it makes it easier for me to test -- josh
 	@donor=Donor.create()
 
   end
