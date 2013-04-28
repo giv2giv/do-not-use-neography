@@ -18,13 +18,6 @@ class App < Sinatra::Application
 #  end
   
   
-#  get '/donor/:id' do
-#    node=Neography::Node.load(params[:id])
-#    puts node.neo_id
-#    puts node.name
-#    puts node.email                #TODO this should probably be the confirmation page for deleting a user, then it redirects to HTTP delete route
-    #                yield
-#  end #/donor/:email
   put '/donor/new' do
 	content_type :json
 	data=Json.parse(request.body.read)
@@ -40,15 +33,6 @@ class App < Sinatra::Application
 	puts Donor.name
   end #/donor/:email
   
-#  get '/profile/:email' do
-    #		TODO This is should return all the data that is part of a user's profile.
-    #		including: endowment packages, contact info, any other public info
-#    yield
-#  end #/profile/:email
-  
-#  get '/donor/:email/' do
-
-#  end
 
   ### The following route is semi nonfunctional, mostly because the add_property method in Donor.rb isn't correct -josh
   put '/donor/:email/:property/:value' do
@@ -58,12 +42,7 @@ class App < Sinatra::Application
     puts @object
 	prop=params[:property]
 	@object[prop]=params[:value]
-#    @object.add_attribute(prop, params[:value])
 	puts @object
-#    data.each do |key, value|
-#      if key!="email"
-#        @object.add_attribute(key, value)
-#      end
     end #do
     
 #  end # post /donor/addproperty

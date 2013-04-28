@@ -50,13 +50,13 @@ class Donor
 
 	def self.find_by_id( id )
 
-			begin
+		begin
 	            @node = Neography::Node.find(ID_INDEX, ID_INDEX, id)
 		rescue Neography::NeographyError => err # Don't throw the error
 				puts "Received error: #{err}"
-			end #begin
+		end #begin
 
-        end # find
+    end # find
 
 
 	def self.delete(email)
@@ -72,10 +72,6 @@ class Donor
 		#find node to add attribute to
 		#add attribute
 		self.key=value
-
-
-		
-		yield
 	end
 
 	def add_funds(source)
