@@ -4,6 +4,8 @@ require 'bcrypt'
 load 'lib/functions.rb'
 
 class Donor
+	
+
 
 	attr_accessor :node
 
@@ -40,7 +42,7 @@ class Donor
 	def self.find_by_email ( email )
 
 		begin
-		@node = Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
+		Neography::Node.find(DONOR_EMAIL_INDEX, DONOR_EMAIL_INDEX, email)
 		rescue Neography::NeographyError => err # Don't throw the error
 		end
 
@@ -69,7 +71,7 @@ class Donor
 		#TODO this should be a method that allows us to arbirtrarily add attributes on the nodes either to all instances or to an individual instance
 		#find node to add attribute to
 		#add attribute
-		self.
+		self.key=value
 
 
 		

@@ -35,6 +35,9 @@ class App < Sinatra::Application
   get '/donor/:email' do
 	@donor=Donor.find_by_email(params[:email])
 	puts @donor
+	puts @donor.name
+	puts @donor.email
+	puts Donor.name
   end #/donor/:email
   
 #  get '/profile/:email' do
@@ -43,21 +46,27 @@ class App < Sinatra::Application
 #    yield
 #  end #/profile/:email
   
-  
+#  get '/donor/:email/' do
+
+#  end
+
   ### The following route is semi nonfunctional, mostly because the add_property method in Donor.rb isn't correct -josh
-  post '/donor/addproperty' do
-    content_type :json
-    data=JSON.parse(request.body.read)
-    @object = Donor.find(data["email"])
+  put '/donor/:email/:property/:value' do
+#    content_type :json
+#    data=JSON.parse(request.body.read)
+    @object = Donor.find_by_email(params[:email])
     puts @object
-    
-    data.each do |key, value|
-      if key!="email"
-        @object.add_attribute(key, value)
-      end
+	prop=params[:property]
+	@object[prop]=params[:value]
+#    @object.add_attribute(prop, params[:value])
+	puts @object
+#    data.each do |key, value|
+#      if key!="email"
+#        @object.add_attribute(key, value)
+#      end
     end #do
     
-  end # post /donor/addproperty
+#  end # post /donor/addproperty
   
 
 end
