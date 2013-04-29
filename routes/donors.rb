@@ -17,26 +17,6 @@ class App < Sinatra::Application
 #    print "\temail: "+donor.email
 #  end
   
-
-  
-  put '/donor/:email' do
-	##this will at some point be :id, i'm just using :email cuz it makes it easier for me to test -- josh
-##  data takes form of: ( name, email, password, address1, address2, city, state, country, zip, facebook_token, dwolla_token, twitter_token )
-###  curl -i -H "Accept: application/json" -X PUT -d '{"name":"josh","email":"joshemail","password":"password",
-##"address1":"home","address2":"virginia","city":"hburg","state":"va","country":"usa",
-##"zip":"22801","facebook_token":"token","dwolla_token":"token","twitter_token":"token"}' http://localhost:9393/donor/joshemail
-	content_type :json
-	data=JSON.parse(request.body.read)
-	puts data
-	search=Donor.find_by_email(data["email"])
-	#not the best way to impement a search to see if the email is in use already, but hey it works. can improve later
-	if ! search
-		@donor=Donor.create(data["name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["facebook_token"], data["dwolla_token"], data["twitter_token"])
-	else
-		puts "EMAIL ALREADY IN USE"
-	end #if ! search
-  end
-
   get '/donor/:email' do
 	@donor=Donor.find_by_email(params[:email])
 	puts @donor
@@ -51,12 +31,28 @@ class App < Sinatra::Application
 	@donor.del
 	puts @donor
   end
-
-
-
   
+  put '/donor/:email' do
+	##this will at some point be :id, i'm just using :email cuz it makes it easier for me to test -- josh
+##  data takes form of: ( name, email, password, address1, address2, city, state, country, zip, facebook_token, dwolla_token, twitter_token )
+###  curl -i -H "Accept: application/json" -X PUT -d '{"name":"josh","email":"joshemail","password":"password",
+##"address1":"home","address2":"virginia","city":"hburg","state":"va","country":"usa",
+##"zip":"22801","facebook_token":"token","dwolla_token":"token","twitter_token":"token"}' http://localhost:9393/donor/joshemail
+	content_type :json
+	data=JSON.parse(request.body.read)
+	search=Donor.find_by_email(data["email"])
+	#not the best way to impement a search to see if the email is in use already, but hey it works. can improve later
+	if ! search
+		@donor=Donor.create(data["name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["facebook_token"], data["dwolla_token"], data["twitter_token"])
+		puts "Created new users, with the following data:"
+		puts data
+	else
+		puts "EMAIL ALREADY IN USE"
+	end #if ! search
+  end
 
   ### the following is consistent with the other donor/:email routes. Should make it easier to add values because of that
+  ### TO DELETE A PROPERTY, SEND THE VALUE OF THAT PROPERTY AS "nil"
   post '/donor/:email' do #:property/:value' do
     content_type :json
     data=JSON.parse(request.body.read)
