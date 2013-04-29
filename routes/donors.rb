@@ -25,14 +25,16 @@ class App < Sinatra::Application
 ###  curl -i -H "Accept: application/json" -X PUT -d '{"name":"josh","email":"joshemail","password":"password",
 ##"address1":"home","address2":"virginia","city":"hburg","state":"va","country":"usa",
 ##"zip":"22801","facebook_token":"token","dwolla_token":"token","twitter_token":"token"}' http://localhost:9393/donor/joshemail
-
-
-
 	content_type :json
 	data=JSON.parse(request.body.read)
 	puts data
-	@donor=Donor.create(data["name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["facebook_token"], data["dwolla_token"], data["twitter_token"])
-
+	search=Donor.find_by_email(data["email"])
+	#not the best way to impement a search to see if the email is in use already, but hey it works. can improve later
+	if ! search
+		@donor=Donor.create(data["name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["facebook_token"], data["dwolla_token"], data["twitter_token"])
+	else
+		puts "EMAIL ALREADY IN USE"
+	end #if ! search
   end
 
   get '/donor/:email' do
@@ -40,7 +42,7 @@ class App < Sinatra::Application
 	puts @donor
 	puts @donor.name
 	puts @donor.email
-	
+	puts @donor.neo_id	
   end #/donor/:email
 
   delete '/donor/:email' do
