@@ -9,14 +9,6 @@ class App < Sinatra::Application
     Charity.find_by_ein(ein).to_json
   end
 
-  get "/charities/find_by_id/:id" do
-    content_type :json  
-    id = params[:id]
-    
-    # look up the node by id
-    Charity.find_by_id(id).to_json
-  end
-
   get "/charities/find_by_name/:name" do
     content_type :json
     name = params[:name]
@@ -25,12 +17,20 @@ class App < Sinatra::Application
     Charity.find_by_name(name).to_json
   end
 
-  get "/charities/delete/:id" do
-    content_type :json  
+  get "/charities/:id" do
+    content_type :json
     id = params[:id]
-    
+
+    # look up the node by id
+    Charity.find_by_id(id).to_json
+  end
+
+  delete "/charities/:id" do
+    content_type :json
+    id = params[:id]
+
     # Delete by id
-    Charity.delete(id).to_json  
+    Charity.delete(id).to_json
   end
 
 end

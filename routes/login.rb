@@ -43,6 +43,7 @@ class App < Sinatra::Application
     password = data["password"]
     
     donor_node = Donor.find_by_email(email)
+      { :error => "Donor email not found" }.to_json
     
     if donor_node.nil?
       response = { :error => "Donor email not found" }.to_json

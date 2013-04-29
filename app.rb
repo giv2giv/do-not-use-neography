@@ -18,6 +18,7 @@ class App < Sinatra::Application
 
   configure :development do
     # ...
+    set :protection, :origin_whitelist => ['http://localhost']
   end
 end
 

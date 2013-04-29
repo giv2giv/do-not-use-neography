@@ -1,7 +1,7 @@
 # Begin endowments
 class App < Sinatra::Application
   # Create a new endowment
-  post '/endowment/create' do
+  post '/endowment/new' do
     content_type :json
     data=JSON.parse(request.body.read)
     Endowment.create(session[:id], data['name'], data['amount'], data['frequency']).to_json

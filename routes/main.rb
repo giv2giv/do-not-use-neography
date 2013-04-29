@@ -4,4 +4,7 @@ class App < Sinatra::Application
     @title = "Welcome to Giv2Giv API"        
     haml :main
   end
+  get "/test" do
+    erb :test
+  end
 end
