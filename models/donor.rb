@@ -10,7 +10,7 @@ class Donor
 	attr_accessor :node
 
 
-	def self.create( name, email, password, address1, address2, city, state, country, zip, created_at, facebook_token, dwolla_token, twitter_token )
+	def self.create( name, email, password, address1, address2, city, state, country, zip, facebook_token, dwolla_token, twitter_token )
 
 		# Create the node
 		@node = Neography::Node.create(
@@ -24,7 +24,6 @@ class Donor
 			"state" => state,
 			"country" => country,
 			"zip" => zip,
-			"created_at" => created_at,
 			"facebook_token" => facebook_token,
 			"dwolla_token" => dwolla_token,
 			"twitter_token" => twitter_token,

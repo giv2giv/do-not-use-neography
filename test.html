@@ -1,0 +1,95 @@
+<html>
+
+<head></head>
+
+<body>
+   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+   <script>
+
+	$(document).ready(function() {
+
+		$("#signup").click( function(e) {
+			e.preventDefault();
+                        $.ajax({
+                                url: "http://localhost:9393/donor/new",
+                                type: "POST",
+                                dataType: "json",
+				data: {email: $("#email"), password: $("#password") }
+                        }).done( function( results ) {
+ 				$("#results").html( " Results: " + results );
+ 			});
+
+                });
+
+
+		$("#new_endowment").click( function(e) {
+			e.preventDefault();
+                        $.ajax({
+                                url: "http://localhost:9393/endowment/new",
+                                type: "POST",
+                                dataType: "json",
+                                data: {endowment_name: $("#endowment_name"), password: $("#endowment_name") },
+                                success: function(result) {
+                                        alert(result);
+                                },
+                        });     
+                });
+
+	});
+
+   </script>
+
+<form id="test_form">
+
+<table>
+
+  <tr>
+	<td>Email:</td>
+	<td><input type="text" size=20 id="email"></td>
+  </tr>
+
+  <tr>
+	<td>Password:</td>
+	<td><input type="password" size=20 id="password"></td>
+  </tr>
+  <tr>
+	<td><input type="button" value="Sign Up" id="signup"></td>
+	<td><input type="button" value="Sign In" id="signin"></td>
+  </tr>
+</table>
+
+<br />
+
+New endowment
+<table>
+  <tr>
+	<td>Endowment Name:</td>
+	<td><input type="text" size=20 id="endowment_name"></td>
+  </tr>
+  <tr>
+	<td colspan=2><input type=button id="new_endowment" value="New endowment"></td>
+  </tr>
+</table>
+
+</form>
+
+<br />
+Results:
+<div id="results">
+</div>
+
+<br />
+<br />
+
+To do:
+<ul>
+   <li>add/remove fund to endowment</li>
+   <li>add/remove charity to endowment</li>
+   <li>donate in</li>
+   <li>list funds</li>
+</ul>
+
+</body>
+
+</html>
+

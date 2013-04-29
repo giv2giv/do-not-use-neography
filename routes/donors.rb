@@ -1,10 +1,5 @@
 class App < Sinatra::Application
 
-  delete '/donor/delete/:email' do
-    ##TODO: needs check to see if you really want to delete the donor. perhaps put that in a get request that then redirects here?
-    Donor.delete(params[:email])
-  end #delete
-
 ## Curl commands to server take this general format, replacing the url suffix and ROUTE as needed
 ## curl -i -H "Accept: application/json" -X DELETE http://localhost:9393/donor/1 -d ''
 
@@ -26,7 +21,17 @@ class App < Sinatra::Application
   
   put '/donor/:email' do
 	##this will at some point be :id, i'm just using :email cuz it makes it easier for me to test -- josh
-	@donor=Donor.create()
+##  data takes form of: ( name, email, password, address1, address2, city, state, country, zip, facebook_token, dwolla_token, twitter_token )
+###  curl -i -H "Accept: application/json" -X PUT -d '{"name":"josh","email":"joshemail","password":"password",
+##"address1":"home","address2":"virginia","city":"hburg","state":"va","country":"usa",
+##"zip":"22801","facebook_token":"token","dwolla_token":"token","twitter_token":"token"}' http://localhost:9393/donor/joshemail
+
+
+
+	content_type :json
+	data=JSON.parse(request.body.read)
+	puts data
+	@donor=Donor.create(data["name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["facebook_token"], data["dwolla_token"], data["twitter_token"])
 
   end
 
@@ -35,7 +40,7 @@ class App < Sinatra::Application
 	puts @donor
 	puts @donor.name
 	puts @donor.email
-	puts Donor.name
+	
   end #/donor/:email
 
   delete '/donor/:email' do
@@ -49,18 +54,22 @@ class App < Sinatra::Application
 
   
 
-  ### The following route is semi nonfunctional, mostly because the add_property method in Donor.rb isn't correct -josh
-  put '/donor/:email/:property/:value' do
-#    content_type :json
-#    data=JSON.parse(request.body.read)
+  ### the following is consistent with the other donor/:email routes. Should make it easier to add values because of that
+  post '/donor/:email' do #:property/:value' do
+    content_type :json
+    data=JSON.parse(request.body.read)
     @object = Donor.find_by_email(params[:email])
     puts @object
-	prop=params[:property]
-	@object[prop]=params[:value]
-	puts @object
+	data.each do |property, value|
+#		prop=data["property"]
+		if property != "email"
+			@object[property]=value
+		end
+		puts @object
     end #do
+  end #put /donor/:email/:prop/:val
     
-#  end # post /donor/addproperty
+
   
 
 end
