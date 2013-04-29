@@ -11,20 +11,20 @@
                 $("#signup").click( function() {
 
                         var donor_data = {
-                                email : $("#email").val,
-                                password : $("#password").val
+                                email : $("#email").val(),
+                                password : $("#password").val()
                         };
 
                         $.ajax({
-                                url: "http://localhost:9393/donor/new",
+                                url: "http://localhost:9393/donor/anything",
                                 type: "PUT",
-                                dataType: "json",
+                                contentType: "json",
                                 data: donor_data,
                                 success: function (result) {
                                         $("#results").html( " Results: " + result );
                                 }
-                        //}).done( function( results ) {
-                                //$("#results").html( " Results: " + results );
+                        }).done( function( results ) {
+                                $("#results").html( " Results: " + results );
                         });
 
                 });
