@@ -9,6 +9,7 @@ Core g2g settings
 # The nonprofit running the fund
 SPONSOR_ORGANIZATION_TYPE = "sponsor"
 SPONSOR_ORGANIZATION_NAME = "giv2giv"
+SPONSOR_ORGANIZATION_WEBSITE = "giv2giv.org"
 
 # The investment fund
 INVESTMENT_FUND_TYPE = "investment_fund"
