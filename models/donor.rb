@@ -80,6 +80,10 @@ class Donor
 		# social hooks for tweet/post/pinterest based on donor preferences
 	end
 
+	def endowments_contributed_to()
+		#return list of all endowments donor contributes to
+	end
+
 	def total_funds()
 		#return total funds across all merchant processors and investment funds
 	end

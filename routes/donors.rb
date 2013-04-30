@@ -5,29 +5,21 @@ class App < Sinatra::Application
 
 
 
-#  get "/donor/email/:email" do
-    ### AS THIS CURRENTLY STANDS IT WILL FIND AN OBJECT WITH THE VALID EMAIL AND RETURN IT'S NEO4J ID. WE SHOULD BE MOVING TOWARD THIS
-    ### TYPE OF ID'ing NODES, IE, WHERE WE RELY ON THE NODE ID INSTEAD OF ANY OTHER ID
-    #        	id = params[:ein]
-    # look up the node by id
-    #        	Donor.find_by_id(id).to_json
-#    donor=Donor.find_by_email(params[:email])
-#    puts "Found donor:"
-#    puts "\tid: "+donor.neo_id.to_s
-#    print "\temail: "+donor.email
-#  end
-  
-  get '/donor/:email' do
-	@donor=Donor.find_by_email(params[:email])
+  get '/donors/' do
+	#get list of ALL donors -- method needed in models/donor.rb
+  end
+
+  get '/donors/:id' do
+	@donor=Donor.find_by_id(params[:id])
 	puts @donor
 	puts @donor.name
 	puts @donor.email
 	puts @donor.neo_id	
   end #/donor/:email
 
-  delete '/donor/:email' do
+  delete '/donors/:id' do
 ## change this route to /donor/:id at some point
-	@donor=Donor.find_by_email(params[:email])
+	@donor=Donor.find_by_id(params[:id])
 	puts @donor
 	begin
 		@donor.del
@@ -38,7 +30,7 @@ class App < Sinatra::Application
 	puts @donor
   end
   
-  put '/donor/:email' do
+  post '/donors/' do
 	##this will at some point be :id, i'm just using :email cuz it makes it easier for me to test -- josh
 ##  data takes form of: ( name, email, password, address1, address2, city, state, country, zip, facebook_token, dwolla_token, twitter_token )
 ###  curl -i -H "Accept: application/json" -X PUT -d '{"name":"josh","email":"joshemail","password":"password",
@@ -60,10 +52,10 @@ class App < Sinatra::Application
 
   ### the following is consistent with the other donor/:email routes. Should make it easier to add values because of that
   ### TO DELETE A PROPERTY, SEND THE VALUE OF THAT PROPERTY AS "nil"
-  post '/donor/:email' do #:property/:value' do
+  post '/donors/:id' do #:property/:value' do
     content_type :json
     data=JSON.parse(request.body.read)
-    @object = Donor.find_by_email(params[:email])
+    @object = Donor.find_by_id(params[:id])
     puts @object
 	data.each do |property, value|
 #		prop=data["property"]
@@ -72,6 +64,11 @@ class App < Sinatra::Application
     end #do
   end #put /donor/:email/:prop/:val
     
+
+
+
+
+
 ## change this route to /donor/:id at some point
   get '/donor/:email/endowment' do
 	#get list of all endowments donor contributes to
