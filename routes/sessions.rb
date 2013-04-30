@@ -13,16 +13,20 @@ post '/login' do
 	content_type :json
 	data=JSON.parse(request.body.read)
 
-	donor_node = Donor.find_by_email(data["email"])
-		{ :error => "Donor email not found" }.to_json
+	login_node = Donor.find_by_email(data["email"])
 	  
-	if donor_node.nil?
-		response = { :error => "Donor email not found" }.to_json
+	if login_node.nil?
+
+		login_node = Charity.find_by_email(data["email"])
+
+		if login_node.nil?
+			response = { :error => "Login email not found" }.to_json
+		end
 	    
-	elsif data["password"] == BCrypt::Password.new(donor_node.password)
+	elsif data["password"] == BCrypt::Password.new(login_node.password)
 		session[:email] = data["email"]
 		session[:id] = data["id"]
-		response = { :id =>donor_node.id, :email => donor_node.email, :password => donor_node.password }.to_json
+		response = { :id =>login_node.id, :email => login_node.email, :password => login_node.password }.to_json
 	else
 		response = { :error => "Invalid password" }.to_json
 	end #if
