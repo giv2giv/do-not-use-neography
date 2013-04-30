@@ -80,6 +80,20 @@ class Endowment
 
 	end
 
+	def self.find( endowment_id )
+		begin
+			@node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
+                	rescue Neography::NeographyError => err # Don't throw the error
+                end
+	end
+
+	def self.delete( endowment_id )
+		# This needs further consideration. Should mark as inactive rather than delete if already has funds, etc
+		@node = Neography::Node.find(ID_INDEX, ID_INDEX, id)
+                @node.remove_node_from_index()
+                @node.del
+	end
+
 
 	def self.add_donor( endowment_id, donor_id )
 		#add the donor to the package
