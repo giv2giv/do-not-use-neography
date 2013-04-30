@@ -66,9 +66,7 @@ class App < Sinatra::Application
     puts @object
 	data.each do |property, value|
 #		prop=data["property"]
-		if property != "email"
-			@object[property]=value
-		end
+		@object[property]=value
 		puts @object
     end #do
   end #put /donor/:email/:prop/:val
