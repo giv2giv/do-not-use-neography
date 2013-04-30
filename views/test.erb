@@ -18,16 +18,40 @@
                         $.ajax({
                                 url: "http://localhost:9393/donor/anything",
                                 type: "PUT",
-                                contentType: "json",
-                                data: donor_data,
-                                success: function (result) {
-                                        $("#results").html( " Results: " + result );
-                                }
+				contentType: "application/json; charset=utf-8",
+    				dataType: "json",
+                                data: JSON.stringify( donor_data ),
+                                success: function ( success_message ) {
+                                        $("#results").html( " Script results: " + success_message );
+                                },
+    				failure: function(errMsg) { alert(errMsg); }
                         }).done( function( results ) {
-                                $("#results").html( " Results: " + results );
+                                $("#results").html( " Script results: " + results );
                         });
-
                 });
+
+		$("#signin").click( function() {
+
+                        var donor_data = {
+                                email : $("#email").val(),
+                                password : $("#password").val()
+                        };
+
+                        $.ajax({
+                                url: "http://localhost:9393/donorsignin",
+                                type: "POST",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                data: JSON.stringify( donor_data ),
+                                success: function ( success_message ) {
+                                        $("#results").html( " Script results: " + success_message );
+                                },
+                                failure: function(errMsg) { alert(errMsg); }
+                        }).done( function( results ) {
+                                $("#results").html( " Script results: " + results );
+                        });
+                });
+
 
 /*
                 $("#new_endowment").click( function(e) {
