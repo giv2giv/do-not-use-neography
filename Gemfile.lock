@@ -1,3 +1,23 @@
+GIT
+  remote: git://github.com/Dwolla/dwolla-ruby.git
+  revision: c1e783892559c5ec20b8dd84f046fc8c3965087b
+  specs:
+    dwolla-ruby (2.0.0)
+      multi_json (>= 1.0.4, < 2)
+      rest-client (~> 1.4)
+
+GIT
+  remote: git://github.com/maxdemarzi/neography.git
+  revision: b4527481aa8e2b503e034891682671c39a520141
+  specs:
+    neography (1.0.9)
+      httpclient (>= 2.3.3)
+      json (>= 1.6.0)
+      multi_json (>= 1.3.2)
+      os (>= 0.9.6)
+      rake (>= 0.8.7)
+      rubyzip (>= 0.9.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -13,14 +33,7 @@ GEM
       dm-core (~> 1.0.2)
     dm-validations (1.0.2)
       dm-core (~> 1.0.2)
-    dwolla-ruby (1.1.0)
-      faraday (= 0.7.6)
-      multi_json (~> 1.3)
     extlib (0.9.16)
-    faraday (0.7.6)
-      addressable (~> 2.2)
-      multipart-post (~> 1.1)
-      rack (~> 1.1)
     geokit (1.6.5)
       multi_json
     httparty (0.10.2)
@@ -28,16 +41,9 @@ GEM
       multi_xml (>= 0.5.2)
     httpclient (2.3.3)
     json (1.7.7)
+    mime-types (1.23)
     multi_json (1.7.2)
     multi_xml (0.5.3)
-    multipart-post (1.2.0)
-    neography (1.0.9)
-      httpclient (>= 2.3.3)
-      json (>= 1.6.0)
-      multi_json (>= 1.3.2)
-      os (>= 0.9.6)
-      rake (>= 0.8.7)
-      rubyzip (>= 0.9.7)
     nokogiri (1.5.9)
     os (0.9.6)
     rack (1.5.2)
@@ -46,6 +52,8 @@ GEM
     rack-protection (1.5.0)
       rack
     rake (10.0.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     ruby-ole (1.2.11.6)
     rubyzip (0.9.9)
     rufus-tokyo (1.0.7)
@@ -78,11 +86,11 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   bcrypt-ruby
-  dwolla-ruby
+  dwolla-ruby!
   geokit
   httparty
   json
-  neography
+  neography!
   nokogiri
   os
   rake
