@@ -1,5 +1,5 @@
 require_relative 'main'
-require_relative 'login'
+require_relative 'sessions'
 require_relative 'charities'
 require_relative 'donors'
 require_relative 'endowments'
