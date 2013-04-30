@@ -16,17 +16,17 @@
                         };
 
                         $.ajax({
-                                url: "http://localhost:9393/donor/anything",
-                                type: "PUT",
+                                url: "http://dev.giv2giv.org:9393/donors",
+                                type: "POST",
 				contentType: "application/json; charset=utf-8",
     				dataType: "json",
                                 data: JSON.stringify( donor_data ),
                                 success: function ( success_message ) {
-                                        $("#results").html( " Script results: " + success_message );
+                                        $("#results").html( " Success results: " + success_message );
                                 },
-    				failure: function(errMsg) { alert(errMsg); }
-                        }).done( function( results ) {
-                                $("#results").html( " Script results: " + results );
+    				failure: function( failure_message ) {
+					$("#results").html( " Failure results: " + failure_message );
+				}
                         });
                 });
 
@@ -38,17 +38,17 @@
                         };
 
                         $.ajax({
-                                url: "http://localhost:9393/donorsignin",
+                                url: "http://dev.giv2giv.org:9393/login",
                                 type: "POST",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 data: JSON.stringify( donor_data ),
                                 success: function ( success_message ) {
-                                        $("#results").html( " Script results: " + success_message );
+                                        $("#results").html( " Success results: " + success_message );
                                 },
-                                failure: function(errMsg) { alert(errMsg); }
-                        }).done( function( results ) {
-                                $("#results").html( " Script results: " + results );
+				failure: function( failure_message ) {
+                                        $("#results").html( " Failure results: " + failure_message );
+                                }
                         });
                 });
 
