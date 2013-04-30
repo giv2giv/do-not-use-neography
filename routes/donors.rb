@@ -26,9 +26,15 @@ class App < Sinatra::Application
   end #/donor/:email
 
   delete '/donor/:email' do
+## change this route to /donor/:id at some point
 	@donor=Donor.find_by_email(params[:email])
 	puts @donor
-	@donor.del
+	begin
+		@donor.del
+	rescue NoMethodError => error
+		puts "Received a NoMethodError while executing request: #{error} ---- this is likely because the database record wasn't found."
+	end
+		
 	puts @donor
   end
   
@@ -60,15 +66,32 @@ class App < Sinatra::Application
     puts @object
 	data.each do |property, value|
 #		prop=data["property"]
-		if property != "email"
-			@object[property]=value
-		end
+		@object[property]=value
 		puts @object
     end #do
   end #put /donor/:email/:prop/:val
     
+## change this route to /donor/:id at some point
+  get '/donor/:email/endowment' do
+	#get list of all endowments donor contributes to
+  end #get /donor/email/endowment
 
+## change this route to /donor/:id at some point
+  delete '/donor/:email/endowment' do
+	#delete donor's contributions to some endowment
+  end #delete /donor/email/endowment
+
+## change this route to /donor/:id at some point
+  put '/donor/:email/endowment' do
+	#create contributionn to endowment
+  end # put /donor/email/endowment
+
+## change this route to /donor/:id at some point
+  post '/donor/:email/endowment' do
+	#alter contributions to endowment
+  end #post /donor/email/endowment
   
+
 
 end
 
