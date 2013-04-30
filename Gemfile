@@ -13,14 +13,14 @@ gem "json"         # For managing json
 
 
 # The specifics ...
-gem "neography"    # Neo4J library.
-gem "dwolla-ruby"  # Dwolla handles financial transactions.
+gem "neography", :git => "git://github.com/maxdemarzi/neography.git" # Neo4J library
+gem "dwolla-ruby", :git => "git://github.com/Dwolla/dwolla-ruby.git" # Dwolla handles financial transactions
 gem "bcrypt-ruby"  # encryption.  duh.
 gem "sinatra-authentication" #authentication
 
 # Required for charity import
 gem "spreadsheet" # Excel library for reading IRS files - http://spreadsheet.ch
-gem "geokit"      # Distance calculator.
+gem "geokit"      # Distance calculator
 gem "nokogiri"    # Easy HTML parser
 
 # Required for neography - see https://github.com/maxdemarzi/neography/wiki/Dependencies
