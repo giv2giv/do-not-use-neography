@@ -5,8 +5,10 @@ class App < Sinatra::Application
 
 
 
-  get '/donors/' do
+  get '/donors' do
 	#get list of ALL donors -- method needed in models/donor.rb
+	donors=Donor.find_all
+	puts donors
   end
 
   get '/donors/:id' do
@@ -30,7 +32,7 @@ class App < Sinatra::Application
 	puts @donor
   end
   
-  post '/donors/' do
+  post '/donors' do
 	##this will at some point be :id, i'm just using :email cuz it makes it easier for me to test -- josh
 ##  data takes form of: ( name, email, password, address1, address2, city, state, country, zip, facebook_token, dwolla_token, twitter_token )
 ###  curl -i -H "Accept: application/json" -X PUT -d '{"name":"josh","email":"joshemail","password":"password",

@@ -42,6 +42,12 @@ class Donor
 
 	end
 
+	def self.find_all()
+		@db=Neography::Rest.new
+		@db.execute_query("start n=node(*) return n;")
+	end
+
+
 	def self.find_by_id( id )
 
 		begin
