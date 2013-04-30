@@ -11,7 +11,7 @@ class Donor
 		@node = Neography::Node.create(
 			"id" => generate_unique_id(),
 			"name" => name,
-			"password" => BCrypt::Password.create(password),
+			"password" => BCrypt::Password.create(password).to_s,
 			"email" => email,
 			"address1" => address1,
 			"address2" => address2,
