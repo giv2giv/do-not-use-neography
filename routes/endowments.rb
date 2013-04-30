@@ -1,29 +1,39 @@
 # Begin endowments
 class App < Sinatra::Application
+
+  get '/endowment/:endowment_id' do
+	content_type :json
+	Endowment.find(params[:endowment_id]).to_json
+  end
+
   # Create a new endowment
   post '/endowment/new' do
-    content_type :json
-    data=JSON.parse(request.body.read)
-    Endowment.create(session[:id], data['name'], data['amount'], data['frequency']).to_json
+	data=JSON.parse(request.body.read)
+
+	content_type :json
+	Endowment.create(session[:id], data['name'], data['amount'], data['frequency']).to_json
   end
-  
+
   # endowment modified, add new investment fund
-  get '/endowment/:endowment_id/add_investment_fund/:fund_id' do
-    content_type :json
-    Endowment.add_investment_fund(params[:endowment_id]).to_json  
+  post '/endowment/:endowment_id/add_investment_fund' do
+	data=JSON.parse(request.body.read)
+
+	content_type :json
+	Endowment.add_investment_fund(data['endowment_id']).to_json  
   end
   
   # endowment modified, add new charity to grantees
-  get '/endowment/:endowment_id/add_charity/:charity_id' do
-    content_type :json
-    Endowment.add_charity(params[:endowment_id], params[:charity_id]).to_json
+  post '/endowment/:endowment_id/add_charity' do
+	data=JSON.parse(request.body.read)
+
+	content_type :json
+	Endowment.add_charity(params[:endowment_id], data['charity_id']).to_json
+  end
+
+  delete '/endowment/:endowment_id' do
+	Endowment.delete(params[:endowment_id]).to_json
   end
   
-  # session donor signs up to contribute to an endowment
-  get '/endowment/:endowment_id/add_donor' do
-    content_type :json
-    Endowment.add_donor(params[:endowment_id]).to_json
-  end
 end
 
 
