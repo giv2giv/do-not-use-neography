@@ -80,7 +80,7 @@ class Endowment
 
 	end
 
-	def self.find( endowment_id )
+	def self.find_by_id( endowment_id )
 		begin
 			@node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
                 	rescue Neography::NeographyError => err # Don't throw the error
@@ -95,36 +95,7 @@ class Endowment
 	end
 
 
-	def self.add_donor( endowment_id, donor_id )
-		#add the donor to the package
-	
-		# Look up the endowment by function argument
-        	@node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
-	
-        	# Look up the donor by session var donor ID
-        	donor_node = Neography::Node.find(ID_INDEX, ID_INDEX, session[:id])
-	
-        	# Relate the donor *to* the endowment
-        	donor_rel = donor_node.outgoing(ENDOWMENT_DONOR_REL) << @node
-	
-	end
-
-	def self.remove_donor( endowment_id, donor_id )
-
-		@node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
-                @donor_node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
-
-                @neo = Neography::Rest.new
-                
-                # Find relatioships between the two nodes of constant type (from g2g-config.rb)
-                rels = @neo.get_node_relationships_to(@node, @donor_node, "in", ENDOWMENT_DONOR_REL)
-
-                # Should be only one - delete all
-                rels.each { |rel_id| @neo.delete_relationship(rel_id) }
-
-	end
 =begin
-
 
 	#if authorized, change the endowment/endowment
 end

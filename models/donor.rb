@@ -74,17 +74,46 @@ class Donor
 		self.key=value
 	end
 
-	def add_funds(source)
+	def add_funding_source(source)
 		#connect to source (dwolla) via token
 		#pull amount
 		#add to account balance
 	end
 
-	def sign_up_for_endowment(endowment)
-		# connect donor to endowment
-		# schedule payment
+	def add_endowment( donor_id, endowment_id, amount )
+
+		#add the donor as connected to endowment
+
+                # Look up the endowment by function argument
+                @endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
+
+                # Look up the donor by session var donor ID
+                @node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
+
+                # Relate the donor *to* the endowment
+                donor_rel = @node.outgoing(ENDOWMENT_DONOR_REL) << @endowment_node
+		donor_rel.amount = amount
+
+		# Still to do: schedule payment
 		# social hooks for tweet/post/pinterest based on donor preferences
 	end
+
+	def remove_endowment( donor_id, endowment_id )
+
+		# Donor no longer wants to contribute to endowment, remove connection
+		@endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
+                @node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
+
+                @neo = Neography::Rest.new
+
+                # Find relatioships between the two nodes of constant type (from g2g-config.rb)
+                rels = @neo.get_node_relationships_to(@endowment_node, @node, "in", ENDOWMENT_DONOR_REL)
+
+                # Should be only one - delete all
+                rels.each { |rel_id| @neo.delete_relationship(rel_id) }
+
+        end
+
 
 	def endowments_contributed_to()
 		#return list of all endowments donor contributes to

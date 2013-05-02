@@ -3,7 +3,7 @@ class App < Sinatra::Application
 
   get '/endowment/:endowment_id' do
 	content_type :json
-	Endowment.find(params[:endowment_id]).to_json
+	Endowment.find_by_id(params[:endowment_id]).to_json
   end
 
   # Create a new endowment

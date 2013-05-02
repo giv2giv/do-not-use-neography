@@ -78,12 +78,23 @@ class App < Sinatra::Application
 
 ## change this route to /donor/:id at some point
   delete '/donor/:email/endowment' do
-	#delete donor's contributions to some endowment
+	#delete donor's connection to some endowment
+
+	data=JSON.parse(request.body.read)
+
+        content_type :json
+        Donor.remove_endowment(session[:id], data['endowment_id'], data['amount']).to_json
   end #delete /donor/email/endowment
 
 ## change this route to /donor/:id at some point
+
   put '/donor/:email/endowment' do
-	#create contributionn to endowment
+	#create connection to endowment - donor will contribute 'amount'
+	data=JSON.parse(request.body.read)
+
+	content_type :json
+	Donor.add_endowment(session[:id], data['endowment_id'], funding_source_scheduled_transfer_id).to_json
+
   end # put /donor/email/endowment
 
 ## change this route to /donor/:id at some point
