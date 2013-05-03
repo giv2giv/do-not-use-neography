@@ -12,7 +12,7 @@ load 'lib/functions.rb'
 class App < Sinatra::Application
 
 use Rack::Session::Cookie, :key => 'rack.session',
-                           :domain => SPONSOR_ORGANIZATION_WEBSITE,
+                           :domain => SPONSOR_ORGANIZATION_DOMAIN,
                            :path => '/',
                            :expire_after => 2592000, # In seconds
                            :secret => generate_unique_id()
