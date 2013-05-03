@@ -9,7 +9,7 @@ Core g2g settings
 # The nonprofit running the fund
 SPONSOR_ORGANIZATION_TYPE = "sponsor"
 SPONSOR_ORGANIZATION_NAME = "giv2giv"
-SPONSOR_ORGANIZATION_WEBSITE = "giv2giv.org"
+SPONSOR_ORGANIZATION_DOMAIN = "giv2giv.org"
 
 # The investment fund
 INVESTMENT_FUND_TYPE = "investment_fund"
@@ -17,6 +17,7 @@ INVESTMENT_FUND_NAME = "giv2giv investment fund"
 
 # The name of the index allowing for lookups of all nodes of type donor, charity, etc
 TYPE_INDEX="type_index"
+
 
 # The name of the id index, throw every node in here with its ID
 ID_INDEX = "id_index"
@@ -40,13 +41,23 @@ ENDOWMENT_TYPE = "endowment"
 ENDOWMENT_NAME_INDEX="endowment_name_index"
 
 
-ENDOWMENT_OWNER_REL=":owns"  # The owner donor->package relationship
-ENDOWMENT_DONOR_REL =":donates"  # The contributing donor->package relationship
-ENDOWMENT_INVESTMENT_REL =":invests"  # The relationship from endowment to investment fund
-ENDOWMENT_GRANTS_REL =":grants"  # The relationship from endowment to investment fund
-ENDOWMENT_SPONSOR_FEE_REL =":sponsor_fee"  # The contributing donor->package relationship
-ENDOWMENT_INVESTMENT_FEE_REL =":investment_fee"  # The contributing donor->package relationship
+# Endowment/donor/charity/fund structural relationships
+ENDOWMENT_CREATOR_REL=":creator"  # The donor->package creator relationship
+ENDOWMENT_DONOR_REL =":donor"  # The donor-contributing-into-endowment relationship
+ENDOWMENT_INVESTMENT_REL =":investment"  # The package-invested-into-fund relationship
+ENDOWMENT_CHARITY_REL =":charity"  # The package-will-grant-out-to-charity relationship
 
+
+# Endowment/donor/charity/fund transaction tracking relationships
+DONATES_REL=":donates"
+GRANTS_REL=":grants"
+INVESTS_REL=":invests"
+
+
+# Fee relationships
+PROCESSOR_FEE_REL =":processor_fee"  # The endowment-pays-fee-to-sponsoring-organization-upon-charity-grant relationship
+SPONSOR_FEE_REL =":sponsor_fee"  # The endowment-pays-fee-to-sponsoring-organization-upon-charity-grant relationship
+INVESTMENT_FEE_REL =":investment_fee"  # The endowment-pays-investment-fee relationship
 
 
 

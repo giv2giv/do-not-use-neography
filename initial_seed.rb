@@ -21,7 +21,7 @@ load 'config/g2g-config.rb'
 # I prefer "Phase 2"
 
 # Create sponsor organization, add to index for easy retrieval later
-sponsoring_organization = @neo4j.create_node("name"=>SPONSOR_ORGANIZATION_NAME)
+sponsoring_organization = @neo4j.create_node("name"=>SPONSOR_ORGANIZATION_NAME, "domain"=>SPONSOR_ORGANIZATION_DOMAIN)
 @neo4j.add_node_to_index(TYPE_INDEX, TYPE_INDEX, SPONSOR_ORGANIZATION_TYPE, sponsoring_organization)
 
 #Create first investment fund, add to index for easy retrieval later
