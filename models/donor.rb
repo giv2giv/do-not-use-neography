@@ -22,6 +22,7 @@ class Donor
 			"facebook_token" => facebook_token,
 			"dwolla_token" => dwolla_token,
 			"twitter_token" => twitter_token,
+			"node_type" => "donor"
 			)
 
 

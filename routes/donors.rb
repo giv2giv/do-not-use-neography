@@ -17,6 +17,7 @@ class App < Sinatra::Application
 	puts @donor.name
 	puts @donor.email
 	puts @donor.neo_id	
+	puts @donor.id
   end #/donor/:email
 
   delete '/donors/:id' do
@@ -43,10 +44,12 @@ class App < Sinatra::Application
 	search=Donor.find_by_email(data["email"])
 	#not the best way to impement a search to see if the email is in use already, but hey it works. can improve later
 	if ! search
-		@donor=Donor.create(data["name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["facebook_token"], data["dwolla_token"], data["twitter_token"])
+		@donor=Donor.create(data["name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["facebook_token"], data["dwolla_token"], data["twitter_token", data["node_type"])
 		puts "Created new users, with the following data:"
 		puts data
 		puts @donor
+		puts @donor.id
+		puts @donor.name
 	else
 		puts "EMAIL ALREADY IN USE"
 	end #if ! search
