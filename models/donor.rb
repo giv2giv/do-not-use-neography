@@ -45,24 +45,22 @@ class Donor
 
 	def self.find_all()
 		@db=Neography::Rest.new
-		donors=@db.execute_query("start n=node(*) where has(n.node_type) and (n.node_type='donor') return *;")
-#		puts
-#		puts donors
-#		puts
-		real=donors["data"]
-		puts donors
+		hash_result=@db.execute_query("start n=node(*) where has(n.node_type) and (n.node_type='donor') return *;")
+		donors_array=hash_result["data"]
+
 		puts
-		puts real
+		puts donors_array.class, "is the result that was extracted from a hash"
 		puts
-		puts
-		real.each do |new|
-#		puts real[0].class
-			new.each do |x|
-				result=x["data"]
-				puts result
-				puts result["id"]
-				puts "\t"+"#{result["name"]}"
-				puts "\t"+"#{result["email"]}"
+		donors_array.each do |donor_hash|
+			puts donor_hash.class
+			donor_hash.each do |result|
+				puts result.class
+				parsed_hash=result["data"]
+				puts parsed_hash.class
+				puts parsed_hash
+				puts parsed_hash["id"]
+				puts "\t"+"#{parsed_hash["name"]}"
+				puts "\t"+"#{parsed_hash["email"]}"
 			end
 		end
 
