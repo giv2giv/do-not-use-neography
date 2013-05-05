@@ -51,9 +51,9 @@ class Donor
 		puts
 		puts donors_array.class, "is the result that was extracted from a hash"
 		puts
-		donors_array.each do |donor_hash|
-			puts donor_hash.class
-			donor_hash.each do |result|
+		donors_array.each do |donor_array|
+			puts donor_array.class
+			donor_array.each do |result|
 				puts result.class
 				parsed_hash=result["data"]
 				puts parsed_hash.class
