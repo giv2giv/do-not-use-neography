@@ -8,7 +8,7 @@ class App < Sinatra::Application
   get '/donors' do
 	#get list of ALL donors -- method needed in models/donor.rb
 	donors=Donor.find_all
-	puts donors
+#	puts donors
   end
 
   get '/donors/:id' do
@@ -36,15 +36,18 @@ class App < Sinatra::Application
   post '/donors' do
 	##this will at some point be :id, i'm just using :email cuz it makes it easier for me to test -- josh
 ##  data takes form of: ( name, email, password, address1, address2, city, state, country, zip, facebook_token, dwolla_token, twitter_token )
-###  curl -i -H "Accept: application/json" -X PUT -d '{"name":"josh","email":"joshemail","password":"password",
-##"address1":"home","address2":"virginia","city":"hburg","state":"va","country":"usa",
-##"zip":"22801","facebook_token":"token","dwolla_token":"token","twitter_token":"token"}' http://localhost:9393/donor/joshemail
+
+=begin
+curl -i -H "Accept: application/json" -X POST -d '{"name":"josh","email":"newemail","password":"password","address1":"home","address2":"virginia","city":"hburg","state":"va","country":"usa","zip":"22801","facebook_token":"token","dwolla_token":"token","twitter_token":"token", "node_type":"donor"}' http://localhost:9393/donors
+
+=end
+
 	content_type :json
 	data=JSON.parse(request.body.read)
 	search=Donor.find_by_email(data["email"])
 	#not the best way to impement a search to see if the email is in use already, but hey it works. can improve later
 	if ! search
-		@donor=Donor.create(data["name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["facebook_token"], data["dwolla_token"], data["twitter_token", data["node_type"])
+		@donor=Donor.create(data["name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["facebook_token"], data["dwolla_token"], data["twitter_token"])
 		puts "Created new users, with the following data:"
 		puts data
 		puts @donor

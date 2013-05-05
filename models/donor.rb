@@ -45,7 +45,28 @@ class Donor
 
 	def self.find_all()
 		@db=Neography::Rest.new
-		@db.execute_query("start n=node(*) return n;")
+		donors=@db.execute_query("start n=node(*) where has(n.node_type) and (n.node_type='donor') return *;")
+#		puts
+#		puts donors
+#		puts
+		real=donors["data"]
+		puts donors
+		puts
+		puts real
+		puts
+		puts
+		real.each do |new|
+#		puts real[0].class
+			new.each do |x|
+				result=x["data"]
+				puts result
+				puts result["id"]
+				puts "\t"+"#{result["name"]}"
+				puts "\t"+"#{result["email"]}"
+			end
+		end
+
+#		donors.each {|d| puts d.name, d.id}
 	end
 
 
