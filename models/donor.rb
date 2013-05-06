@@ -111,7 +111,7 @@ class Donor
                 @node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
 
                 # Relate the donor *to* the endowment
-                donor_rel = @node.outgoing(ENDOWMENT_DONOR_REL) << @endowment_node
+                donor_rel = @node.outgoing(ENDOWMENT_DONOR) << @endowment_node
 		donor_rel.amount = amount
 
 		# Still to do: schedule payment
@@ -127,12 +127,45 @@ class Donor
                 @neo = Neography::Rest.new
 
                 # Find relatioships between the two nodes of constant type (from g2g-config.rb)
-                rels = @neo.get_node_relationships_to(@endowment_node, @node, "in", ENDOWMENT_DONOR_REL)
+                rels = @neo.get_node_relationships_to(@endowment_node, @node, "in", ENDOWMENT_DONOR)
 
                 # Should be only one - delete all
                 rels.each { |rel_id| @neo.delete_relationship(rel_id) }
 
         end
+
+	def donate( options = Hash ) 
+		# Donor makes donation into a giv2giv mini-endowment. Create a relationship between donor and endowment, storing key/value data pairs in the relationship
+
+
+		#options  = {
+			#:donor_id => donor_id,  # Donor making the donation
+			#:endowment_id => endowment_id, # Mini-endowment into which amount is being donated on date
+			#:transaction_id => transaction_id, # Dwolla transaction id, paypal transaction_id, etc
+			#:date
+			#:amount
+		#}
+
+
+		@endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
+                @node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
+
+		# Create a new outgoing relation from the donor *to* the endowment
+                donor_rel = @node.outgoing(DONATES) << @endowment_node
+
+		options.each { |key,value| donor_rel.key = value }  # maybe should use self.add_attribute() ?
+
+
+		# set shares of the endowment purchased by this donation
+		share_price = BigDecimal(Endowment.get_share_price( endowment_id )) # get_share_price returns a string
+		incoming_amount = BigDecimal(options[:amount]) # amount donated
+
+		shares_purchased = ( incoming_amount / share_price ) # How many shares were purchased?
+
+		donor_rel.shares_purchased = shares_purchased.to_s() # Store # of shares in the relationship
+
+
+	end
 
 
 	def endowments_contributed_to()

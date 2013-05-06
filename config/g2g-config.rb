@@ -42,23 +42,24 @@ ENDOWMENT_NAME_INDEX="endowment_name_index"
 
 
 # Endowment/donor/charity/fund structural relationships
-ENDOWMENT_CREATOR_REL=":creator"  # The donor->package creator relationship
-ENDOWMENT_DONOR_REL =":donor"  # The donor-contributing-into-endowment relationship
-ENDOWMENT_INVESTMENT_REL =":investment"  # The package-invested-into-fund relationship
-ENDOWMENT_CHARITY_REL =":charity"  # The package-will-grant-out-to-charity relationship
+ENDOWMENT_CREATOR=":creator"  # The donor->package creator relationship
+ENDOWMENT_DONOR =":donor"  # The donor-contributing-into-endowment relationship
+ENDOWMENT_INVESTMENT =":investment"  # The package-invested-into-fund relationship
+ENDOWMENT_CHARITY =":charity"  # The package-will-grant-out-to-charity relationship
 
 
 # Endowment/donor/charity/fund transaction tracking relationships
-DONATES_REL=":donates"
-GRANTS_REL=":grants"
-INVESTS_REL=":invests"
+DONATES=":donates" # Donor makes donation into a giv2giv mini-endowment, will receive X shares of endowment
+BUYS=":buys" # giv2giv mini-endowments monies are invested into a fund
+SELLS=":sells" # giv2giv mini-endowments investment fund shares sold, monies are returned to endowment
+SHARE_PRICE=":share_price" # giv2giv mini-endowment investment fund *daily* share prices
+GRANTS=":grants" # Mini-endowment pays out to a charity
 
 
 # Fee relationships
-PROCESSOR_FEE_REL =":processor_fee"  # The endowment-pays-fee-to-sponsoring-organization-upon-charity-grant relationship
-SPONSOR_FEE_REL =":sponsor_fee"  # The endowment-pays-fee-to-sponsoring-organization-upon-charity-grant relationship
-INVESTMENT_FEE_REL =":investment_fee"  # The endowment-pays-investment-fee relationship
-
+PROCESSOR_FEE =":processor_fee"  # The endowment-pays-fee-to-sponsoring-organization-upon-charity-grant relationship
+SPONSOR_FEE =":sponsor_fee"  # The endowment-pays-fee-to-sponsoring-organization-upon-charity-grant relationship
+INVESTMENT_FEE =":investment_fee"  # The endowment-pays-investment-fee relationship, used for all fees including trade fees and fund management fees
 
 
 # these are the default values:

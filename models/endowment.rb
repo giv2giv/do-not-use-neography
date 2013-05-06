@@ -32,7 +32,10 @@ class Endowment
         	owner_donor = Neography::Node.find(ID_INDEX, ID_INDEX, owner_id)
 	
         	# Relate the donor to the endowment
-        	owner_donor.outgoing(ENDOWMENT_OWNER_REL) << @node
+        	owner_donor.outgoing(ENDOWMENT_CREATOR) << @node
+
+		# Create an index named #{node.id} to track daily share price
+		@neo4j.create_node_index(@node.id)
 	
 	end
 
@@ -47,7 +50,7 @@ class Endowment
 		@node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
 
         	# Relate the endowment to the investment fund
-        	investment_rel = @node.outgoing(ENDOWMENT_INVESTMENT_REL) << investment_fund_node
+        	investment_rel = @node.outgoing(ENDOWMENT_INVESTMENT) << investment_fund_node
         	investment_rel.percent = 100;
 
 	end
@@ -61,7 +64,7 @@ class Endowment
         	charity_node = Neography::Node.find(ID_INDEX, ID_INDEX, charity_id)
 	
 		# Relate the endowment *to* the charity
-        	charity_rel = @node.outgoing(ENDOWMENT_GRANTS_REL) << charity_node
+        	charity_rel = @node.outgoing(ENDOWMENT_GRANTS) << charity_node
 	
 	end
 
@@ -73,7 +76,7 @@ class Endowment
 		@neo = Neography::Rest.new
 
 		# Find relatioships between the two nodes of constant type (from g2g-config.rb)
-		rels = @neo.get_node_relationships_to(@node, @charity_node, "in", ENDOWMENT_GRANTS_REL) 
+		rels = @neo.get_node_relationships_to(@node, @charity_node, "in", ENDOWMENT_GRANTS) 
 
 		# Should be only one - delete all
 		rels.each { |rel_id| @neo.delete_relationship(rel_id) }
@@ -92,6 +95,29 @@ class Endowment
 		@node = Neography::Node.find(ID_INDEX, ID_INDEX, id)
                 @node.remove_node_from_index()
                 @node.del
+	end
+
+	def self.get_share_price( endowment_id, date=nil)
+
+		# if date is nil, fetch today's share price
+		date ||= date.today()
+
+		@share_price_node = Neography::Node.find(endowment_id, endowment_id, date)
+
+		return @share_price_node.share_price
+
+	end
+
+	def self.set_share_price( endowment_id, date, share_price )
+
+		@share_price_node = Neography::Node.create(
+                        "date" => date,
+                        "share_price" => share_price.to_s()  # 3.14159
+                )
+
+		# Now, add the node to the index named @node.id with key @node_id and value date-of-share-price
+		@share_price_node.add_to_index( endowment_id, endowment_id, @share_price_node.date )
+
 	end
 
 
