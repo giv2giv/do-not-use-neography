@@ -1,0 +1,158 @@
+5/7/13 5:36:57 PM org.neo4j.server.CommunityBootstrapper WARNING: WARNING! You are using an unsupported Java runtime. Please use Oracle(R) Java(TM) Runtime Environment 6.
+5/7/13 5:36:57 PM org.neo4j.server.database.Database INFO: Loaded neo4j tuning properties from conf/neo4j.properties
+17:36:57.816 [main] INFO  neo4j - WARNING! You are using an unsupported Java runtime. Please use Oracle(R) Java(TM) Runtime Environment 6.
+17:36:57.859 [main] INFO  neo4j.datasource - Creating new db @ /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore
+17:36:57.912 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.nodestore.db] brickCount=0 brickSize=3753900b mappedMem=375390208b (storeSize=0b)
+17:36:57.921 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.nodestore.db hit=1 miss=0 switches=0 ooe=0
+17:36:58.028 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db.names] brickCount=0 brickSize=0b mappedMem=0b (storeSize=38b)
+17:36:58.032 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db] brickCount=0 brickSize=0b mappedMem=0b (storeSize=0b)
+17:36:58.035 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db.names hit=0 miss=0 switches=0 ooe=0
+17:36:58.045 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db hit=0 miss=0 switches=0 ooe=0
+17:36:58.059 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db.names] brickCount=0 brickSize=0b mappedMem=0b (storeSize=38b)
+17:36:58.061 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db] brickCount=0 brickSize=0b mappedMem=0b (storeSize=0b)
+17:36:58.062 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.strings] brickCount=0 brickSize=1149184b mappedMem=1149239296b (storeSize=128b)
+17:36:58.063 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index.keys] brickCount=0 brickSize=1026b mappedMem=1048576b (storeSize=38b)
+17:36:58.067 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index] brickCount=0 brickSize=10485b mappedMem=1048576b (storeSize=0b)
+17:36:58.069 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.arrays] brickCount=0 brickSize=1303296b mappedMem=1303379968b (storeSize=128b)
+17:36:58.071 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db] brickCount=0 brickSize=13526597b mappedMem=1352663040b (storeSize=0b)
+17:36:58.073 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshipstore.db] brickCount=0 brickSize=16577979b mappedMem=1657798656b (storeSize=0b)
+17:36:58.073 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.nodestore.db] brickCount=0 brickSize=375390b mappedMem=375390208b (storeSize=9b)
+17:36:58.074 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore] brickCount=0 brickSize=0b mappedMem=0b (storeSize=0b)
+17:36:58.083 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db.names hit=0 miss=0 switches=0 ooe=0
+17:36:58.096 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db hit=0 miss=0 switches=0 ooe=0
+17:36:58.113 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.strings hit=0 miss=0 switches=0 ooe=0
+17:36:58.131 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index.keys hit=0 miss=0 switches=0 ooe=0
+17:36:58.144 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index hit=0 miss=0 switches=0 ooe=0
+17:36:58.168 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.arrays hit=0 miss=0 switches=0 ooe=0
+17:36:58.185 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db hit=0 miss=0 switches=0 ooe=0
+17:36:58.203 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshipstore.db hit=0 miss=0 switches=0 ooe=0
+17:36:58.225 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.nodestore.db hit=0 miss=0 switches=0 ooe=0
+17:36:58.249 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore hit=0 miss=8 switches=0 ooe=0
+17:36:58.273 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db.names] brickCount=0 brickSize=0b mappedMem=0b (storeSize=38b)
+17:36:58.273 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db] brickCount=0 brickSize=0b mappedMem=0b (storeSize=0b)
+17:36:58.274 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.strings] brickCount=0 brickSize=1149184b mappedMem=1149239296b (storeSize=128b)
+17:36:58.274 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index.keys] brickCount=0 brickSize=1026b mappedMem=1048576b (storeSize=38b)
+17:36:58.274 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index] brickCount=0 brickSize=10485b mappedMem=1048576b (storeSize=0b)
+17:36:58.275 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.arrays] brickCount=0 brickSize=1303296b mappedMem=1303379968b (storeSize=128b)
+17:36:58.275 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db] brickCount=0 brickSize=13526597b mappedMem=1352663040b (storeSize=0b)
+17:36:58.275 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshipstore.db] brickCount=0 brickSize=16577979b mappedMem=1657798656b (storeSize=0b)
+17:36:58.276 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.nodestore.db] brickCount=0 brickSize=375390b mappedMem=375390208b (storeSize=9b)
+17:36:58.276 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore] brickCount=0 brickSize=0b mappedMem=0b (storeSize=54b)
+17:36:58.286 [main] INFO  neo4j.xafactory - Opened logical log [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/nioneo_logical.log.1] version=0, lastTxId=1 (clean)
+5/7/13 5:36:58 PM org.neo4j.server.database.Database INFO: Successfully started database
+5/7/13 5:36:58 PM org.neo4j.server.AbstractNeoServer INFO: Starting Neo Server on port [7474] with [40] threads available
+5/7/13 5:36:58 PM org.neo4j.server.AbstractNeoServer INFO: Enabling HTTPS on port [7473]
+5/7/13 5:36:58 PM org.neo4j.server.AbstractNeoServer INFO: No SSL certificate found, generating a self-signed certificate..
+Logger not configured, logging to std out instead: [FINE] Adding JAXRS packages [org.neo4j.server.rest.discovery] at [/]
+5/7/13 5:36:59 PM org.neo4j.server.modules.DiscoveryModule INFO: Mounted discovery module at [/]
+Logger not configured, logging to std out instead: [FINE] Adding JAXRS packages [org.neo4j.server.rest.web] at [/db/data]
+5/7/13 5:36:59 PM org.neo4j.server.plugins.PluginManager INFO: Loaded server plugin "CypherPlugin"
+5/7/13 5:36:59 PM org.neo4j.server.plugins.PluginManager INFO: Loaded server plugin "GremlinPlugin"
+5/7/13 5:36:59 PM org.neo4j.server.modules.RESTApiModule INFO: Mounted REST API at [/db/data/]
+Logger not configured, logging to std out instead: [FINE] Adding JAXRS packages [org.neo4j.server.webadmin.rest] at [/db/manage]
+5/7/13 5:36:59 PM org.neo4j.server.modules.ManagementApiModule INFO: Mounted management API at [/db/manage/]
+5/7/13 5:36:59 PM org.neo4j.server.modules.WebAdminModule INFO: Mounted webadmin at [/webadmin]
+17:36:59.503 [main] INFO  org.mortbay.log - Logging to Logger[org.mortbay.log] via org.mortbay.log.Slf4jLog
+5/7/13 5:36:59 PM org.neo4j.server.web.Jetty6WebServer INFO: Mounting static content at [/webadmin] from [webadmin-html]
+Logger not configured, logging to std out instead: [FINE] Found [jar:file:/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/system/lib/neo4j-server-1.8.2-static-web.jar!/webadmin-html]
+Logger not configured, logging to std out instead: [FINE] Mounting static content from [jar:file:/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/system/lib/neo4j-server-1.8.2-static-web.jar!/webadmin-html] at [/webadmin]
+Logger not configured, logging to std out instead: [FINE] Mounting servlet at [/db/manage]
+Logger not configured, logging to std out instead: [FINE] Mounting servlet at [/db/data]
+Logger not configured, logging to std out instead: [FINE] Mounting servlet at [/]
+17:36:59.539 [main] INFO  org.mortbay.log - jetty-6.1.25
+17:36:59.582 [main] WARN  org.mortbay.log - Can't reuse /tmp/Jetty_localhost_7474_webadmin.html__webadmin__.w17eyp, using /tmp/Jetty_localhost_7474_webadmin.html__webadmin__.w17eyp_6280670747338202192
+17:36:59.604 [main] INFO  org.mortbay.log - NO JSP Support for /webadmin, did not find org.apache.jasper.servlet.JspServlet
+17:37:00.769 [main] WARN  org.mortbay.log - failed SelectChannelConnector@localhost:7474: java.net.BindException: Address already in use
+17:37:00.775 [main] WARN  org.mortbay.log - failed SslSocketConnector@localhost:7473: java.net.BindException: Address already in use
+17:37:00.775 [main] WARN  org.mortbay.log - failed Server@79a86488: org.mortbay.util.MultiException[java.net.BindException: Address already in use, java.net.BindException: Address already in use]
+java.lang.RuntimeException: org.mortbay.util.MultiException[java.net.BindException: Address already in use, java.net.BindException: Address already in use]
+	at org.neo4j.server.web.Jetty6WebServer.startJetty(Jetty6WebServer.java:313)
+	at org.neo4j.server.web.Jetty6WebServer.start(Jetty6WebServer.java:164)
+	at org.neo4j.server.AbstractNeoServer.startWebServer(AbstractNeoServer.java:254)
+	at org.neo4j.server.AbstractNeoServer.start(AbstractNeoServer.java:141)
+	at org.neo4j.server.Bootstrapper.start(Bootstrapper.java:85)
+	at org.neo4j.server.Bootstrapper.main(Bootstrapper.java:49)
+Caused by: org.mortbay.util.MultiException[java.net.BindException: Address already in use, java.net.BindException: Address already in use]
+	at org.mortbay.jetty.Server.doStart(Server.java:188)
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
+	at org.neo4j.server.web.Jetty6WebServer.startJetty(Jetty6WebServer.java:309)
+	... 5 more
+5/7/13 5:37:00 PM org.neo4j.server.AbstractNeoServer SEVERE: Failed to start Neo Server on port [7474], reason [org.mortbay.util.MultiException[java.net.BindException: Address already in use, java.net.BindException: Address already in use]]
+5/7/13 5:39:29 PM org.neo4j.server.CommunityBootstrapper WARNING: WARNING! You are using an unsupported Java runtime. Please use Oracle(R) Java(TM) Runtime Environment 6.
+5/7/13 5:39:30 PM org.neo4j.server.database.Database INFO: Loaded neo4j tuning properties from conf/neo4j.properties
+17:39:30.210 [main] INFO  neo4j - WARNING! You are using an unsupported Java runtime. Please use Oracle(R) Java(TM) Runtime Environment 6.
+17:39:30.263 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db.names non clean shutdown detected
+17:39:30.269 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db.names] brickCount=0 brickSize=0b mappedMem=0b (storeSize=38b)
+17:39:30.273 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db non clean shutdown detected
+17:39:30.274 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db] brickCount=0 brickSize=0b mappedMem=0b (storeSize=0b)
+17:39:30.274 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.strings non clean shutdown detected
+17:39:30.274 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.strings] brickCount=0 brickSize=1149184b mappedMem=1149239296b (storeSize=128b)
+17:39:30.275 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index.keys non clean shutdown detected
+17:39:30.275 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index.keys] brickCount=0 brickSize=1026b mappedMem=1048576b (storeSize=38b)
+17:39:30.276 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index non clean shutdown detected
+17:39:30.276 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index] brickCount=0 brickSize=10485b mappedMem=1048576b (storeSize=0b)
+17:39:30.277 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.arrays non clean shutdown detected
+17:39:30.277 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.arrays] brickCount=0 brickSize=1303296b mappedMem=1303379968b (storeSize=128b)
+17:39:30.282 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db non clean shutdown detected
+17:39:30.282 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db] brickCount=0 brickSize=13526597b mappedMem=1352663040b (storeSize=0b)
+17:39:30.284 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshipstore.db non clean shutdown detected
+17:39:30.284 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshipstore.db] brickCount=0 brickSize=16577979b mappedMem=1657798656b (storeSize=0b)
+17:39:30.285 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.nodestore.db non clean shutdown detected
+17:39:30.285 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.nodestore.db] brickCount=0 brickSize=375390b mappedMem=375390208b (storeSize=9b)
+17:39:30.287 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore non clean shutdown detected
+17:39:30.287 [main] INFO  neo4j.neostore - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore] brickCount=0 brickSize=0b mappedMem=0b (storeSize=54b)
+17:39:30.299 [main] INFO  neo4j.xafactory - Non clean shutdown detected on log [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/nioneo_logical.log.1]. Recovery started ...
+17:39:30.302 [main] INFO  neo4j.xafactory - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/nioneo_logical.log.1] logVersion=0 with committed tx=1
+17:39:30.302 [main] INFO  neo4j.xafactory - [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/nioneo_logical.log.1] entries found=0 lastEntryPos=16
+17:39:30.302 [main] INFO  neo4j.xafactory - Opened logical log [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/nioneo_logical.log.1] version=0, lastTxId=-1 (recovered)
+17:39:30.303 [main] INFO  neo4j.xafactory - XaResourceManager[/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/nioneo_logical.log] sorting 0 xids
+17:39:30.303 [main] INFO  neo4j.xafactory - XaResourceManager[/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/nioneo_logical.log] checkRecoveryComplete 0 xids
+17:39:30.317 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshiptypestore.db.names rebuild id generator, highId=1 defragged count=0
+17:39:30.357 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index.keys rebuild id generator, highId=1 defragged count=0
+17:39:30.379 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.index rebuild id generator, highId=1 defragged count=0
+17:39:30.397 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.strings rebuild id generator, highId=1 defragged count=0
+17:39:30.414 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db.arrays rebuild id generator, highId=1 defragged count=0
+17:39:30.432 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.propertystore.db rebuild id generator, highId=1 defragged count=0
+17:39:30.449 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.relationshipstore.db rebuild id generator, highId=1 defragged count=0
+17:39:30.464 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore.nodestore.db rebuild id generator, highId=1 defragged count=0
+17:39:30.478 [main] INFO  neo4j.neostore - /home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/neostore rebuild id generator, highId=6 defragged count=0
+17:39:30.484 [main] INFO  neo4j.xafactory - XaResourceManager[/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/nioneo_logical.log] recovery completed.
+17:39:30.485 [main] INFO  neo4j.xafactory - Recovery on log [/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/data/graph.db/nioneo_logical.log.1] completed.
+5/7/13 5:39:30 PM org.neo4j.server.database.Database INFO: Successfully started database
+5/7/13 5:39:30 PM org.neo4j.server.AbstractNeoServer INFO: Starting Neo Server on port [7474] with [40] threads available
+5/7/13 5:39:30 PM org.neo4j.server.AbstractNeoServer INFO: Enabling HTTPS on port [7473]
+Logger not configured, logging to std out instead: [FINE] Adding JAXRS packages [org.neo4j.server.rest.discovery] at [/]
+5/7/13 5:39:31 PM org.neo4j.server.modules.DiscoveryModule INFO: Mounted discovery module at [/]
+Logger not configured, logging to std out instead: [FINE] Adding JAXRS packages [org.neo4j.server.rest.web] at [/db/data]
+5/7/13 5:39:31 PM org.neo4j.server.plugins.PluginManager INFO: Loaded server plugin "CypherPlugin"
+5/7/13 5:39:31 PM org.neo4j.server.plugins.PluginManager INFO: Loaded server plugin "GremlinPlugin"
+5/7/13 5:39:31 PM org.neo4j.server.modules.RESTApiModule INFO: Mounted REST API at [/db/data/]
+Logger not configured, logging to std out instead: [FINE] Adding JAXRS packages [org.neo4j.server.webadmin.rest] at [/db/manage]
+5/7/13 5:39:31 PM org.neo4j.server.modules.ManagementApiModule INFO: Mounted management API at [/db/manage/]
+5/7/13 5:39:31 PM org.neo4j.server.modules.WebAdminModule INFO: Mounted webadmin at [/webadmin]
+17:39:31.480 [main] INFO  org.mortbay.log - Logging to Logger[org.mortbay.log] via org.mortbay.log.Slf4jLog
+5/7/13 5:39:31 PM org.neo4j.server.web.Jetty6WebServer INFO: Mounting static content at [/webadmin] from [webadmin-html]
+Logger not configured, logging to std out instead: [FINE] Found [jar:file:/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/system/lib/neo4j-server-1.8.2-static-web.jar!/webadmin-html]
+Logger not configured, logging to std out instead: [FINE] Mounting static content from [jar:file:/home/josh/workprojects/rubyprojects/new_giv2giv/api/neo4j/system/lib/neo4j-server-1.8.2-static-web.jar!/webadmin-html] at [/webadmin]
+Logger not configured, logging to std out instead: [FINE] Mounting servlet at [/db/manage]
+Logger not configured, logging to std out instead: [FINE] Mounting servlet at [/db/data]
+Logger not configured, logging to std out instead: [FINE] Mounting servlet at [/]
+17:39:31.539 [main] INFO  org.mortbay.log - jetty-6.1.25
+17:39:31.584 [main] WARN  org.mortbay.log - Can't reuse /tmp/Jetty_localhost_7474_webadmin.html__webadmin__.w17eyp, using /tmp/Jetty_localhost_7474_webadmin.html__webadmin__.w17eyp_4188983259017480738
+17:39:31.609 [main] INFO  org.mortbay.log - NO JSP Support for /webadmin, did not find org.apache.jasper.servlet.JspServlet
+17:39:32.733 [main] WARN  org.mortbay.log - failed SelectChannelConnector@localhost:7474: java.net.BindException: Address already in use
+17:39:32.738 [main] WARN  org.mortbay.log - failed SslSocketConnector@localhost:7473: java.net.BindException: Address already in use
+17:39:32.739 [main] WARN  org.mortbay.log - failed Server@1fb93526: org.mortbay.util.MultiException[java.net.BindException: Address already in use, java.net.BindException: Address already in use]
+java.lang.RuntimeException: org.mortbay.util.MultiException[java.net.BindException: Address already in use, java.net.BindException: Address already in use]
+	at org.neo4j.server.web.Jetty6WebServer.startJetty(Jetty6WebServer.java:313)
+	at org.neo4j.server.web.Jetty6WebServer.start(Jetty6WebServer.java:164)
+	at org.neo4j.server.AbstractNeoServer.startWebServer(AbstractNeoServer.java:254)
+	at org.neo4j.server.AbstractNeoServer.start(AbstractNeoServer.java:141)
+	at org.neo4j.server.Bootstrapper.start(Bootstrapper.java:85)
+	at org.neo4j.server.Bootstrapper.main(Bootstrapper.java:49)
+Caused by: org.mortbay.util.MultiException[java.net.BindException: Address already in use, java.net.BindException: Address already in use]
+	at org.mortbay.jetty.Server.doStart(Server.java:188)
+	at org.mortbay.component.AbstractLifeCycle.start(AbstractLifeCycle.java:50)
+	at org.neo4j.server.web.Jetty6WebServer.startJetty(Jetty6WebServer.java:309)
+	... 5 more
+5/7/13 5:39:32 PM org.neo4j.server.AbstractNeoServer SEVERE: Failed to start Neo Server on port [7474], reason [org.mortbay.util.MultiException[java.net.BindException: Address already in use, java.net.BindException: Address already in use]]

@@ -2,3 +2,4 @@
 .idea/
 lib/_keys.rb
 charity_excel_files/
+./neo4j

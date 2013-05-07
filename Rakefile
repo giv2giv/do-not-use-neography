@@ -2,9 +2,6 @@ require 'rake'
 require 'neography/tasks'
 load 'lib/initial_seed.rb'
 require 'neography'
-load 'config/g2g-config.rb'
-load 'lib/functions.rb'
-
 
 task :default => [:test]
 
