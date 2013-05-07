@@ -15,6 +15,11 @@ SPONSOR_ORGANIZATION_DOMAIN = "giv2giv.org"
 INVESTMENT_FUND_TYPE = "investment_fund"
 INVESTMENT_FUND_NAME = "giv2giv investment fund"
 
+# The merchant processor
+PROCESSOR_TYPE = "processor"
+PROCESSOR_NAME = "Dwolla"
+
+
 # The name of the index allowing for lookups of all nodes of type donor, charity, etc
 TYPE_INDEX="type_index"
 
@@ -100,18 +105,4 @@ END charity import settings
 =end
 
 
-
-=begin
-Dwolla-specific settings
-=end
-
-# Dwolla processes all transactions $10 and under for free
-DWOLLA_FEE_THRESHOLD = 10.00
-
-# Dwolla transaction fee for transaction amounts at or above TRANSACT_FEE_THRESHOLD
-DWOLLA_TRANSACTION_FEE = 0.25
-
-=begin
-END Dwolla-specific settings
-=end
 

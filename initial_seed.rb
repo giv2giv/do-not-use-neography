@@ -26,8 +26,12 @@ sponsoring_organization.add_to_index(ID_INDEX, ID_INDEX, sponsoring_organization
 sponsoring_organization.add_to_index(TYPE_INDEX, TYPE_INDEX, SPONSOR_ORGANIZATION_TYPE)
 
 
-#Create first investment fund, add to index for easy retrieval later
+# Create first investment fund, add to index for easy retrieval later
 investment_fund = Neography::Node.create( "id" => generate_unique_id(), "name"=>INVESTMENT_FUND_NAME)
 investment_fund.add_to_index(ID_INDEX, ID_INDEX, investment_fund.id)
 investment_fund.add_to_index(TYPE_INDEX, TYPE_INDEX, INVESTMENT_FUND_TYPE)
 
+# Create Processor node
+processor = Neography::Node.create( "id" => generate_unique_id(), "name"=>PROCESSOR_NAME, "fee_threshold"=>"10.00", "fee"=>"0.25")
+processor.add_to_index(ID_INDEX, ID_INDEX, processor.id)
+processor.add_to_index(TYPE_INDEX, TYPE_INDEX, PROCESSOR_TYPE)
