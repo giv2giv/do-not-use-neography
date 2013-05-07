@@ -135,6 +135,9 @@ class Donor
         end
 
 	def donate( donor_id, endowment_id, transaction_id, date, amount ) 
+
+		# Called upon successful funds transfer from donor to giv2giv
+
 		# Donor makes donation into a giv2giv mini-endowment. Create a relationship between donor and endowment, storing key/value data pairs in the relationship
 
 		@endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)

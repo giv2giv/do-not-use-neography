@@ -1,30 +1,10 @@
 
-def schedule_transfer_from_dwolla_to_tradeking() 
+def record_tradeking_transfer_from_dwolla_to_tradeking() 
 	# Runs nightly
 
-	# Steps:  Compute amount, Make transfer, (record transfers per endowment?)
-
-	# Get successful donations today (from neo4j, not dwolla b/c donations will be mingled with other transfers)
-	# Schedule Dwolla transfer of aggregate
-
-end
-
-def record_transfer_from_dwolla_to_tradeking() 
-	# records transfer from dwolla to tradeking
-
+	# Polls tradeking.com API for incoming transfers from Dwolla initiated by giv2giv admin at tradeking.com
 	# steps: record transfer per endowment using Endowment.buy()
-end
 
-def record_transfer_from_dwolla_to_tradeking()
-        # records transfer from dwolla to tradeking
-
-        # steps: record transfer per endowment using Endowment.buy()
-end
-
-
-def get_dwolla_balance_required_on_grant_date( date )
-	# compute 1.5% of an endowment's share_info current_value
-	# use cypher
 end
 
 
@@ -36,22 +16,23 @@ end
 
 
 def prepare_grants( excel_grant_spreadsheet )
-
 	# accepts excel of giv2giv's grant committee decision
 	# sells/subtracts donors' shares of endowment
 	# update endowment shares_outstanding
-	# transfer aggregate from TradeKing to Dwolla
+	# spits out aggregate amount to transfer TradeKing to Dwolla
+	# giv2giv admin transfers aggreate amount from TradeKing to Dwolla using tradeking.com
 end
 
 def schedule_grants( excel_grant_spreadsheet )
-	# Run upon prepare_grants() transfer complete
+	# runs nightly
+	# Polls tradeking.com API for outgoing transfers from TradeKing to Dwolla initiated during prepare_grants() by giv2giv admin
 
-	# Aggregates grants per charity
-	# Schedules Dwolla transfers from giv2giv to charity
-	# Endowment.grant()
-	# make "GRANT" relationship from endowment to charity with transaction_id, request_date, amount
-	# make "THANKS" relationship from charity to donor with transaction_id, date, their portion of amount
+	# transfer amount should match excel_grant_spreadsheet.total
 
+	# Aggregate grants per charity
+	# Endowment.grant() should schedule Dwolla transfers from giv2giv to charity
+	# 	make "GRANT" relationship from endowment to charity with transaction_id, request_date, amount
+	# 	make "THANKS" relationship from charity to donor with transaction_id, date, their portion of amount
 	# send social notifications
 end
 
