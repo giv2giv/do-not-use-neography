@@ -26,16 +26,23 @@ class Endowment
         	@node.add_to_index(TYPE_INDEX, TYPE_INDEX, ENDOWMENT_TYPE)
 	
         	# Look up the Donor owner's / endowment creator's node by id 
-        	owner_donor = Neography::Node.find(ID_INDEX, ID_INDEX, owner_id)
+        	creator_donor = Neography::Node.find(ID_INDEX, ID_INDEX, creator_id)
 	
         	# Relate the donor to the endowment
-        	owner_donor.outgoing(ENDOWMENT_CREATOR) << @node
+        	creator_donor.outgoing(ENDOWMENT_CREATOR) << @node
 
-		# Create an index named #{node.id}share_price to track daily share price
-		Neography::Rest.new.create_node_index(@node.id+"share_price")
-		# Create an index named #{node.id}shares_outstanding to track daily shares outstanding
-		Neography::Rest.new.create_node_index(@node.id+"shares_outstanding")
-	
+		# Create the initial endowment share price node
+		@share_node = Neography::Node.create(
+			"id" => generate_unique_id(),
+			"share_price" => "0.01",
+			"shares_outstanding" => "0",
+			"fund_value" => "0",
+		)
+        	@node.add_to_index(ID_INDEX, ID_INDEX, @share_node.id)
+
+		# Add to SHARE_INDEX to allow share info lookup using endowment_id (@node.id) and date
+        	@node.add_to_index(SHARE_INDEX, @node.id, Date.today.to_s())
+
 	end
 
 	def self.add_investment_fund( endowment_id )
@@ -97,59 +104,16 @@ class Endowment
 	end
 
 
-	def self.get_shares_outstanding( endowment_id, date=nil)
+	def self.get_share_info( endowment_id, date=nil)
 
                 # if date is nil, fetch today's share price
 		date ||= Date.today.to_s()
 
-                @shares_oustanding_node = Neography::Node.find(endowment_id+"shares_outstanding", endowment_id, date)
+                @share_node = Neography::Node.find(SHARE_INDEX, endowment_id, date)
 
-                return @share_price_node.shares_outstanding
-
-        end
-
-	def self.set_shares_outstanding( endowment, date, shares_outstanding )
-                @shres_outstanding_node = Neography::Node.create(
-                        "date" => date,
-                        "shares_outstanding" => shares_outstanding.to_s()  # 3.14159
-                )
-
-                # Now, add the node to the index named @node.id with key @node_id and value date-of-share-price
-                @share_price_node.add_to_index( endowment_id+"shares_outstanding", endowment_id, @share_price_node.date )
-        end
-
-	def self.get_share_price( endowment_id, date=nil)
-
-		# if date is nil, fetch today's share price
-		date ||= Date.today.to_s()
-
-		@share_price_node = Neography::Node.find(endowment_id+"share_price", endowment_id, date)
-
-		return @share_price_node.share_price
-
-	end
-
-	def self.set_share_price( endowment_id, date, share_price )
-
-                @share_price_node = Neography::Node.create(
-                        "date" => date,
-                        "share_price" => share_price.to_s()  # 3.14159
-                )
-
-                # Now, add the node to the index named @node.id with key @node_id and value date-of-share-price
-                @share_price_node.add_to_index( endowment_id+"share_price", endowment_id, @share_price_node.date )
+		# share node has share_price, shares_outstanding, endowment_value
 
         end
-
-	def self.get_total_value ( endowment_id, date=nil )
-
-		date ||= Date.today.to_s()
-
-		@node = Neography::Node.find( ID_INDEX, ID_INDEX, endowment_id )
-
-		return (BigDecimal(@node.shares_outstanding)  * BigDecimal(self.get_share_price ( endowment_id )) ).to_s()
-	end
-
 
 	def self.buy_fund( endowment_id, transaction_id, fund_id, date, amount ) # Called when funds moved from dwolla/paypal to tradeking
 
@@ -175,20 +139,21 @@ class Endowment
 
         end
 
-	def self.generate_advice( endowment_id )
+	def self.grant_failed( ) # called by Dwolla upon failed grant out to a charity (maybe they never accepted funds?)
+		# Should we say 'Contact your charity!' ? What if amount is small?
 	end
-	
 
-	def self.grant( endowment_id, transaction_id, charity_id, date, amount )
+	def self.grant_successful( endowment_id, transaction_id, charity_id, date, amount )
 
-		# This will be called in a foreach donor, foreach endowment_of_donor, foreach charity_in_endowment, grant()
-		# Calling script will need to do donor-(thanks)>charity relationship to record donor's individual portion of bulk grant
+		# This will be called when grant is scheduled out to a charity
+
+		# No need to fiddle w/ shares because shares sold in grant_prepare()
 
 		# Recording a bulk grant from an endowment out to a charity
 		@node = Neography::Node.find( ID_INDEX, ID_INDEX, endowment_id )
                 @charity_node = Neography::Node.find( ID_INDEX, ID_INDEX, charity_id )
 
-		grant_rel = @node.outgoing(GRANTS) << @charity_node # Create a new relatinoship from endowment to charity
+		grant_rel = @node.outgoing(GRANTS) << @charity_node # Create a new relationship from endowment to charity
 		grant_rel.transaction_id = transaction_id # Set relationship properties
                 grant_rel.date = date
                 grant_rel.amount = amount

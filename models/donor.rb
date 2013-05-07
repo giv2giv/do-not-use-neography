@@ -137,7 +137,6 @@ class Donor
 	def donate( donor_id, endowment_id, transaction_id, date, amount ) 
 		# Donor makes donation into a giv2giv mini-endowment. Create a relationship between donor and endowment, storing key/value data pairs in the relationship
 
-
 		@endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
                 @node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
 
@@ -148,17 +147,23 @@ class Donor
 		donation_rel.amount = amount
 
 
-		# set shares of the endowment purchased by this donation
-		share_price = BigDecimal(Endowment.get_share_price( endowment_id )) # get_share_price returns a string
-		incoming_amount = BigDecimal(options[:amount]) # amount donated
+		# get share_info for the endowment to get share_price, shares_oustanding, current_value
+		share_info = Endowment.get_share_info( endowment_id )
 
-		shares_purchased = ( incoming_amount / share_price ) # How many shares were purchased?
+		# Always use BigDecimal
+		share_price = BigDecimal(share_info.share_price) # get_share_price returns a string
+		amount = BigDecimal(amount) # amount donated
 
+		shares_purchased = ( amount / share_price ) # How many shares were purchased?
+
+		donation_rel.share_price = share_price.to_s() # Store # of shares for this transaction in the relationship
 		donation_rel.shares_purchased = shares_purchased.to_s() # Store # of shares for this transaction in the relationship
 
-		# Store shares_outstanding in the node
-		@endowment_node.shares_outstanding = (BigDecimal(@endowment_node.shares_outstanding) + shares_purchased).to_s()
+		# Store new shares_outstanding in the share_info node
+		share_info.shares_outstanding = (BigDecimal(share_info.shares_outstanding) + shares_purchased).to_s()
 
+		# Store new current_value in the share_info node
+		share_info.current_value = (BigDecimal(share_info.current_value) + amount).to_s()
 
 	end
 
