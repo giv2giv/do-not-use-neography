@@ -134,26 +134,18 @@ class Donor
 
         end
 
-	def donate( options = Hash ) 
+	def donate( donor_id, endowment_id, transaction_id, date, amount ) 
 		# Donor makes donation into a giv2giv mini-endowment. Create a relationship between donor and endowment, storing key/value data pairs in the relationship
-
-
-		#options  = {
-			#:donor_id => donor_id,  # Donor making the donation
-			#:endowment_id => endowment_id, # Mini-endowment into which amount is being donated on date
-			#:transaction_id => transaction_id, # Dwolla transaction id, paypal transaction_id, etc
-			#:date
-			#:amount
-		#}
 
 
 		@endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
                 @node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
 
-		# Create a new outgoing relation from the donor *to* the endowment
-                donor_rel = @node.outgoing(DONATES) << @endowment_node
-
-		options.each { |key,value| donor_rel.key = value }  # maybe should use self.add_attribute() ?
+		# Create a new outgoing relation from the donor *to* the endowment to record the transaction
+                donor_rel = @node.outgoing(DONATES) << @endowment_node 
+		donor_rel.transaction_id = transaction_id
+		donor_rel.date = date
+		donor_rel.amount = amount
 
 
 		# set shares of the endowment purchased by this donation

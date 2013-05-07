@@ -10,7 +10,7 @@ class Endowment
 
 	attr_accessor :node
 
-# This code does not work -MPB
+# This code is untested -MPB
 
 	def self.create(owner_id, name, amount, frequency)
 
@@ -35,7 +35,7 @@ class Endowment
         	owner_donor.outgoing(ENDOWMENT_CREATOR) << @node
 
 		# Create an index named #{node.id} to track daily share price
-		@neo4j.create_node_index(@node.id)
+		Neography::Rest.new.create_node_index(@node.id)
 	
 	end
 
@@ -92,7 +92,7 @@ class Endowment
 
 	def self.delete( endowment_id )
 		# This needs further consideration. Should mark as inactive rather than delete if already has funds, etc
-		@node = Neography::Node.find(ID_INDEX, ID_INDEX, id)
+		@node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
                 @node.remove_node_from_index()
                 @node.del
 	end
@@ -119,6 +119,32 @@ class Endowment
 		@share_price_node.add_to_index( endowment_id, endowment_id, @share_price_node.date )
 
 	end
+
+
+	def self.buy_fund( endowment_id, transaction_id, fund_id, date, amount ) # Called when funds moved from dwolla/paypal to tradeking
+
+		@node = Neography::Node.find( ID_INDEX, ID_INDEX, endowment_id )
+		@fund_node = Neography::Node.find( ID_INDEX, ID_INDEX, fund_id )
+
+        	fund_rel = @node.outgoing(BUYS) << @fund_node	# Create a new relationship
+		fund_rel.transaction_id = transaction_id # Set relationship properties
+		fund_rel.date = date
+		fund_rel.amount = amount
+
+	end
+
+	def self.sell_fund( endowment_id, transaction_id, fund_id, date, amount ) # Called when funds moved from dwolla/paypal to tradeking
+
+                @node = Neography::Node.find( ID_INDEX, ID_INDEX, endowment_id )
+                @fund_node = Neography::Node.find( ID_INDEX, ID_INDEX, fund_id )
+
+                fund_rel = @fund_node.outgoing(SELLS) << @node   # Create a new relationship from fund to endowment
+                fund_rel.transaction_id = transaction_id # Set relationship properties
+                fund_rel.date = date
+                fund_rel.amount = amount
+
+        end
+
 
 
 =begin

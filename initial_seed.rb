@@ -5,6 +5,7 @@
 require 'neography'
 
 load 'config/g2g-config.rb'
+load 'lib/functions.rb'
 
 # Neography only supports creating indexes using "Phase 1"
 @neo4j = Neography::Rest.new
@@ -18,12 +19,15 @@ load 'config/g2g-config.rb'
 @neo4j.create_node_index(DONOR_TOKEN_INDEX)
 @neo4j.create_node_index(ENDOWMENT_NAME_INDEX)
 
-# I prefer "Phase 2"
 
 # Create sponsor organization, add to index for easy retrieval later
-sponsoring_organization = @neo4j.create_node("name"=>SPONSOR_ORGANIZATION_NAME, "domain"=>SPONSOR_ORGANIZATION_DOMAIN)
-@neo4j.add_node_to_index(TYPE_INDEX, TYPE_INDEX, SPONSOR_ORGANIZATION_TYPE, sponsoring_organization)
+sponsoring_organization = Neography::Node.create( "id" => generate_unique_id(), "name"=>SPONSOR_ORGANIZATION_NAME, "domain"=>SPONSOR_ORGANIZATION_DOMAIN)
+sponsoring_organization.add_to_index(ID_INDEX, ID_INDEX, sponsoring_organization.id)
+sponsoring_organization.add_to_index(TYPE_INDEX, TYPE_INDEX, SPONSOR_ORGANIZATION_TYPE)
+
 
 #Create first investment fund, add to index for easy retrieval later
-investment_fund = @neo4j.create_node("name"=>INVESTMENT_FUND_NAME)
-@neo4j.add_node_to_index(TYPE_INDEX, TYPE_INDEX, INVESTMENT_FUND_TYPE, investment_fund);
+investment_fund = Neography::Node.create( "id" => generate_unique_id(), "name"=>INVESTMENT_FUND_NAME)
+investment_fund.add_to_index(ID_INDEX, ID_INDEX, investment_fund.id)
+investment_fund.add_to_index(TYPE_INDEX, TYPE_INDEX, INVESTMENT_FUND_TYPE)
+
