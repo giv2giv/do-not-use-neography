@@ -11,7 +11,7 @@ class Donor
 		@node = Neography::Node.create(
 			"id" => generate_unique_id(),
 			"name" => name,
-			"password" => BCrypt::Password.create(password).to_s,
+			"password" => BCrypt::Password.create(password).to_s(),
 			"email" => email,
 			"address1" => address1,
 			"address2" => address2,
@@ -142,10 +142,10 @@ class Donor
                 @node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
 
 		# Create a new outgoing relation from the donor *to* the endowment to record the transaction
-                donor_rel = @node.outgoing(DONATES) << @endowment_node 
-		donor_rel.transaction_id = transaction_id
-		donor_rel.date = date
-		donor_rel.amount = amount
+                donation_rel = @node.outgoing(DONATES) << @endowment_node 
+		donation_rel.transaction_id = transaction_id
+		donation_rel.date = date
+		donation_rel.amount = amount
 
 
 		# set shares of the endowment purchased by this donation
@@ -154,7 +154,10 @@ class Donor
 
 		shares_purchased = ( incoming_amount / share_price ) # How many shares were purchased?
 
-		donor_rel.shares_purchased = shares_purchased.to_s() # Store # of shares in the relationship
+		donation_rel.shares_purchased = shares_purchased.to_s() # Store # of shares for this transaction in the relationship
+
+		# Store shares_outstanding in the node
+		@endowment_node.shares_outstanding = (BigDecimal(@endowment_node.shares_outstanding) + shares_purchased).to_s()
 
 
 	end
