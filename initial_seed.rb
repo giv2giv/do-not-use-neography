@@ -18,6 +18,7 @@ load 'lib/functions.rb'
 @neo4j.create_node_index(DONOR_EMAIL_INDEX)
 @neo4j.create_node_index(DONOR_TOKEN_INDEX)
 @neo4j.create_node_index(ENDOWMENT_NAME_INDEX)
+@neo4j.create_node_index(SHARE_INDEX)
 
 
 # Create sponsor organization, add to index for easy retrieval later

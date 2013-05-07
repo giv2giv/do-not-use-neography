@@ -27,7 +27,8 @@ TYPE_INDEX="type_index"
 # The name of the id index, throw every node in here with its ID
 ID_INDEX = "id_index"
 
-
+# The name of the share index, throw every share node (representing a daily price/shares/value node) in here with its ID
+SHARE_INDEX="share_index"
 
 # Charity indices
 CHARITY_TYPE = "charity"
