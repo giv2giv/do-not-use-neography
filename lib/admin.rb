@@ -1,10 +1,27 @@
 
 def record_tradeking_transfer_from_dwolla_to_tradeking() 
+
+	# When donors donate, the funds go into Dwolla. We will move those funds to tradeking for investment
+
 	# Runs nightly
+
+	# how to avoid manually transferring daily?
 
 	# Polls tradeking.com API for incoming transfers from Dwolla initiated by giv2giv admin at tradeking.com
 	# steps: record transfer per endowment using Endowment.buy()
 
+end
+
+def update_fund_value()
+	# nightly cron task
+	# get fund_value from tradeking
+	# get shares_outstanding from share_info
+	# share_price = fund_value / shares_outstanding
+	update_endowment_value()
+end
+
+def update_endowment_value()
+	current_value = fund_shares * fund_share_price	
 end
 
 
