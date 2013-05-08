@@ -8,17 +8,23 @@ class App < Sinatra::Application
   get '/donors' do
 	#get list of ALL donors -- method needed in models/donor.rb
 	donors = Neography::Node.find(TYPE_INDEX, TYPE_INDEX, DONOR_TYPE)
-
+	puts donors
+	puts donors.class
 	if ! donors
 		puts "No results found"
-	elsif donors.length == 1 # This is needed because for some reason .each do |donor| wont return results if there's only one db entry
-		puts donors
 	else
-		donors.each do |donor|
-			puts
-			puts donor
+		puts donors.length
+		if donors.class == "Neography::Node"# This is needed because if there is only one result, the class is "Neography::Node" - 2 or more and it is "Array"
+			puts donors
+			puts "SOMETHING!"
+		
+		else
+			donors.each do |donor|
+				puts donors.length
+				puts donor
+				puts "SOMETHINGE ELSE!"
+			end
 		end
-
 	end
 #	end
 	puts
