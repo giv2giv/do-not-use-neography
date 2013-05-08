@@ -121,54 +121,18 @@ class Donor
 	def remove_endowment( donor_id, endowment_id )
 
 		# Donor no longer wants to contribute to endowment, remove connection
-		@endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
+		endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
                 @node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
 
                 @neo = Neography::Rest.new
 
                 # Find relatioships between the two nodes of constant type (from g2g-config.rb)
-                rels = @neo.get_node_relationships_to(@endowment_node, @node, "in", ENDOWMENT_DONOR)
+                rels = @neo.get_node_relationships_to(endowment_node, @node, "in", ENDOWMENT_DONOR)
 
                 # Should be only one - delete all
                 rels.each { |rel_id| @neo.delete_relationship(rel_id) }
 
         end
-
-	def donate( donor_id, endowment_id, transaction_id, date, amount ) 
-
-		# Called upon successful funds transfer from donor to giv2giv
-
-		# Donor makes donation into a giv2giv mini-endowment. Create a relationship between donor and endowment, storing key/value data pairs in the relationship
-
-		@endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
-                @node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
-
-		# Create a new outgoing relation from the donor *to* the endowment to record the transaction
-                donation_rel = @node.outgoing(DONATES) << @endowment_node 
-		donation_rel.transaction_id = transaction_id
-		donation_rel.date = date
-		donation_rel.amount = amount
-
-
-		# get share_info for the endowment to get share_price, shares_oustanding, current_value
-		share_info = Endowment.get_share_info( endowment_id )
-
-		# Always use BigDecimal
-		share_price = BigDecimal(share_info.share_price) # get_share_price returns a string
-		amount = BigDecimal(amount) # amount donated
-
-		shares_purchased = ( amount / share_price ) # How many shares were purchased?
-
-		donation_rel.share_price = share_price.to_s() # Store # of shares for this transaction in the relationship
-		donation_rel.shares_purchased = shares_purchased.to_s() # Store # of shares for this transaction in the relationship
-
-		# Store new shares_outstanding in the share_info node
-		share_info.shares_outstanding = (BigDecimal(share_info.shares_outstanding) + shares_purchased).to_s()
-
-		# Store new current_value in the share_info node
-		share_info.current_value = (BigDecimal(share_info.current_value) + amount).to_s()
-
-	end
 
 
 	def endowments_contributed_to()
