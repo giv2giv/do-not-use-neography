@@ -9,7 +9,7 @@ class Endowment
 
 # This code is untested -MPB
 
-	def self.create(owner_id, name, amount, frequency)
+	def self.create(creator_id, name, amount, frequency)
 
         	@node = Neography::Node.create(
 			"id" => generate_unique_id(),
@@ -25,7 +25,7 @@ class Endowment
         	# Add this node to the type index for easy retrieval of all endowments
         	@node.add_to_index(TYPE_INDEX, TYPE_INDEX, ENDOWMENT_TYPE)
 	
-        	# Look up the Donor owner's / endowment creator's node by id 
+        	# Look up the endowment creator's node by id 
         	creator_donor = Neography::Node.find(ID_INDEX, ID_INDEX, creator_id)
 	
         	# Relate the donor to the endowment
@@ -36,12 +36,12 @@ class Endowment
 			"id" => generate_unique_id(),
 			"share_price" => "0.01",
 			"shares_outstanding" => "0",
-			"fund_value" => "0",
+			"current_value" => "0",
 		)
-        	@node.add_to_index(ID_INDEX, ID_INDEX, @share_node.id)
+        	@share_node.add_to_index(ID_INDEX, ID_INDEX, @share_node.id)
 
-		# Add to SHARE_INDEX to allow share info lookup using endowment_id (@node.id) and date
-        	@node.add_to_index(SHARE_INDEX, @node.id, Date.today.to_s())
+		# Add share_node to SHARE_INDEX to allow share info lookup using endowment_id (@node.id) and date
+        	@share_node.add_to_index(SHARE_INDEX, @node.id, Date.today.to_s())
 
 	end
 
@@ -114,7 +114,7 @@ class Endowment
 		# share node has share_price, shares_outstanding, endowment_value
 
         end
-
+=begin
 	def self.buy_fund( endowment_id, transaction_id, fund_id, date, amount ) # Called when funds moved from dwolla/paypal to tradeking
 
 		@node = Neography::Node.find( ID_INDEX, ID_INDEX, endowment_id )
@@ -138,29 +138,14 @@ class Endowment
                 fund_rel.amount = amount
 
         end
-
 	def self.grant_failed( ) # called by Dwolla upon failed grant out to a charity (maybe they never accepted funds?)
 		# Should we say 'Contact your charity!' ? What if amount is small?
 	end
+=end
 
-	def self.grant_successful( endowment_id, transaction_id, charity_id, date, amount )
 
-		# This will be called when grant is scheduled out to a charity
 
-		# No need to fiddle w/ shares because shares sold in grant_prepare()
-
-		# Recording a bulk grant from an endowment out to a charity
-		@node = Neography::Node.find( ID_INDEX, ID_INDEX, endowment_id )
-                @charity_node = Neography::Node.find( ID_INDEX, ID_INDEX, charity_id )
-
-		grant_rel = @node.outgoing(GRANTS) << @charity_node # Create a new relationship from endowment to charity
-		grant_rel.transaction_id = transaction_id # Set relationship properties
-                grant_rel.date = date
-                grant_rel.amount = amount
-
-	end
-
-	def self.pay_investment_fee( endowment_id, transaction_id, fund_id, date, amount )
+	def self.investment_fee( endowment_id, transaction_id, fund_id, date, amount )
 
 		@node = Neography::Node.find( ID_INDEX, ID_INDEX, endowment_id )
                 @fund_node = Neography::Node.find( ID_INDEX, ID_INDEX, fund_id )
@@ -172,31 +157,90 @@ class Endowment
 
 	end
 
-	def self.processor_fee( endowment_id, transaction_id, processor_id, date, amount )
+	def self.processor_fee( endowment_id, transaction_id, fee )
 
                 @node = Neography::Node.find( ID_INDEX, ID_INDEX, endowment_id )
-                @processor_node = Neography::Node.find( ID_INDEX, ID_INDEX, processor_id )
+                @processor_node = fetch_processor_node() # from lib/functions.rb
 
                 processor_rel = @node.outgoing(PROCESSOR_FEE) << @processor_node   # Create a new relationship from endowment to processor
                 processor_rel.transaction_id = transaction_id # Set relationship properties
-                processor_rel.date = date
-                processor_rel.amount = amount
+                processor_rel.fee = fee
 
         end
 
-	def self.sponsor_fee( endowment, transaction_id, date, amount )
+	def self.sponsor_fee( endowment_id, transaction_id, date, amount )
 
-		@node = fetch_sponsor_organization_node() # from lib/functions.rb
-                @processor_node = Neography::Node.find( ID_INDEX, ID_INDEX, processor_id )
+                @node = Neography::Node.find( ID_INDEX, ID_INDEX, endowment_id )
+		@sponsor_node = fetch_sponsor_organization_node() # from lib/functions.rb
 
-                fund_rel = @node.outgoing(PROCESSOR_FEE) << @processor_node   # Create a new relationship from endowment to sponsor
-                fund_rel.transaction_id = transaction_id # Set relationship properties
-                fund_rel.date = date
-                fund_rel.amount = amount
+                fee_rel = @node.outgoing(PROCESSOR_FEE) << @sponsor_node   # Create a new relationship from endowment to sponsor
+                fee_rel.transaction_id = transaction_id # Set relationship properties
+                fee_rel.date = date
+                fee_rel.amount = amount
 
 	end
 
-	
+
+
+
+	def self.nightly_donations_to_shares( endowment_id )
+
+		# Look up the endowment node
+		@node = Neography::Node.find( ID_INDEX, ID_INDEX, endowment_id )
+
+
+		# Find all COMPLETED in to endowment that occurred yesterday
+		donations = @node.incoming(COMPLETED).filter("position.lastRelationship().getProperty('date') == '#{Date.yesterday}';")
+
+		# Look up endowment share_info in index
+		share_info = self.get_share_info( endowment_id, Date.yesterday.to_s() )
+
+		# Always use BigDecimal 
+
+		shares_outstanding = BigDecimal( share_info.shares_outstanding )
+		current_value = BigDecimal( share_info.current_value )
+
+		donations.each do |donation_node|
+
+			# shares_purchased = COMPLETED.amount / share_price
+			amount = BigDecimal( donation_node.amount_completed )
+			share_price = BigDecimal( share_info.share_price )
+
+			shares_purchased = amount / share_price
+			donation_node.shares_purchased = shares_purchased.to_s()
+
+			current_value += amount
+			shares_outstanding += shares_purchased
+
+		end
+
+
+
+		# Now do the scheduled grants out to charities
+
+		# This is all kinds of wrong
+		grants = @node.outgoing(SCHEDULED).filter("position.lastRelationship().getProperty('date') == '#{Date.yesterday}';")
+
+		grants.each do |grant_node|
+
+			# shares_purchased = COMPLETED.amount / share_price
+                        amount = BigDecimal( grant_node.amount_completed )
+                        share_price = BigDecimal( share_info.share_price )
+
+                        shares_sold = amount / share_price
+                        grant_node.shares_sold = shares_sold.to_s()
+
+                        current_value -= amount
+                        shares_outstanding -= shares_sold
+		end
+
+
+		# Update Endowment share_info.current_value
+		share_info.current_value = current_value
+		# Update Endowment share_info.shares_outstanding
+		share_info.shares_outstanding = shares_outstanding
+	end
+
 
 
 =begin
