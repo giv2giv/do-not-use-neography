@@ -7,7 +7,28 @@ class App < Sinatra::Application
 
   get '/donors' do
 	#get list of ALL donors -- method needed in models/donor.rb
-	donors=Donor.find_all
+	donors = Neography::Node.find(TYPE_INDEX, TYPE_INDEX, DONOR_TYPE)
+	puts donors
+	puts donors.class
+	if ! donors
+		puts "No results found"
+	else
+		puts donors.length
+		if donors.class == "Neography::Node"# This is needed because if there is only one result, the class is "Neography::Node" - 2 or more and it is "Array"
+			puts donors
+			puts "SOMETHING!"
+		
+		else
+			donors.each do |donor|
+				puts donors.length
+				puts donor
+				puts "SOMETHINGE ELSE!"
+			end
+		end
+	end
+#	end
+	puts
+#	donors=Donor.find_all
 #	puts donors
   end
 
@@ -48,7 +69,7 @@ curl -i -H "Accept: application/json" -X POST -d '{"name":"josh","email":"newema
 	#not the best way to impement a search to see if the email is in use already, but hey it works. can improve later
 	if ! search
 		@donor=Donor.create(data["name"], data["email"], data["password"], data["address1"], data["address2"], data["city"], data["state"], data["country"], data["zip"], data["facebook_token"], data["dwolla_token"], data["twitter_token"])
-		puts "Created new users, with the following data:"
+		puts "Created a new user, with the following data:"
 		puts data
 		puts @donor
 		puts @donor.id
