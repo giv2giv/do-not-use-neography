@@ -21,7 +21,9 @@ end
 namespace :database do
 	desc "installation and setup of neo4j database. Needs user with passwordless sudo"
 	task :init do
-		exec("ruby lib/initial_seed.rb")
+		exec "rake neo4j:install"
+		exec "rake neo4j:start"
+		exec "ruby lib/initial_seed.rb"
 =begin
 TODO
 needs code to check whether it's already been run and give warning if so
