@@ -26,16 +26,17 @@ end
 
 
 namespace :neo do
-	desc "installation and setup of neo4j database. Needs user with passwordless sudo"
-	task :install do
+	desc "sets up database, starts it, and seeds it with some test data -- use 'rake neo:setup[value] where value is the number of charities to import"
+	task :setup, :arg1 do |t, args|
+		exec "bundle install"
 		exec "rake neo4j:install"
 		exec "rake neo4j:start"
-		exec "ruby lib/initial_seed.rb"
-		exec "ruby charity_import.rb"
-
+		charity_import(args[:arg1].to_i)
+		initial_seed
 	end # task
 
-	desc "seeding initial database"
+
+	desc "seed initial database - command takes form of 'rake neo:seed[value] where value is the number of charities to import"
 	task :seed, :arg1 do |t, args|
 		puts "Performing charity import: importing first #{args[:arg1]} charities -- PLEASE WAIT. TIME INTENSIVE PROCESS"
 		charity_import(args[:arg1].to_i) #will halt the import at :arg1 number of charities
