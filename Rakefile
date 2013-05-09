@@ -26,7 +26,7 @@ end
 
 
 namespace :neo do
-	desc "sets up database, starts it, and seeds it with some test data -- use 'rake neo:setup[value] where value is the number of charities to import"
+	desc "sets up & starts db, and seeds it with test data - use 'rake neo:setup[value]' - value is the number of charities to import"
 	task :setup, :arg1 do |t, args|
 		exec "bundle install"
 		exec "rake neo4j:install"
