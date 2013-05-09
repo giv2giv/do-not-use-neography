@@ -5,76 +5,64 @@ class Fund
 
 	attr_accessor :node
 
-	def request_buy( )
+	def self.create( name ) 
+
+                @node = Neography::Node.create(
+                        "id" => generate_unique_id(),
+                        "name" => name
+                )
+
+		# Create the initial endowment share price node
+                @share_node = Neography::Node.create(
+                        "id" => generate_unique_id(),
+                        "share_price" => "0.01",
+                        "shares_outstanding" => "0",
+                        "fund_value" => "0",
+                )
+
+                @share_node.add_to_index(ID_INDEX, ID_INDEX, @share_node.id) # push node into catch-all ID index
+
+                # Add to SHARE_INDEX to allow share info lookup using fund_id (@node.id) and date
+                @share_node.add_to_index(SHARE_INDEX, @node.id, Date.today.to_s())
 
 	end
 
-	def complete_buy( )
+	def schedule_buy( fund_id )
+	end
 
+	def complete_buy( fund_id )
 	end
 
 
 
-	def self.request_donation( donor_id, endowment_id, amount )
+	def compute_share_price( fund_id )
 
-                # Called upon adding a Dwolla request for donation
-
-                # DAN do your magic here
-                # transaction_id = Dwolla.request_funds(tokens, donors, amounts)
-
-                @node = Neography::Node.find(ID_INDEX, ID_INDEX, donor_id)
-
-                endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
-
-                # Create a node for the donation
-                donation_node = Neography::Node.create( "id" => generate_unique_id(), "transaction_id" => transaction_id)
-                donation_node.request_date = Date.today.to_s()
-
-		# Add to donations index for later retrieval using donor_id, transaction_id
-                donation_node.add_to_index(DONATION_INDEX, donor_id, transaction_id)
-
-                # Create a request relationship from donor to donation
-                request_rel = @node.outgoing(REQUESTS_DONATION) << donation_node
-
-                # Create a pending relationship from donation to Endowment
-                pending_rel = donation_node.outgoing(PENDING_DONATION) << endowment_node
-		# Put original amount in the pending relationship
-                pending_rel.amount = amount
-
-        end
-
-	def self.complete_donation( donor_id, endowment_id, transaction_id, date, amount, fee=nil )
-
-                # Called by Dwolla webhook upon successful donation
-                # Donor completes donation into a giv2giv mini-endowment. Create a relationship between donor and endowment, storing key/value data pairs in the relationship
-
-                endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
-                # Find donation node
-                donation_node = Neography::Node.find(DONATION_INDEX, donor_id, transaction_id)
+		# Look up fund node
+		@fund_node = Neography::Node.find(ID_INDEX, ID_INDEX, fund_id)
 
 
-                if fee!=nil
-                	processor_node = Neography::Node.find(TYPE_INDEX, TYPE_INDEX, PROCESSOR_TYPE)
-                        fee_rel = donation_node.outgoing(PROCESSOR_FEE) << processor_node
-                        fee_rel.amount = fee
-                end
-
-                # Create a new outgoing relation from the donation *to* the endowment to record the transaction
-                completed_rel = donation_node.outgoing(COMPLETED_DONATION) << endowment_node
-                completed_rel.date = date
-                completed_rel.amount = amount
+		# Look up share price node from previous day
+		@yesterday_node = Neography::Node.find(SHARE_INDEX, fund_id, Date.yesterday)
 
 
+		# Execute completed BUYs, increasing shares_standing
+		# We may need to do this with cypher
+		yesterday_buys = @fund_node.incoming(BUYS).filter("position.endNode().getProperty('date') == '#{Date.yesterday}';")
 
+		# Execute completed SELLs, decreasing shares_standing
+		yesterday_sells = @fund_node.incoming(SELLS).filter("position.endNode().getProperty('date') == '#{Date.yesterday}';")
 
-		# Maybe move the below to a share-management library to record shares per donor, donation (endowment buy), grant (endowment sale), endowment, fund, fund purchase, and fund sale
-
-                # get share_info for the endowment to get share_price, shares_oustanding, current_value
-                share_info = Endowment.get_share_info( endowment_id, Date.today.to_s())
 
                 # Always use BigDecimal
-                share_price = BigDecimal(share_info.share_price) # get_share_price returns a string
-                amount = BigDecimal(amount) # amount donated
+                share_price = BigDecimal($yesterday_node.share_price) # get_share_price returns a string
+
+		node_id = @yesterday_node.neo_id
+
+		# Sum across completed buys
+        	buy_amount = @neo.execute_query("START me = node({node_id})
+        	MATCH (me)-[buys#{COMPLETED}]->(fund)
+		WHERE buys.date='#{Date.yesterday}'
+        	RETURN SUM(buys.amount)", {:node_id => node_id})["data"]
 
                 shares_purchased = ( amount / share_price ) # How many shares were purchased?
 
@@ -87,6 +75,31 @@ class Fund
                 # Store new endowment current_value in the endowment's share_info node
                 share_info.current_value = (BigDecimal(share_info.current_value) + amount).to_s()
 
-        end
+
+		@today_node = Neography::Node.create(
+                        "id" => generate_unique_id(),
+                        "share_price" => "0.01",
+                        "shares_outstanding" => "0",
+                        "fund_value" => "0",
+                )
+
+		# Look up buys / sales
+
+		# Incoming ACH Received's add to shares_outstanding
+		# Look up eTrade, find incoming deposits from previous day
+
+		# Outgoing SELL relationships subtract from shares_outstanding
+
+		@buy_nodes = Neography::Node.find(SHARE_INDEX, fund_id, date)
+
+		# Look up appreciation/depreciation
+		# Look up total fund value
+		
+
+		# Compute new shares outstanding
+		# Compute new share price
+
+	end
+	
 
 end # end class
