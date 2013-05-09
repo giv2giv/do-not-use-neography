@@ -8,9 +8,12 @@ require 'nokogiri'
 
 #include GeoKit::Geocoders
 
+
+def charity_import(value)
 load 'config/g2g-config.rb'
 load 'IRS_charity_classification_codes.rb'
 load 'models/charity.rb'
+
 
 # Make the directory to write the excel files if it doesn't exist
 Dir.mkdir(EXCEL_DIRECTORY) unless File.exists?(EXCEL_DIRECTORY)
@@ -127,7 +130,7 @@ Key/Values in the excel files:
 #						puts "Anything!" --- i used this as debugger code -- josh
 						if @ii > 0
 							#puts ein
-
+							puts @ii
 							charity = Charity.find_by_ein(ein)
 
 							if charity==nil
@@ -154,7 +157,7 @@ Key/Values in the excel files:
   						@ii = @ii+1
 	
 						# Debugging mode - comment to load all charities
-						exit if @ii > 5000
+						exit if @ii > ARGV[0].to_i
 
   					#end #END if empty row or not 0th row   if row != nil && @ii > 0
 				end
@@ -169,3 +172,4 @@ Key/Values in the excel files:
 end # END looping through URLs   @urls.each do |url|
 
 puts "Imported #{@ii} charities."
+end #method definition
