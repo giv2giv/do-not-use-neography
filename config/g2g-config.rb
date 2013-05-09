@@ -55,8 +55,15 @@ ENDOWMENT_CHARITY =":charity"  # The package-will-grant-out-to-charity relations
 
 
 # Endowment/donor/charity/fund transaction tracking relationships
-DONATES=":donates" # Donor makes donation into a giv2giv mini-endowment, will receive X shares of endowment
-BUYS=":buys" # giv2giv mini-endowments monies are invested into a fund
+SCHEDULED=":scheduled" 
+COMPLETED=":completed"
+
+
+# Donor makes donation into a giv2giv mini-endowment, will receive X shares of endowment
+#SCHEDULED_DONATES=":donates" # Donor makes donation into a giv2giv mini-endowment, will receive X shares of endowment
+#SCHEDULED_DONATES=":donates" # Donor makes donation into a giv2giv mini-endowment, will receive X shares of endowment
+#SCHEDULED_BUY=":scheduled_buy" # giv2giv mini-endowments monies are invested into a fund
+#COMPLETED_BUY=":completed_buy" # giv2giv mini-endowments monies are invested into a fund
 SELLS=":sells" # giv2giv mini-endowments investment fund shares sold, monies are returned to endowment
 SHARE_PRICE=":share_price" # giv2giv mini-endowment investment fund *daily* share prices
 GRANTS=":grants" # Mini-endowment pays out to a charity
