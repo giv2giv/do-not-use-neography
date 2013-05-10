@@ -177,13 +177,13 @@ def charity_import(val)
 	
 									# The charity node already exists
 									# Update the existing node properties with data from the IRS import
-									Charity.node.name = name
-									Charity.node.address = address 
-									Charity.node.city = city 
-									Charity.node.state = state 
-									Charity.node.zip = zip 
-									Charity.node.ntee_common = ntee_common 
-									Charity.node.ntee_core = ntee_core 
+									charity.name = name
+									charity.address = address 
+									charity.city = city 
+									charity.state = state 
+									charity.zip = zip 
+									charity.ntee_common = ntee_common 
+									charity.ntee_core = ntee_core 
 									#charity.node.latitude = latitude 
 									#charity.node.longitude = longitude 
 	
