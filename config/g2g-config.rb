@@ -53,6 +53,9 @@ ENDOWMENT_DONOR =":donor"  # The donor-contributing-into-endowment relationship
 ENDOWMENT_INVESTMENT =":investment"  # The package-invested-into-fund relationship
 ENDOWMENT_CHARITY =":charity"  # The package-will-grant-out-to-charity relationship
 
+GRANT_PERCENT=".015"
+
+DONOR_ADVISED=":donor_advised" # relationship for total share per endowment advised upon
 
 # Endowment/donor/charity/fund transaction tracking relationships
 SCHEDULED=":scheduled" 
