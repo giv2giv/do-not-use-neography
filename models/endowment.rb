@@ -1,4 +1,5 @@
 load 'lib/functions.rb'
+require 'bigdecimal'
 
 class Endowment
 
@@ -188,10 +189,6 @@ class Endowment
 		# Look up the endowment node
 		@node = Neography::Node.find( ID_INDEX, ID_INDEX, endowment_id )
 
-
-		# Find all COMPLETED in to endowment that occurred yesterday
-		donations = @node.incoming(COMPLETED).filter("position.lastRelationship().getProperty('date') == '#{Date.yesterday}';")
-
 		# Look up endowment share_info in index
 		share_info = self.get_share_info( endowment_id, Date.yesterday.to_s() )
 
@@ -200,14 +197,34 @@ class Endowment
 		shares_outstanding = BigDecimal( share_info.shares_outstanding )
 		current_value = BigDecimal( share_info.current_value )
 
-		donations.each do |donation_node|
+		# Find all COMPLETED in to endowment that occurred yesterday
 
-			# shares_purchased = COMPLETED.amount / share_price
-			amount = BigDecimal( donation_node.amount_completed )
+                donation_results = Neography::Rest.new.execute_query("START me = node(#{@node.neo_id})
+                        MATCH (donor)->[scheduled#{SCHEDULED}]->(donation)-[completed#{COMPLETED}]->(me)
+                        WHERE donation.date_completed='#{Date.yesterday}'
+                        RETURN donor.id AS donor_id, donation.id AS donation_id, donation.amount_completed")
+                
+                array_of_hashes = donation_results["data"].map {|row| Hash[*donation_results["columns"].zip(row).flatten] }
+                donations = array_of_hashes.map{|m| OpenStruct.new(m)}
+
+                # Now we should have donation.donor_id
+
+
+		donations.each do |donation|
+
+			# shares_purchased = amount_completed / share_price
+			amount = BigDecimal( donation.amount_completed )
 			share_price = BigDecimal( share_info.share_price )
 
 			shares_purchased = amount / share_price
+
+			# Record the shares_purchased in the donation node
+			donation_node = Neography::Node.find( ID_INDEX, ID_INDEX, donation.donation_id )
 			donation_node.shares_purchased = shares_purchased.to_s()
+
+			
+			# TODO how do we easily retrieve total endowment shares by donor? sum(donation_nodes.shares_purchased) - sum(grant_nodes.shares_sold) ? Seems cumbersome
+			# We may be better off using a donor-[DONOR_ADVISED]->endowment relationship where DONOR_ADVISED.total_shares is updated on each donation/grant
 
 			current_value += amount
 			shares_outstanding += shares_purchased
@@ -219,6 +236,8 @@ class Endowment
 		# Now do the scheduled grants out to charities
 
 		# This is all kinds of wrong
+
+=begin
 		grants = @node.outgoing(SCHEDULED).filter("position.lastRelationship().getProperty('date') == '#{Date.yesterday}';")
 
 		grants.each do |grant_node|
@@ -233,12 +252,26 @@ class Endowment
                         current_value -= amount
                         shares_outstanding -= shares_sold
 		end
+=end
 
 
-		# Update Endowment share_info.current_value
-		share_info.current_value = current_value
-		# Update Endowment share_info.shares_outstanding
-		share_info.shares_outstanding = shares_outstanding
+
+
+		# Now compute the new share price; current_value and shares_outstanding are already BigDecimal
+		share_price = current_value / shares_outstanding
+
+		# Now create a new share_node for today and index it
+		@share_node = Neography::Node.create(
+                        "id" => generate_unique_id(),
+                        "share_price" => share_price,
+                        "shares_outstanding" => shares_oustanding.to_s(),
+                        "current_value" => current_value.to_s()
+                )
+                @share_node.add_to_index(ID_INDEX, ID_INDEX, @share_node.id)
+
+                # Add share_node to SHARE_INDEX to allow share info lookup using endowment_id (@node.id) and date
+                @share_node.add_to_index(SHARE_INDEX, @node.id, Date.today.to_s())
+
 	end
 
 

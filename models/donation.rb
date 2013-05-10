@@ -33,7 +33,7 @@ class Donation
 
 		# Add date and amount to scheduled relationship
                 donation_node.date_scheduled = Date.today.to_s()
-                donation_rel.amount_scheduled = amount
+                donation_node.amount_scheduled = amount
 
         end
 
@@ -60,6 +60,7 @@ class Donation
 			Endowment.fee( endowment_node.id, transaction_id, fee )
                 end
 
+		# Share purchases are recorded nightly to avoid collisions
 
         end
 

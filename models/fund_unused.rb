@@ -1,5 +1,6 @@
 
 load 'lib/functions.rb'
+require 'bigdecimal'
 
 class Fund
 
@@ -26,13 +27,6 @@ class Fund
                 @share_node.add_to_index(SHARE_INDEX, @node.id, Date.today.to_s())
 
 	end
-
-	def schedule_buy( fund_id )
-	end
-
-	def complete_buy( fund_id )
-	end
-
 
 
 	def compute_share_price( fund_id )
@@ -100,6 +94,6 @@ class Fund
 		# Compute new share price
 
 	end
-	
+
 
 end # end class
