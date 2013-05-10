@@ -2,13 +2,42 @@
 
 load 'lib/functions.rb'
 
+require 'bigdecimal'
+
 class Grant
 
 	attr_accessor :node
 
 
 	def generate_grant( date )
+
         	# generate excel of grant advice from donors
+
+		# Find all endowments
+		endowments = Neography::Node.find(TYPE_INDEX, TYPE_INDEX, ENDOWMENT_TYPE)
+
+		endowments.each do |endowment_node|
+
+			# Find endowments' values on date
+                	@share_node = Neography::Node.find(SHARE_INDEX, endowment_id, date)
+			if @share_node.current_value > 0
+				# How much is this endowment granting out?
+				grant_amount = BigDecimal( GRANT_PERCENT ) * BigDecimal( @share_node.current_value )
+			end
+
+			# Find donors contributing and the portion of the grant over which they hold advisory powers
+
+			donors = endowment_node.incoming(ENDOWMENT_DONOR)
+
+
+			# Find charities advised to receive grants
+
+
+		end
+
+
+
+
         	# Each endowment's charity gets: { share_info.current_value * 1.5% / num_charities }
         	# columns: donor_id, endowment_id, endowment_name, charity_id, charity_name, amount
 		# Outputs excel for off-line review, changes and approval
