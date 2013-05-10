@@ -213,12 +213,6 @@ def charity_import(val)
 	
 	end #method definition
 
-namespace :boo do
-task :testingdis, :arg1 do |t, args|
-		charity_import(args[:arg1].to_i) #will halt the import at :arg1 number of charities
-end #task
-
-
 
 end #namespace
 
