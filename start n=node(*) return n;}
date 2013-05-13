@@ -1,0 +1,5 @@
+{
+  "message" : "1",
+  "exception" : "ArrayIndexOutOfBoundsException",
+  "stacktrace" : [ "org.neo4j.server.rest.repr.formats.UrlFormFormat.readMap(UrlFormFormat.java:99)", "org.neo4j.server.rest.repr.RepresentationFormat.readParameterList(RepresentationFormat.java:97)", "org.neo4j.server.rest.web.ExtensionService.invokeGraphDatabaseExtension(ExtensionService.java:122)", "java.lang.reflect.Method.invoke(Method.java:616)" ]
+}

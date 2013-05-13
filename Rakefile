@@ -206,7 +206,7 @@ def charity_import(val)
 	                end # END HTTP connection  Net::HTTP.start("www.irs.gov") do |http|
 	        #ensure
 	
-	        end # END begin
+#	        end # END begin
 	end # END looping through URLs   @urls.each do |url|
 	
 	puts "Imported #{@ii} charities."

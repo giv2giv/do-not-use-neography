@@ -135,6 +135,12 @@ class Donor
         end
 
 
+
+
+
+
+
+
 	def endowments_contributed_to()
 		#return list of all endowments donor contributes to
 	end
