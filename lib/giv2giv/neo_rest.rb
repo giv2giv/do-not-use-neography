@@ -36,9 +36,9 @@ class NeoRest
 		request = Net::HTTP::Put.new("/db/data/node/"+id.to_s+"/properties/"+key)
 		request.body=value
 		response = @http.request(request)
-		puts "BOOBOOBOBOBOBOBOBO"+response.body.inspect
+#		puts "BOOBOOBOBOBOBOBOBO"+response.body.inspect
 #		create_instance(response)
-		self.get(id)
+#		self.get(id)
 	end
 
 	def self.post(key = "id", value = generate_unique_id())
