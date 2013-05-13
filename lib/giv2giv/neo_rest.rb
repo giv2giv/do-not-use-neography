@@ -14,8 +14,23 @@ load 'lib/functions.rb'
 
 
 class NeoRest
-	attr_accessor :data
-	@http = Net::HTTP.new("localhost", "7474")
+  attr_accessor :data
+  @http = Net::HTTP.new("localhost", "7474")
+  
+  def self.save!(node) 
+    request = Net::HTTP::Post.new("/db/data/node/")
+    request.set_form_data(node.attributes)
+    response = @http.request(request)
+    puts response.body.inspect    
+    node.attributes = create_instance(response)
+  end
+
+  def self.find(id) 
+    request = Net::HTTP::Get.new("/db/data/node/"+id.to_s)
+    response = @http.request(request)
+    create_instance(response)
+  end
+
 
 	def self.put(id, key= nil, value = nil)
 		request = Net::HTTP::Put.new("/db/data/node/"+id.to_s)
@@ -56,14 +71,10 @@ class NeoRest
 	end
 
 	def self.create_instance(response)
-		puts response.body
-		decode=JSON.parse(response.body)
-		instance = self.new 
-		instance.data=decode["data"]
-		puts "created following instance"
-		puts decode["data"]
-		puts decode["self"]
-		instance
+          puts response.body
+          attrs = JSON.parse(response.body)["data"]
+          attrs[:id] = JSON.parse(response.body)["self"].match(/\d*$/)
+          attrs
 	end
 
 	def self.add_to_index(node, index)
@@ -75,28 +86,6 @@ class NeoRest
 
 
 end #class
-
-
-#testrest()
-
-puts "SHOULD POST STUFF"
-bob=NeoRest.post()
-puts bob.class
-
-
-#puts "SHOULD PUT/EDIT SOMETHING"
-#bob=NeoRest.put(11081, "email", "joshemail")
-
-
-puts "SHOULD GET STUFF"
-josh=NeoRest.get(11081)
-puts josh.class
-
-
-
-puts "SHOULD DELETE STUFF"
-joshdel=NeoRest.delete(11051)
-puts joshdel
 
 
 

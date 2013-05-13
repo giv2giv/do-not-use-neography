@@ -4,7 +4,32 @@ load 'lib/functions.rb'
 
 class Donation
 
-	attr_accessor :node
+  # attr_accessor :node
+  attr_accessor trasaction_id
+  attr_accessor date
+  attr_accessor amount
+  attr_accessor is_scheduled
+  node_accessor donor
+  node_accessor endowment
+
+
+  def initialize(donor, endowment, amount)
+    @date = new()
+    @amount = amount
+    @donor       = donor
+    @endowment   = endowment
+  end
+  
+  def schedule_donation()
+    @trasaction_id = Dwolla ....
+    add_to_index DONATION_INDEX, :transaction_id
+  end
+
+  def complete_donation()
+  end
+
+
+
 
 	def self.schedule_donation( donor_id, endowment_id, amount )
 
@@ -16,8 +41,7 @@ class Donation
                 endowment_node = Neography::Node.find(ID_INDEX, ID_INDEX, endowment_id)
 
 
-                # DAN do your magic here
-		# transaction_id = Dwolla.schedule_funds(tokens, donors, amounts)
+
 
                 # Create a donation node
                 donation_node = Neography::Node.create( "id" => generate_unique_id(), "transaction_id" => transaction_id)

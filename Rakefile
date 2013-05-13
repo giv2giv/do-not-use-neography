@@ -14,6 +14,7 @@ task :default => [:test]
 
 task :test do
   ruby "test/charity_import_test.rb"
+  ruby "test/neo4j_test.rb"
 end
 
 namespace :server do
