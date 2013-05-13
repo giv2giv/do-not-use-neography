@@ -20,9 +20,15 @@ class Neo4JTest < Test::Unit::TestCase
   end
 
   def test_fail_create
-    assert_raises do 
+    assert_raises Exception do 
       donor=TestDonor.new({:person=>"john"})
 	end
+  end
+
+  def test_put
+    donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})
+	puts "FJfffffffffffffffffffffffffffffffffF"+donor_dan.id.to_s
+	bob = NeoRest.put(donor_dan.id, "state", "virginia")
   end
 
 =begin

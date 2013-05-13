@@ -33,11 +33,12 @@ class NeoRest
 
 
 	def self.put(id, key= nil, value = nil)
-		request = Net::HTTP::Put.new("/db/data/node/"+id.to_s)
-		request.set_form_data({key => value})
+		request = Net::HTTP::Put.new("/db/data/node/"+id.to_s+"/properties/"+key)
+		request.body=value
 		response = @http.request(request)
-		puts response.body.inspect
-		create_instance(response)
+		puts "BOOBOOBOBOBOBOBOBO"+response.body.inspect
+#		create_instance(response)
+		self.get(id)
 	end
 
 	def self.post(key = "id", value = generate_unique_id())
@@ -71,7 +72,7 @@ class NeoRest
 	end
 
 	def self.create_instance(response)
-          puts response.body
+#          puts response.body
           attrs = JSON.parse(response.body)["data"]
           attrs[:id] = JSON.parse(response.body)["self"].match(/\d*$/)
           attrs
