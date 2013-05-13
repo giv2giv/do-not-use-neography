@@ -84,8 +84,8 @@ bob=NeoRest.post()
 puts bob.class
 
 
-puts "SHOULD PUT/EDIT SOMETHING"
-bob=NeoRest.put(11081, "email", "joshemail")
+#puts "SHOULD PUT/EDIT SOMETHING"
+#bob=NeoRest.put(11081, "email", "joshemail")
 
 
 puts "SHOULD GET STUFF"
