@@ -19,6 +19,19 @@ class Neo4JTest < Test::Unit::TestCase
     assert_not_nil NeoRest.find(donor_dan.id)
   end
 
+  def test_fail_create
+    assert_raises do 
+      donor=TestDonor.new({:person=>"john"})
+	end
+  end
+
+=begin
+  def test_add_attribute
+    donor_dan=TestDonor.new({:name=>"Booyah", :email => "pooppsie@mcpooples.com"})
+	NeoRest.save!(donor_dan)
+	donor_dan.attribute=value
+  end
+=end
   def test_relationship
 #    donor_josh = TestDonor.new({:name => "Josh", :email => "jlegs@sexybarristas.com"})
 #    donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})
