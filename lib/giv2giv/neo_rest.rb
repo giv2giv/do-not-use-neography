@@ -11,13 +11,22 @@ end
 class NeoRest
   attr_accessor :data
   @http = Net::HTTP.new("localhost", "7474")
-  
+
+  # Handles both create and update.
   def self.save!(node) 
-    request = Net::HTTP::Post.new("/db/data/node/")
+    if(node.id.nil?)
+       request = Net::HTTP::Post.new("/db/data/node/")
+    else
+       request = Net::HTTP::Put.new("/db/data/node/#{node.id}/properties")
+    end
     request.set_form_data(node.attributes)
     response = @http.request(request)
-    node.attributes = dehash_attributes(response) #takes a hash and sets those as actual attributes on the instance, to make each of them callable
+    if(node.id.nil?)
+      node.attributes = dehash_attributes(response) #takes a hash and sets those as actual attributes on the instance, to make each of them callable
+    end
+    node
   end
+
 
   def self.find(id) 
     request  = Net::HTTP::Get.new("/db/data/node/"+id.to_s)
@@ -25,8 +34,7 @@ class NeoRest
     attrs    = dehash_attributes(response)
     # This next line creates an instance of the sub class with the correct attributes based on
     # the "type" attribute.  So "Type" must align with a known sub class of node.
-    keys_as_syms = attrs.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
-    Object.const_get(attrs["type"]).new(keys_as_syms)
+    Object.const_get(attrs[:type]).new(attrs)
   end
 
 
@@ -76,7 +84,11 @@ class NeoRest
 	def self.dehash_attributes(response)
           response_hash = JSON.parse(response.body)
           attrs = response_hash["data"]
+          # Convert all keys to hashes
+          attrs = attrs.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+
           response_hash["self"].match(/(\d*)$/)
+
           attrs[:id] = $1.to_i
           attrs
 	end

@@ -33,6 +33,17 @@ class Neo4JTest < Test::Unit::TestCase
     assert_equal "daniel.h.funk@gmail.com", donor_dan2.email
   end
 
+  def test_modify
+    donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})
+    NeoRest.save!(donor_dan)
+    id         =  donor_dan.id
+    donor_dan.name="Not Dan"
+    NeoRest.save!(donor_dan)
+    assert_equal id, donor_dan.id
+    donor_dan  = NeoRest.find(id)
+    assert_equal "Not Dan", donor_dan.name
+  end
+
   def test_create_with_more_params
     donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com", :person => "johnny"})
     NeoRest.save!(donor_dan)
