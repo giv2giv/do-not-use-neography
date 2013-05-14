@@ -14,10 +14,18 @@ class Neo4JTest < Test::Unit::TestCase
 
   def test_create    
     donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})
-    NeoRest.save!(donor_dan)    
+    NeoRest.save!(donor_dan)
     assert_not_nil donor_dan.id
     assert_not_nil NeoRest.find(donor_dan.id)
   end
+
+  def test_create_with_more_params
+    donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com", :person => "johnny"})
+    NeoRest.save!(donor_dan)
+    assert_not_nil donor_dan.id
+    assert_not_nil NeoRest.find(donor_dan.id)
+  end
+
 
   def test_fail_create
     assert_raises Exception do 
@@ -25,12 +33,12 @@ class Neo4JTest < Test::Unit::TestCase
 	end
   end
 
-  def test_put
-    donor_dan  = TestDonor.new({:name => "josh",  :email => "dsmeoimefoie@gmail.com"})
-	NeoRest.save!(donor_dan)
-	bob = NeoRest.put(donor_dan.id, "state", "virginia")
+#  def test_put
+#    donor_dan  = TestDonor.new({:name => "josh",  :email => "dsmeoimefoie@gmail.com"})#
+#	NeoRest.save!(donor_dan)
+#	bob = NeoRest.put(donor_dan.id, "state", "virginia")
 #	NeoRest.save!(bob)
-  end
+#  end
 
 =begin
   def test_add_attribute
