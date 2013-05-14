@@ -8,6 +8,7 @@ require "#{root_dir}/lib/giv2giv/neo_rest"
 class TestDonor < Node
   node_attribute :name
   node_attribute :email
+#  relationship :friend, TestDonor
 end
 
 class Neo4JTest < Test::Unit::TestCase
@@ -64,17 +65,17 @@ class Neo4JTest < Test::Unit::TestCase
     id         =  donor_dan.id
     donor_dan  = NeoRest.find(id)
     assert_not_nil donor_dan
-    NeoRest.delete(id)
+    NeoRest.delete(donor_dan)
     assert_raises Exception do
       donor_dan  = NeoRest.find(id)
     end
   end
 
   def test_relationship
-#    donor_josh = TestDonor.new({:name => "Josh", :email => "jlegs@sexybarristas.com"})
-#    donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})
-#    donor_dan.add_friend(donor_josh, {:type => "just friends", :desc => "no sexy sexy"})
-#    Neo4J.save!(donor_dan)    
+    donor_josh = TestDonor.new({:name => "Josh", :email => "jlegs@sexybarristas.com"})
+    donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})
+    donor_dan.add_friend(donor_josh, {:type => "just friends", :desc => "no sexy sexy"})
+    Neo4J.save!(donor_dan)
   end
 
 end

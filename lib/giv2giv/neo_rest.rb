@@ -27,7 +27,6 @@ class NeoRest
     node
   end
 
-
   def self.find(id) 
     request  = Net::HTTP::Get.new("/db/data/node/"+id.to_s)
     response = @http.request(request)
@@ -40,8 +39,16 @@ class NeoRest
     Object.const_get(attrs[:type]).new(attrs)
   end
 
+  def self.delete(node)
+    request = Net::HTTP::Delete.new("/db/data/node/"+ node.id.to_s)
+    response = @http.request(request)
+  end #get
 
-	def self.put(id, key= "default", value = "poop")
+
+
+
+
+  def self.put(id, key= "default", value = "poop")
 		request = Net::HTTP::Put.new("/db/data/node/#{id}/properties/#{key}")
 #		request["content-type"] = "application/json"
 		request.body=value
@@ -54,23 +61,7 @@ class NeoRest
 #		puts new 
 	end
 
-	def self.post(key = "id", value = generate_unique_id())
-		request = Net::HTTP::Post.new("/db/data/node/")
-		request.set_form_data({key=>value})
-		response = @http.request(request)
-		dehash_attributes(response)
-	end
 
-	def self.get(id)
-		request = Net::HTTP::Get.new("/db/data/node/"+id.to_s)
-		response = @http.request(request)
-		dehash_attributes(response)
-	end #get
-
-	def self.delete(id)
-		request = Net::HTTP::Delete.new("/db/data/node/"+id.to_s)
-		response = @http.request(request)
-	end #get
 
 	def self.find_by_email(email)
 		request = Net::HTTP::Delete.new("/db/data/index/node/my_nodes/DONOR_EMAIL_INDEX/"+email)
