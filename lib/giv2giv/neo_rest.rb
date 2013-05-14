@@ -8,11 +8,6 @@ def getData()
   data = resp.body
 end
 
-
-#puts getData()
-load 'lib/functions.rb'
-
-
 class NeoRest
   attr_accessor :data
   @http = Net::HTTP.new("localhost", "7474")
@@ -22,13 +17,16 @@ class NeoRest
     request.set_form_data(node.attributes)
     response = @http.request(request)
     node.attributes = dehash_attributes(response) #takes a hash and sets those as actual attributes on the instance, to make each of them callable
-
   end
 
   def self.find(id) 
-    request = Net::HTTP::Get.new("/db/data/node/"+id.to_s)
+    request  = Net::HTTP::Get.new("/db/data/node/"+id.to_s)
     response = @http.request(request)
-    dehash_attributes(response)
+    attrs    = dehash_attributes(response)
+    # This next line creates an instance of the sub class with the correct attributes based on
+    # the "type" attribute.  So "Type" must align with a known sub class of node.
+    keys_as_syms = attrs.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+    Object.const_get(attrs["type"]).new(keys_as_syms)
   end
 
 
@@ -76,8 +74,10 @@ class NeoRest
 	end
 
 	def self.dehash_attributes(response)
-          attrs = JSON.parse(response.body)["data"]
-          attrs[:id] = JSON.parse(response.body)["self"].match(/\d*$/)
+          response_hash = JSON.parse(response.body)
+          attrs = response_hash["data"]
+          response_hash["self"].match(/(\d*)$/)
+          attrs[:id] = $1.to_i
           attrs
 	end
 
