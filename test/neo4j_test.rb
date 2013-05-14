@@ -29,6 +29,7 @@ class Neo4JTest < Test::Unit::TestCase
     donor_dan  = TestDonor.new({:name => "josh",  :email => "dsmeoimefoie@gmail.com"})
 	NeoRest.save!(donor_dan)
 	bob = NeoRest.put(donor_dan.id, "state", "virginia")
+#	NeoRest.save!(bob)
   end
 
 =begin

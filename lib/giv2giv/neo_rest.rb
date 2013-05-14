@@ -21,37 +21,38 @@ class NeoRest
     request = Net::HTTP::Post.new("/db/data/node/")
     request.set_form_data(node.attributes)
     response = @http.request(request)
-    puts response.body.inspect    
-    node.attributes = create_instance(response)
+    puts response.body.inspect
+    node.attributes = create_attributes(response)
   end
 
   def self.find(id) 
     request = Net::HTTP::Get.new("/db/data/node/"+id.to_s)
     response = @http.request(request)
-    create_instance(response)
+    create_attributes(response)
   end
 
 
 	def self.put(id, key= nil, value = nil)
 		request = Net::HTTP::Put.new("/db/data/node/"+id.to_s+"/properties/"+key)
-		request.body=value
+		request.set_form_data({key=>value})
 		response = @http.request(request)
 #		puts "BOOBOOBOBOBOBOBOBO"+response.body.inspect
-#		create_instance(response)
-#		self.get(id)
+#		create_attributes(response)
+		new=self.get(id)
+		puts new 
 	end
 
 	def self.post(key = "id", value = generate_unique_id())
 		request = Net::HTTP::Post.new("/db/data/node/")
 		request.set_form_data({key=>value})
 		response = @http.request(request)
-		create_instance(response)
+		create_attributes(response)
 	end
 
 	def self.get(id)
 		request = Net::HTTP::Get.new("/db/data/node/"+id.to_s)
 		response = @http.request(request)
-		create_instance(response)
+		create_attributes(response)
 	end #get
 
 	def self.delete(id)
@@ -62,16 +63,16 @@ class NeoRest
 	def self.find_by_email(email)
 		request = Net::HTTP::Delete.new("/db/data/index/node/my_nodes/DONOR_EMAIL_INDEX/"+email)
 		response=@http.request(request)
-		create_instance(response)
+		create_attributes(response)
 	end
 
 	def self.find_by_id(unique_id)
 		request = Net::HTTP::Delete.new("/db/data/index/node/my_nodes/DONOR_ID_INDEX/"+unique_id.to_s)
 		response=@http.request(request)
-		create_instance(response)
+		create_attributes(response)
 	end
 
-	def self.create_instance(response)
+	def self.create_attributes(response)
 #          puts response.body
           attrs = JSON.parse(response.body)["data"]
           attrs[:id] = JSON.parse(response.body)["self"].match(/\d*$/)
