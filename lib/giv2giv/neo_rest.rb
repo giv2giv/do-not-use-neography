@@ -21,7 +21,6 @@ class NeoRest
     request = Net::HTTP::Post.new("/db/data/node/")
     request.set_form_data(node.attributes)
     response = @http.request(request)
-    puts response.body.inspect
     node.attributes = dehash_attributes(response) #takes a hash and sets those as actual attributes on the instance, to make each of them callable
 
   end
@@ -77,7 +76,6 @@ class NeoRest
 	end
 
 	def self.dehash_attributes(response)
-#          puts response.body
           attrs = JSON.parse(response.body)["data"]
           attrs[:id] = JSON.parse(response.body)["self"].match(/\d*$/)
           attrs
@@ -92,9 +90,6 @@ class NeoRest
 
 
 end #class
-
-bob = NeoRest.put(11222, "state", "virginia")
-puts bob
 
 =begin
 the above method call gives a nasty error in the neo4j logs: 

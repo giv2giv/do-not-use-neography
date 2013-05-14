@@ -1,9 +1,9 @@
 ENV['RACK_ENV'] = 'test'
 require 'test/unit'
-#require '/lib/giv2giv/node.rb'
 
-require File.expand_path '../../lib/giv2giv/node', __FILE__
-require File.expand_path '../../lib/giv2giv/neo_rest', __FILE__
+root_dir = File.expand_path "#{File.dirname(__FILE__)}/../.."
+require "#{root_dir}/lib/giv2giv/node"
+require "#{root_dir}/lib/giv2giv/neo_rest"
 
 class TestDonor < Node
   node_attribute :name
@@ -34,10 +34,8 @@ class Neo4JTest < Test::Unit::TestCase
   end
 
   def test_put
-	bob = NeoRest.put(11222, "state", "virginia")
-	bob2=NeoRest.get(11222)
-	puts bob2
-	puts bob
+	bob =  NeoRest.put(11222, "state", "virginia")
+#	bob2 = NeoRest.get(11222)
   end
 
 =begin

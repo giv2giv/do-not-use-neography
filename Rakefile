@@ -8,13 +8,12 @@ require 'open-uri'
 require 'net/http'
 require 'nokogiri'
 
-	
+
 #include GeoKit::Geocoders
 task :default => [:test]
 
 task :test do
-  ruby "test/charity_import_test.rb"
-  ruby "test/neo4j_test.rb"
+  ruby "test/all_tests.rb"
 end
 
 namespace :server do
