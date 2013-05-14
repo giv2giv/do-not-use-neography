@@ -47,11 +47,6 @@ class NeoRest
 		request.body=value
 		response = @http.request(request)
 
-#		response = @http.send_request('PUT', "/db/data/node/"+id.to_s+"/properties/"+key, request.body.to_json
-
-		#dehash_attributes(response)
-#		new=self.get(id)
-#		puts new 
 	end
 
 	def self.post(key = "id", value = generate_unique_id())
