@@ -17,14 +17,14 @@ class Neo4JTest < Test::Unit::TestCase
     assert_equal "TestDonor", donor_dan.type
     assert_equal "Dan", donor_dan.name
     assert_equal "daniel.h.funk@gmail.com", donor_dan.email
-    NeoRest.save!(donor_dan)
+    NeoRest.save(donor_dan)
     assert_not_nil donor_dan.id
     assert donor_dan.id > 0
   end
 
   def test_find
     donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})
-    NeoRest.save!(donor_dan)
+    NeoRest.save(donor_dan)
     donor_dan2 =  NeoRest.find(donor_dan.id)
     assert donor_dan2.instance_of? TestDonor
     assert_not_nil donor_dan2.id
@@ -35,10 +35,10 @@ class Neo4JTest < Test::Unit::TestCase
 
   def test_modify
     donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})
-    NeoRest.save!(donor_dan)
+    NeoRest.save(donor_dan)
     id         =  donor_dan.id
     donor_dan.name="Not Dan"
-    NeoRest.save!(donor_dan)
+    NeoRest.save(donor_dan)
     assert_equal id, donor_dan.id
     donor_dan  = NeoRest.find(id)
     assert_equal "Not Dan", donor_dan.name
@@ -46,7 +46,7 @@ class Neo4JTest < Test::Unit::TestCase
 
   def test_create_with_more_params
     donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com", :person => "johnny"})
-    NeoRest.save!(donor_dan)
+    NeoRest.save(donor_dan)
     assert_not_nil donor_dan.id
     assert_not_nil NeoRest.find(donor_dan.id)
   end
@@ -58,18 +58,18 @@ class Neo4JTest < Test::Unit::TestCase
     end
   end
 
-  def test_put
-	bob =  NeoRest.put(11222, "state", "virginia")
-#	bob2 = NeoRest.get(11222)
+  def test_delete
+    donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})
+    NeoRest.save(donor_dan)
+    id         =  donor_dan.id
+    donor_dan  = NeoRest.find(id)
+    assert_not_nil donor_dan
+    NeoRest.delete(id)
+    assert_raises Exception do
+      donor_dan  = NeoRest.find(id)
+    end
   end
 
-=begin
-  def test_add_attribute
-    donor_dan=TestDonor.new({:name=>"Booyah", :email => "pooppsie@mcpooples.com"})
-	NeoRest.save!(donor_dan)
-	donor_dan.attribute=value
-  end
-=end
   def test_relationship
 #    donor_josh = TestDonor.new({:name => "Josh", :email => "jlegs@sexybarristas.com"})
 #    donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})

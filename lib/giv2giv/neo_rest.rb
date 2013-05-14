@@ -13,7 +13,7 @@ class NeoRest
   @http = Net::HTTP.new("localhost", "7474")
 
   # Handles both create and update.
-  def self.save!(node) 
+  def self.save(node)
     if(node.id.nil?)
        request = Net::HTTP::Post.new("/db/data/node/")
     else
@@ -31,6 +31,9 @@ class NeoRest
   def self.find(id) 
     request  = Net::HTTP::Get.new("/db/data/node/"+id.to_s)
     response = @http.request(request)
+    if (response.code == "404")
+      raise Exception.new("No node found with an id of #{id}")
+    end
     attrs    = dehash_attributes(response)
     # This next line creates an instance of the sub class with the correct attributes based on
     # the "type" attribute.  So "Type" must align with a known sub class of node.
