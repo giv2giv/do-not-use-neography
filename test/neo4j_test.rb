@@ -33,12 +33,12 @@ class Neo4JTest < Test::Unit::TestCase
 	end
   end
 
-#  def test_put
-#    donor_dan  = TestDonor.new({:name => "josh",  :email => "dsmeoimefoie@gmail.com"})#
-#	NeoRest.save!(donor_dan)
-#	bob = NeoRest.put(donor_dan.id, "state", "virginia")
-#	NeoRest.save!(bob)
-#  end
+  def test_put
+	bob = NeoRest.put(11222, "state", "virginia")
+	bob2=NeoRest.get(11222)
+	puts bob2
+	puts bob
+  end
 
 =begin
   def test_add_attribute
