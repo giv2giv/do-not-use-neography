@@ -2,11 +2,6 @@ require 'net/http'
 require 'uri'
 require 'json'
 
-def getData()
-  url  = 'http://localhost:7474/db/data/'
-  resp = Net::HTTP.get_response(URI.parse(url)) # get_response takes an URI object
-  data = resp.body
-end
 
 class NeoRest
   attr_accessor :data
@@ -54,11 +49,6 @@ class NeoRest
 		request.body=value
 		response = @http.request(request)
 
-#		response = @http.send_request('PUT', "/db/data/node/"+id.to_s+"/properties/"+key, request.body.to_json
-
-		#dehash_attributes(response)
-#		new=self.get(id)
-#		puts new 
 	end
 
 
@@ -96,49 +86,4 @@ class NeoRest
 
 
 end #class
-
-=begin
-the above method call gives a nasty error in the neo4j logs: 
-
-May 13, 2013 11:12:49 PM com.sun.jersey.spi.container.ContainerResponse mapMappableContainerException
-SEVERE: The RuntimeException could not be mapped to a response, re-throwing to the HTTP container
-java.lang.RuntimeException: Not implemented!
-	at org.neo4j.server.rest.repr.formats.UrlFormFormat.readValue(UrlFormFormat.java:78)
-	at org.neo4j.server.rest.web.RestfulGraphDatabase.setNodeProperty(RestfulGraphDatabase.java:307)
-	at sun.reflect.GeneratedMethodAccessor57.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:616)
-	at com.sun.jersey.spi.container.JavaMethodInvokerFactory$1.invoke(JavaMethodInvokerFactory.java:60)
-	at com.sun.jersey.server.impl.model.method.dispatch.AbstractResourceMethodDispatchProvider$ResponseOutInvoker._dispatch(AbstractResourceMethodDispatchProvider.java:205)
-	at com.sun.jersey.server.impl.model.method.dispatch.ResourceJavaMethodDispatcher.dispatch(ResourceJavaMethodDispatcher.java:75)
-	at com.sun.jersey.server.impl.uri.rules.HttpMethodRule.accept(HttpMethodRule.java:288)
-	at com.sun.jersey.server.impl.uri.rules.RightHandPathRule.accept(RightHandPathRule.java:147)
-	at com.sun.jersey.server.impl.uri.rules.ResourceClassRule.accept(ResourceClassRule.java:108)
-	at com.sun.jersey.server.impl.uri.rules.RightHandPathRule.accept(RightHandPathRule.java:147)
-	at com.sun.jersey.server.impl.uri.rules.RootResourceClassesRule.accept(RootResourceClassesRule.java:84)
-	at com.sun.jersey.server.impl.application.WebApplicationImpl._handleRequest(WebApplicationImpl.java:1469)
-	at com.sun.jersey.server.impl.application.WebApplicationImpl._handleRequest(WebApplicationImpl.java:1400)
-	at com.sun.jersey.server.impl.application.WebApplicationImpl.handleRequest(WebApplicationImpl.java:1349)
-	at com.sun.jersey.server.impl.application.WebApplicationImpl.handleRequest(WebApplicationImpl.java:1339)
-	at com.sun.jersey.spi.container.servlet.WebComponent.service(WebComponent.java:416)
-	at com.sun.jersey.spi.container.servlet.ServletContainer.service(ServletContainer.java:537)
-	at com.sun.jersey.spi.container.servlet.ServletContainer.service(ServletContainer.java:699)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:820)
-	at org.mortbay.jetty.servlet.ServletHolder.handle(ServletHolder.java:511)
-	at org.mortbay.jetty.servlet.ServletHandler.handle(ServletHandler.java:390)
-	at org.mortbay.jetty.servlet.SessionHandler.handle(SessionHandler.java:182)
-	at org.mortbay.jetty.handler.ContextHandler.handle(ContextHandler.java:765)
-	at org.mortbay.jetty.handler.HandlerCollection.handle(HandlerCollection.java:114)
-	at org.mortbay.jetty.handler.HandlerWrapper.handle(HandlerWrapper.java:152)
-	at org.mortbay.jetty.Server.handle(Server.java:326)
-	at org.mortbay.jetty.HttpConnection.handleRequest(HttpConnection.java:542)
-	at org.mortbay.jetty.HttpConnection$RequestHandler.content(HttpConnection.java:943)
-	at org.mortbay.jetty.HttpParser.parseNext(HttpParser.java:756)
-	at org.mortbay.jetty.HttpParser.parseAvailable(HttpParser.java:218)
-	at org.mortbay.jetty.HttpConnection.handle(HttpConnection.java:404)
-	at org.mortbay.io.nio.SelectChannelEndPoint.run(SelectChannelEndPoint.java:410)
-	at org.mortbay.thread.QueuedThreadPool$PoolThread.run(QueuedThreadPool.java:582)
-
-=end
-
 
