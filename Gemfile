@@ -10,6 +10,8 @@ gem "rake"         # Rake is MAKE for ruby, and is useful for managing our libra
 gem "test-unit"    # Unit test our libraries.
 gem "json"         # For managing json
 
+# Neo4J 
+gem "neo4j-wrapper"  # Just the wrapper stuff, which gives us some mapping logic, but not the rails nonsense.
 
 # The specifics ...
 # gem "neography", :git => "git://github.com/maxdemarzi/neography.git" # Neo4J library
