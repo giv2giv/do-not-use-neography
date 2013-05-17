@@ -1,4 +1,4 @@
-require 'neo4j'
+require 'neo4j-wrapper'
 
 root_dir = File.expand_path "#{File.dirname(__FILE__)}/.."
 load "#{root_dir}/lib/functions.rb"
