@@ -14,7 +14,8 @@ gem "json"         # For managing json
 # The specifics ...
 # gem "neography", :git => "git://github.com/maxdemarzi/neography.git" # Neo4J library
 gem "dwolla-ruby", :git => "git://github.com/Dwolla/dwolla-ruby.git" # Dwolla handles financial transactions
-# bcrypt doesn't work with jruby. 
+
+# bcrypt and sinatra-authentication doesn't work with jruby. 
 # gem "bcrypt-ruby"  # encryption.  dUH.
 # gem "sinatra-authentication" #authentication
 

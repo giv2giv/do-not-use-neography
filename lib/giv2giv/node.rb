@@ -38,8 +38,6 @@ class Node
     self.class_eval("def #{arg}=(val);@attributes[:#{arg}]=val;end")
   end
 
-  def self.relationship()
-
   # Getter and setter methods for Type.
   def type
     @attributes[:type]
@@ -60,7 +58,5 @@ class Node
   def id
     @attributes[:id]
   end
-
-
 
 end

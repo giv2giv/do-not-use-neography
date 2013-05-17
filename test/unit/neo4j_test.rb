@@ -76,8 +76,6 @@ class Neo4JTest < Test::Unit::TestCase
     NeoRest.save(TestDonor.new({:name => "John", :email => "daniel.h.funk@gmail.com"}))
     NeoRest.save(TestDonor.new({:name => "Bill", :email => "daniel.h.funk@gmail.com"}))
     NeoRest.save(TestDonor.new({:name => "Ean",  :email => "daniel.h.funk@gmail.com"}))
-
-    NeoRest.find(id, )
   end
 
 

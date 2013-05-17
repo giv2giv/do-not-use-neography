@@ -1,6 +1,4 @@
 require 'rake'
-require 'neography/tasks'
-require 'neography'
 require 'rubygems'
 require 'spreadsheet' # excel library - http://spreadsheet.ch
 require 'geokit'
