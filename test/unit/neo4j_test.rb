@@ -8,8 +8,8 @@ require "#{root_dir}/lib/giv2giv/neo_rest"
 class TestDonor < Node
   node_attribute :name
   node_attribute :email
-#  relationship :friend, TestDonor
 end
+
 
 class Neo4JTest < Test::Unit::TestCase
 
@@ -71,11 +71,23 @@ class Neo4JTest < Test::Unit::TestCase
     end
   end
 
-  def test_relationship
-    donor_josh = TestDonor.new({:name => "Josh", :email => "jlegs@sexybarristas.com"})
-    donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})
-    donor_dan.add_friend(donor_josh, {:type => "just friends", :desc => "no sexy sexy"})
-    Neo4J.save!(donor_dan)
+  def test_find_by
+    NeoRest.save(TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"}))
+    NeoRest.save(TestDonor.new({:name => "John", :email => "daniel.h.funk@gmail.com"}))
+    NeoRest.save(TestDonor.new({:name => "Bill", :email => "daniel.h.funk@gmail.com"}))
+    NeoRest.save(TestDonor.new({:name => "Ean",  :email => "daniel.h.funk@gmail.com"}))
+
+    NeoRest.find(id, )
   end
+
+
+#  def test_relationship
+#    donor_josh = TestDonor.new({:name => "Josh", :email => "jlegs@sexybarristas.com"})
+#    donor_dan  = TestDonor.new({:name => "Dan",  :email => "daniel.h.funk@gmail.com"})
+#    donor_dan.add_friend(donor_josh, {:type => "just friends", :desc => "no sexy sexy"})
+#    Neo4J.save!(donor_dan)
+#  end
+
+
 
 end

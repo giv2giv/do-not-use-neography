@@ -1,3 +1,29 @@
+=begin
+
+Classes should extend Node in order to save their attributes in a database.
+To add attributes use the node_attribute() class level call.
+
+NODE ATTRIBUTES
+============================
+class TestDonor < Node
+   node_attribute :name
+end
+
+Creates a class called TestDonor that has a name attribute.  By setting this attribute
+you get a getter and setter on name, and are garanteed that teh value will be persisted in the
+database when you call NeoRest.save(my_node)
+
+Calls to Save will set an id on the given node.
+
+Find will find nodes with a given id.
+
+To create relationships use the
+relationship call()
+
+
+
+
+=end
 class Node
   class << self; attr_accessor :keys end
   attr_accessor :attributes
@@ -12,6 +38,9 @@ class Node
     self.class_eval("def #{arg}=(val);@attributes[:#{arg}]=val;end")
   end
 
+  def self.relationship()
+
+  # Getter and setter methods for Type.
   def type
     @attributes[:type]
   end
@@ -31,5 +60,7 @@ class Node
   def id
     @attributes[:id]
   end
+
+
 
 end

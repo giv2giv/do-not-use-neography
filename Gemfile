@@ -6,17 +6,17 @@ source "https://rubygems.org"
 
 # The basics ...
 gem "sinatra"      # bare bones web framework
-gem "shotgun"      # automatic reloading version of the rackup - makes sinatra play nice.
 gem "rake"         # Rake is MAKE for ruby, and is useful for managing our library of scripts.
 gem "test-unit"    # Unit test our libraries.
 gem "json"         # For managing json
 
 
 # The specifics ...
-gem "neography", :git => "git://github.com/maxdemarzi/neography.git" # Neo4J library
+# gem "neography", :git => "git://github.com/maxdemarzi/neography.git" # Neo4J library
 gem "dwolla-ruby", :git => "git://github.com/Dwolla/dwolla-ruby.git" # Dwolla handles financial transactions
-gem "bcrypt-ruby"  # encryption.  duh.
-gem "sinatra-authentication" #authentication
+# bcrypt doesn't work with jruby. 
+# gem "bcrypt-ruby"  # encryption.  dUH.
+# gem "sinatra-authentication" #authentication
 
 # Required for charity import
 gem "spreadsheet" # Excel library for reading IRS files - http://spreadsheet.ch
